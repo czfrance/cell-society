@@ -3,7 +3,7 @@ Cell Society
 
 This project implements a cellular automata simulator.
 
-Names:
+Names: Diane Kim, Cynthia France, Jose Santillan 
 
 
 ### Timeline
