@@ -1,6 +1,6 @@
 # Rock Paper Scissors Lab Discussion
 #### Names & NetIDs
-* Diane Kim: 
+* Diane Kim: dyk3
 * Jose Santillan: jas299
 * Cynthia France: cf219
 
