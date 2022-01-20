@@ -1,5 +1,8 @@
 # Rock Paper Scissors Lab Discussion
-#### Names and NetIDs
+#### Names & NetIDs
+* Diane Kim: 
+* Jose Santillan: jas299
+* Cynthia France: cf219
 
 
 ### High Level Design Goals
@@ -9,73 +12,104 @@
 ### CRC Card Classes
 
 This class's purpose or value is to represent a customer's order:
+Game class
+* Keeps track of:
+  * players
+* get player input
+* display result/standings
+* Depends on Player, Weapon
 
-|Order| |
-|---|---|
-|boolean isInStock(OrderLine)         |OrderLine|
-|double getTotalPrice(OrderLine)      |Customer|
-|boolean isValidPayment (Customer)    | |
-|void deliverTo (OrderLine, Customer) | |
+Player class
+* keeps track of:
+  * num wins
+  * num losses
+  * current weapon
+* calculates score
+* Depends on Weapon
 
+Weapon super class
+* abstract method getOutcome
+* Vars:
+  * (abstract) winsAgainst
+  * (abstract) losesAgainst
+* Scissors subclass
+* Paper subclass
+* Rock subclass
+ 
 
-This class's purpose or value is to represent a customer's order:
+Game:
 ```java
-public class Order {
-     // returns whether or not the given items are available to order
-     public boolean isInStock (OrderLine items)
-     // sums the price of all the given items
-     public double getTotalPrice (OrderLine items)
-     // returns whether or not the customer's payment is valid
-     public boolean isValidPayment (Customer customer)
-     // dispatches the items to be ordered to the customer's selected address
-     public void deliverTo (OrderLine items, Customer customer)
+public class RPSGame {
+     // a list of the players in the game
+     private List<Players> players;
+     
+     public void setupGame();
+     
+     private void getPlayerInput();
+     
+     private void displayResults();
+     
+     private void newGame();
  }
  ```
 
-This class's purpose or value is to manage something:
+Player:
 ```java
-public class Something {
-     // sums the numbers in the given data
-     public int getTotal (Collection<Integer> data)
-	 // creates an order from the given data
-     public Order makeOrder (String structuredData)
+public class Player {
+     private int numWins;
+     private int numLosses;
+     private Weapon currWeapon;
+     
+     public void outcome();
  }
 ```
 
+Weapon super class
+* abstract method getOutcome
+* Vars:
+    * (abstract) winsAgainst
+    * (abstract) losesAgainst
+* Scissors subclass
+* Paper subclass
+* Rock subclass
+```java
+public class Weapon {
+     private List<Weapon> winsAgainst;
+     private List<Weapon> losesAgainst;
+     
+     public abstract void getOutcome();
+ }
+```
 
 ### Use Cases
 
 * A new game is started with five players, their scores are reset to 0.
  ```java
- Something thing = new Something();
- Order o = thing.makeOrder("coffee,large,black");
- o.update(13);
+for (int i = 0; i < 5; i++) {
+  players.add(new Player());
+}
  ```
 
 * A player chooses his RPS "weapon" with which he wants to play for this round.
  ```java
- Something thing = new Something();
- Order o = thing.makeOrder("coffee,large,black");
- o.update(13);
+  Player.setWeapon(scanner.nextInt());
  ```
 
 * Given three players' choices, one player wins the round, and their scores are updated.
  ```java
- Something thing = new Something();
- Order o = thing.makeOrder("coffee,large,black");
- o.update(13);
+    player1.outcome(player2);
+    player2.outcome(player3);
+    player3.outcome(player1);
+    updateScores();
+  
  ```
 
 * A new choice is added to an existing game and its relationship to all the other choices is updated.
  ```java
- Something thing = new Something();
- Order o = thing.makeOrder("coffee,large,black");
- o.update(13);
+     player.setWeapon();
  ```
 
 * A new game is added to the system, with its own relationships for its all its "weapons".
  ```java
- Something thing = new Something();
- Order o = thing.makeOrder("coffee,large,black");
- o.update(13);
+    Game game2 = newGame();
  ```
