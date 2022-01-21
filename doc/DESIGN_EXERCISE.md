@@ -1,5 +1,8 @@
 # Cell Society Design Lab Discussion
 #### Names and NetIDs
+Cynthia France: cf219
+Diane Kim: dyk3
+Jose Santillan: jas299
 
 
 ### Simulations
