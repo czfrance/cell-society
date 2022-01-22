@@ -3,7 +3,7 @@
 
 ## Team Roles and Responsibilities
 
- * Team Member #1
+ * Team Member #1                                                                                                                                                                                                                                                                                                                                                                                                                         c
 
  * Team Member #2
 

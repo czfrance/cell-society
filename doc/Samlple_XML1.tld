@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cellsociety>
+    <simulation>
+
+        <name> Game of Life - Conway</name>
+        <width> 30</width>
+        <height> 50</height>
+        <initSquares>
+            (4, 9)
+            (2, 10)
+            (6, 10)
+            (2, 11)
+            (3, 11)
+            ...
+            ...
+            (5, 10)
+        </initSquares>
+
+    </simulation>
+
+    <simulation>
+
+        <name> Spreading of Fire</name>
+        <width> 30</width>
+        <height> 50 </height>
+        <!-- (x coordinate, y coordinate) ie Array[y][x]-->
+        <initSquare> (5, 9) </initSquare>
+        <probCatch> 0.4 </probCatch>
+
+
+    </simulation>
+
+    <simulation>
+        <name> Schellings Model of Segregation</name>
+        <width> 30 </width>
+        <height> 50 </height>
+
+        <initGroupA>
+            (9, 6)
+            (15, 30)
+            ..
+            ..
+            ..
+            ..
+            ..
+            (22, 14)
+        </initGroupA>
+        <initGroupB>
+            (4, 6)
+            (6, 7)
+            ..
+            ..
+            ..
+            ..
+            ..
+            (19, 24)
+        </initGroupB>
+        <groupASize> 30 </groupASize>
+        <grouBSize> 30 </grouBSize>
+        <emptyCells> 30 </emptyCells>
+        <tolerenceLevel> 0.4 </tolerenceLevel>
+
+
+
+    </simulation>
+
+    <simulation>
+
+        <name> Wa-Tor World model </name>
+        <width> 30 </width>
+        <height> 50 </height>
+        <fish>
+            <reproductionTime> 4 </reproductionTime>
+            <nutritionValue>  2 </nutritionValue>
+        </fish>
+        <sharks>
+            <reproudctionTime> 4</reproudctionTime>
+            <initEnergy> 3 </initEnergy>
+        </sharks>
+
+
+    </simulation>
+
+    <simulation>
+
+        <name> Percolation </name>
+        <width> 30 </width>
+        <height> 50 </height>
+
+
+    </simulation>
+</cellsociety>

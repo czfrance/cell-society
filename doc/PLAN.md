@@ -23,6 +23,21 @@ made from [a tool that generates UML from existing code](http://staruml.io/).
  Order o = thing.makeOrder("coffee,large,black");
  o.update(13);
  ```
+* Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors)
+
+
+* Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing)
+
+
+* Move to the next generation: update all cells in a simulation from their current state to their next state and display the result graphically
+
+
+* Switch simulations: load a new simulation from a data file, replacing the current running simulation with the newly loaded one
+
+
+* Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in a data file
+
+
 
 
 ## Design Considerations
