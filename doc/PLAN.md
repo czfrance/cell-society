@@ -68,11 +68,11 @@ if (cell.getNeighbors() > 3 || cell.getNeighbors() <= 1) {
 }
 
 * Move to the next generation: update all cells in a simulation from their current state to their next state and display the result graphically
-private void updateGrid(){
-    for (int i = 0; i < grid.size(); i++) {
-        for (int j = 0; j < grid.get(i).size();j++) {
-            grid.get(i).get(j).update();
-    }
+private void updateGrid(){\
+    for (int i = 0; i < grid.size(); i++) {\
+        for (int j = 0; j < grid.get(i).size();j++) {\
+            grid.get(i).get(j).update();\
+    }\
 }
 
 
