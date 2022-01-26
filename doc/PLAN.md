@@ -14,35 +14,54 @@ subclass). The code to check neighbors, characteristics of cells and their inter
 neighbors should be closed from modification. 
 
 ## Design Overview
-* Simulation
-  * GameOfLife
-  * Fire
-  * Schelling
-  * WaTor
-  * Percolation
-* Cell
-  * LifeCell (for game of life)
-  * Empty (for all)
-  * Burning (for fire)
-  * Tree (for fire)
-  * GroupA (sh)
-  * GroupB
-  * Fish
-  * Shark
-  * Filled
-  * Active
-  * NotOpen
-* GUI
-  * GameOfLifeGUI
-  * FireGUI
-  * SchellingGUI
-  * WaTorGUI
-  * PercolationGUI
+![Burning Cell subclass](images/Burning_CRC.jpeg "Burning Cell subclass")
+![CellSociety class](images/CellSociety_CRC.jpeg "CellSociety class")
+![Fish Cell subclass](images/Fish_CRC.jpeg "Fish Cell subclass")
+![GameOfLife Simulation subclass](images/GoL_CRC.jpeg "GameOfLife Simulation subclass")
+![Percolation Simulation subclass](images/Percolation_CRC.jpeg "Percolation Simulation subclass")
+![SpreadingOfFire Simulation subclass](images/SoF_CRC.jpeg "SpreadingOfFire Simulation subclass")
+![WaTor Simulation subclass](images/WaTor_CRC.jpeg "WaTor Simulation subclass")
 
 ## Design Details
 
-Here is a graphical look at my design:
-
+* ```Simulation``` (Model): This is essentially the Model component of our project (out of MVC). The superclass
+    keeps track of a variety of variables essential to the simulations, ie author, grid size, description,
+    and other parameters. It would also contain many abstract methods such as ```updateGrid()``` and ```step()``` that
+    take care of overall simulation calculations
+    * ```GameOfLife```
+    * ```Fire```
+    * ```Schelling```
+    * ```WaTor```
+    * ```Percolation```
+* ```Cell``` (Model): This is a helper class essential for the functioning of Simulation. Cells keep track
+    of their own state and are in charge of their own actions. General member variables keep track of
+    the state of the cell and its next states, while subclasses will have additional variables such 
+    as lives (for fish) and happiness (for Schelling's).
+    * ```LifeCell``` (for game of life)
+    * ```Empty``` (for all)
+    * ```Burning``` (for fire)
+    * ```Tree``` (for fire)
+    * ```GroupA``` (sh)
+    * ```GroupB```
+    * ```Fish```
+    * ```Shark```
+    * ```Filled```
+    * ```Active```
+    * ```NotOpen```
+* ```GUI``` (View): This is essentially the view of our project, and dictates what the user sees and
+    interacts with. Some important functions include: updating grid, calling the controller to 
+    update state/get information, recognizing when certain buttons are pressed, and generally 
+    communicating to the back-end the user's desires.
+    * ```GameOfLifeGUI```
+    * ```FireGUI```
+    * ```SchellingGUI```
+    * ```WaTorGUI```
+    * ```PercolationGUI```
+* ```Controller```: This class is responsible for communicating between the model and the view. The 
+  controller is aware of the needs of both classes and updates/asks the other class for information
+  each time something is requested or an event occurs. For example, if the playButton is pressed, the
+  controller knows to ask the model for the next generation of cells. Once this is obtained, the controller
+  will pass the information to the view so that it can update itself.
 
 
 ## Use Cases
@@ -68,28 +87,39 @@ if (cell.getNeighbors() > 3 || cell.getNeighbors() <= 1) {
 }
 
 * Move to the next generation: update all cells in a simulation from their current state to their next state and display the result graphically
-private void updateGrid(){\
-    for (int i = 0; i < grid.size(); i++) {\
-        for (int j = 0; j < grid.get(i).size();j++) {\
-            grid.get(i).get(j).update();\
-    }\
+private void updateGrid(){
+    for (int i = 0; i < grid.size(); i++) {
+        for (int j = 0; j < grid.get(i).size();j++) {
+            grid.get(i).get(j).update();
+    }
 }
 
 
 * Switch simulations: load a new simulation from a data file, replacing the current running simulation with the newly loaded one
 ````if a user presses a numkey to switch to a different simulation````
-
-...
-else if (key == KeyCode.NUMPAD1) {
-    CellSociety.switchScene(1);
-}
+```java
+    switch (keyCode) {
+      case DIGIT1 -> CellSociety.switchScene(1);
+      case DIGIT2 -> CellSociety.switchScene(2);
+      case DIGIT3 -> ...
+    }
+```
 ``` in the cell society class```
 public static void switchScene()
 
 
 * Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in a data file
+```public Fire fire = new Fire(gridX, gridY, probCatch, ...);```
+OR
+```fire.setProbCatch(proCatch);```
 
-
+* Save the current generation as a new configuration file:
+```java
+    String newAuthor = authorTextField.text();
+    String newDescription = descTextField.text();
+    String newTitle = titleTextField.text();
+    CellSociety.saveAsNewConfig(newTitle, newAuthor, newDescription, Simulation.getGrid());
+```
 
 
 ## Design Considerations
@@ -109,20 +139,31 @@ The reason that this issue arises is because of the simultaneous nature of the p
     if it is impossible for the fish to move without colliding.
 
 #### Design Issue #2
+Another design issue somewhat similar to the above is how to coordinate cell moves for the Schelling
+model. If the grid contains more cells/individuals that are unhappy/need to be moved than open spaces,
+and since all the moves must happen at the same time, we run into the problem of not finding an
+open space for all the cells that must move.
 
- * Alernative #1
-
- * Alernative #2
-
+ * Alternative #1
+    In addition to "empty" and "filled" cells, have an in-between state where cells that contain
+    unhappy individuals are also considered in the list of cells that are empty (and thus can hold
+   a different individual). This way, there will never be a shortage of cells to move to
+ * Alternative #2
+    Continue to move cells that could not move before into new spots as they are vacated by individuals
+    that could move. This would all happen in one "turn" and the view would not update until all
+    unhappy individuals have had the chance to move.
  * Trade-offs
-
+    The first alternative would involve yet another data structure/object/variable to keep track of,
+   but it would be significantly easier to move all the individuals (one round is more than sufficient).
+   The second alternative wouldn't require any additional pieces, but would be much harder to implement,
+    as we would need to re-loop through everything until all unhappy cells have been relocated.
 
 
 ## User Interface
 
 Here is our amazing UI:
 
-![This is cool, too bad you can't see it](images/UI_Design.HEIC "An preliminary UI")
+![This is cool, too bad you can't see it](images/UI_Design.jpeg "An preliminary UI")
 
 Ways the user can interact with the UI:
 * click the dropdown menu with simulation title to choose another configuration file to load
