@@ -7,4 +7,7 @@ module cellsociety_app {
 
     // allow other classes to access listed packages in your project
     exports cellsociety;
+  exports cellsociety.views;
+    exports cellsociety.models;
+    exports cellsociety.cells;
 }
