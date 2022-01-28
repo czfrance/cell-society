@@ -19,9 +19,8 @@ public class SimulationModel {
   public final String HEIGHT_INFO = "height";
   public final String WIDTH_INFO = "width";
 
-  protected List<List<Integer>> rawGrid = new ArrayList<>();
+  protected List<List<Cell>> myGrid = new ArrayList<>();
 
-  //private Cell[][] myGrid;
   private final int WIDTH;
   private final int HEIGHT;
 

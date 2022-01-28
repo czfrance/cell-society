@@ -10,26 +10,41 @@ public class LifeCell extends Cell{
     this.setFill(Color.BLUE);
   }
 
-  public void initNeighbors(int width, int height) {
+  public void initNeighbors(int width, int height, ArrayList<ArrayList<Cell>> grid) {
     int corner = isCorner(width, height);
     int edge = isEdge(width, height);
     if (corner != -1) {
-      cornerNeighbors(corner);
+      myNeighbors = edgeNeighbors(corner, grid);
     } else if (edge != -1) {
-
+      myNeighbors = edgeNeighbors(edge, grid);
     } else {
-
+      myNeighbors = centerNeighbors(grid);
     }
-
   }
-  private ArrayList<Cell> edgeNeighbors() {
+
+  private ArrayList<Cell> edgeNeighbors(int code, ArrayList<ArrayList<Cell>> grid) {
     ArrayList<Cell> neighbors = new ArrayList<>();
 
+    switch (code) {
+      case TOP_EDGE:
 
+        break;
+      case BOTTOM_EDGE:
+
+        break;
+      case RIGHT_EDGE:
+
+        break;
+      case LEFT_EDGE:
+
+        break;
+      default:
+        System.out.println("NOT AN EDGE");
+    }
     return neighbors;
   }
 
-  private ArrayList<Cell> cornerNeighbors(int code) {
+  private ArrayList<Cell> cornerNeighbors(int code, ArrayList<ArrayList<Cell>> grid) {
     ArrayList<Cell> neighbors = new ArrayList<>();
 
     switch (code) {
@@ -51,6 +66,16 @@ public class LifeCell extends Cell{
     }
 
 
+    return neighbors;
+  }
+
+  private ArrayList<Cell> centerNeighbors(ArrayList<ArrayList<Cell>> grid) {
+    ArrayList<Cell> neighbors = new ArrayList<>();
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        neighbors.add(grid.get(ROW + i).get(COLUMN + j));
+      }
+    }
     return neighbors;
   }
 }

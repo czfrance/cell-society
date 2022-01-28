@@ -6,8 +6,8 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class Cell extends Rectangle {
 
-  public final int COLUMN;
-  public final int ROW;
+  protected final int COLUMN;
+  protected final int ROW;
 
   public final int TOP_LEFT = 1;
   public final int TOP_RIGHT = 2;
@@ -85,6 +85,5 @@ public abstract class Cell extends Rectangle {
     if (COLUMN == width && ROW == height) return BOTTOM_RIGHT;
     return -1;
   }
-
 
 }
