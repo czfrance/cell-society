@@ -5,6 +5,7 @@ module cellsociety_app {
     requires javafx.base;
     requires javafx.media;
   requires java.xml;
+  requires java.desktop;
 
   // allow other classes to access listed packages in your project
     exports cellsociety;

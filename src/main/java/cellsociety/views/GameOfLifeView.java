@@ -1,5 +1,10 @@
 package cellsociety.views;
 
-public class GameOfLifeView extends SimulationView{
+import cellsociety.models.*;
 
+public class GameOfLifeView extends SimulationView {
+
+  public GameOfLifeView(SimulationModel simModel) {
+    super(simModel);
+  }
 }
