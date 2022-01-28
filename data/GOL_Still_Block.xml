@@ -5,5 +5,10 @@
   <description>A single 2x2 block that does not change from generation to generation</description>
   <width>4</width>
   <height>4</height>
-  <publisher>Broadway Books</publisher>
+  <config>
+    0000
+    0110
+    0110
+    0000
+  </config>
 </data>
