@@ -1,5 +1,6 @@
 package cellsociety.models;
 
+import cellsociety.cells.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,31 +10,72 @@ public class SimulationModel {
   //public static final String DATA_TYPE = "Game";
   // field names expected to appear in data file holding values for this object
   public static final List<String> DATA_FIELDS = List.of("simulation type", "title", "author", "description",
-      "width", "height", "config");
+                                                              "width", "height", "config");
   public Map<String, String> information;
-  private List<List<Integer>> grid = new ArrayList<>();
+
+  public final String HEIGHT_INFO = "height";
+  public final String WIDTH_INFO = "width";
+
+  private List<List<Integer>> rawGrid = new ArrayList<>();
+
+  private Cell[][] myGrid;
+  private final int WIDTH;
+  private final int HEIGHT;
+
+  private int iteration;
+  private int simulationSpeed;
 
   public SimulationModel(Map<String, String> dataValues) {
     information = dataValues;
+
+    WIDTH = Integer.parseInt(information.get(WIDTH_INFO));
+    HEIGHT = Integer.parseInt(information.get(HEIGHT_INFO));
+
     createGrid();
   }
 
+  private void init() {
+
+  }
+
+  private void step() {
+
+  }
+
+  public Cell[][] getGrid() {
+    return myGrid;
+  }
+
+  public void updateGrid() {
+
+  }
+
   private void createGrid() {
-    grid.add(new ArrayList<Integer>());
+    //Just here for abstraction
+
+
+    rawGrid.add(new ArrayList<Integer>());
     int rowNum = 0;
     for (char c : information.get(DATA_FIELDS.get(6)).toCharArray()) {
       switch (c) {
-        case '\n' -> {grid.add(new ArrayList<>()); rowNum++;}
+        case '\n' -> {
+          rawGrid.add(new ArrayList<>());
+          rowNum++;
+        }
         //case ' ' -> {}
-        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> grid.get(rowNum).add(Character.getNumericValue(c));
-        default -> {}
+        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> rawGrid.get(rowNum)
+            .add(Character.getNumericValue(c));
+        default -> {
+        }
       }
-
     }
   }
 
+  /**
+   * Prints the current grid
+   */
   public void printGrid() {
-    for (List l : grid) {
+    for (List l : rawGrid) {
       for (Object i : l) {
         System.out.print(i);
       }
@@ -55,5 +97,30 @@ public class SimulationModel {
         String.format("  %s = '%d',", DATA_FIELDS.get(5), Integer.parseInt(information.get(DATA_FIELDS.get(5)))),
         String.format("  %s = '%s',", DATA_FIELDS.get(6), information.get(DATA_FIELDS.get(6))),
         "]");
+  }
+
+  /**
+   * getter method
+   * @return Height of the grid
+   */
+  public int getHeight() {return HEIGHT;}
+
+  /**
+   * Getter method
+   * @return Width of the grid
+   */
+  public int getWidth() {return WIDTH;}
+
+  /**
+   * Getter method
+   * @return The current iteration the simulation is on
+   */
+  public int getIteration() {return iteration;}
+
+  public int getSpeed() {return simulationSpeed;}
+
+  public void setSpeed(int newSpeed) {simulationSpeed = newSpeed;}
+  public void HandleKeyInput() {
+    //need to implement within extended classes
   }
 }
