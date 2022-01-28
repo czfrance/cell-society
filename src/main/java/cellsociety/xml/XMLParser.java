@@ -1,6 +1,11 @@
 package cellsociety.xml;
 
+import cellsociety.models.GameOfLifeModel;
+import cellsociety.models.PercolationModel;
+import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
+import cellsociety.models.SpreadingFireModel;
+import cellsociety.models.WaTorModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
