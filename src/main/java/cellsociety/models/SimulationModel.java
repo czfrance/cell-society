@@ -12,18 +12,23 @@ public class SimulationModel {
   public static final List<String> DATA_FIELDS = List.of("simulation type", "title", "author", "description",
                                                               "width", "height", "config");
   public Map<String, String> information;
-  private List<List<Integer>> grid = new ArrayList<>();
+
+  public final String HEIGHT_INFO = "height";
+  public final String WIDTH_INFO = "width";
+
+  private List<List<Integer>> rawGrid = new ArrayList<>();
 
   private Cell[][] myGrid;
-
+  private final int WIDTH;
+  private final int HEIGHT;
 
   public SimulationModel(Map<String, String> dataValues) {
     information = dataValues;
+
+    WIDTH = Integer.parseInt(information.get(WIDTH_INFO));
+    HEIGHT = Integer.parseInt(information.get(HEIGHT_INFO));
+
     createGrid();
-  }
-
-  public SimulationModel(int gridSize) {
-
   }
 
   private void init() {
@@ -38,21 +43,24 @@ public class SimulationModel {
     return myGrid;
   }
 
-  private void updateGrid() {
+  public void updateGrid() {
 
   }
 
   private void createGrid() {
-    grid.add(new ArrayList<Integer>());
+    //Just here for abstraction
+
+
+    rawGrid.add(new ArrayList<Integer>());
     int rowNum = 0;
     for (char c : information.get(DATA_FIELDS.get(6)).toCharArray()) {
       switch (c) {
         case '\n' -> {
-          grid.add(new ArrayList<>());
+          rawGrid.add(new ArrayList<>());
           rowNum++;
         }
         //case ' ' -> {}
-        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> grid.get(rowNum)
+        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> rawGrid.get(rowNum)
             .add(Character.getNumericValue(c));
         default -> {
         }
@@ -64,7 +72,7 @@ public class SimulationModel {
    * Prints the current grid
    */
   public void printGrid() {
-    for (List l : grid) {
+    for (List l : rawGrid) {
       for (Object i : l) {
         System.out.print(i);
       }
@@ -88,4 +96,6 @@ public class SimulationModel {
         "]");
   }
 
+  public int getHeight() {return HEIGHT;}
+  public int getWidth() {return WIDTH;}
 }

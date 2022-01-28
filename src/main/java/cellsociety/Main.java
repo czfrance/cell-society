@@ -45,7 +45,7 @@ public class Main extends Application {
 //    );
 //
 //    private static final Map<String, SimulationModel> SIM_MODELS = Map.of(
-//        "GameOfLife", new GameOfLifeModel()
+//        "GameOfLife", new GameOfLifeModel(),
 //    );
 
 
@@ -66,16 +66,16 @@ public class Main extends Application {
         stage.setTitle(TITLE);
         stage.show();
 
-
-
-
         File dataFile = FILE_CHOOSER.showOpenDialog(stage);
         while (dataFile != null) {
             try {
                 System.out.println("starting");
                 // just showing how to use a pair :)
                 String name = dataFile.getName();
-                SimulationModel model = new XMLParser().getSimulation(dataFile);
+                Map<String, String> info = new XMLParser().getInformation(dataFile);
+                SimulationModel model = new SimulationModel(info);
+                GameOfLifeModel game = new GameOfLifeModel(info);
+                System.out.println(game.getHeight());
                 //Pair<String, Game> p = new Pair<>(dataFile.getName(), new XMLParser().getSimulation(dataFile));
                 // do something "interesting" with the resulting data
                 showMessage(AlertType.INFORMATION, name + "\n" + model.toString());
@@ -90,6 +90,9 @@ public class Main extends Application {
 
         // nothing selected, so quit the application
         Platform.exit();
+
+
+
     }
 
     // display given message to user using the given type of Alert dialog box

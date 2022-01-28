@@ -40,7 +40,7 @@ public class XMLParser {
   /**
    * Get data contained in this XML file as an object
    */
-  public SimulationModel getSimulation (File dataFile) throws XMLException {
+  public Map<String, String> getInformation (File dataFile) throws XMLException {
     Element root = getRootElement(dataFile);
 //    if (! isValidFile(root, Game.DATA_TYPE)) {
 //      throw new XMLException(ERROR_MESSAGE, Game.DATA_TYPE);
@@ -50,7 +50,7 @@ public class XMLParser {
     for (String field : SimulationModel.DATA_FIELDS) {
       results.put(field, getTextValue(root, field));
     }
-    return new SimulationModel(results);
+    return results;
   }
 
   // get root element of an XML file
