@@ -14,4 +14,13 @@ public class GameOfLifeModel extends SimulationModel {
   private void createGrid() {
 
   }
+
+  @Override
+  public void updateGrid() {
+
+  }
+
+  private void newGeneration() {
+
+  }
 }

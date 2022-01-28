@@ -22,6 +22,9 @@ public class SimulationModel {
   private final int WIDTH;
   private final int HEIGHT;
 
+  private int iteration;
+  private int simulationSpeed;
+
   public SimulationModel(Map<String, String> dataValues) {
     information = dataValues;
 
@@ -96,6 +99,28 @@ public class SimulationModel {
         "]");
   }
 
+  /**
+   * getter method
+   * @return Height of the grid
+   */
   public int getHeight() {return HEIGHT;}
+
+  /**
+   * Getter method
+   * @return Width of the grid
+   */
   public int getWidth() {return WIDTH;}
+
+  /**
+   * Getter method
+   * @return The current iteration the simulation is on
+   */
+  public int getIteration() {return iteration;}
+
+  public int getSpeed() {return simulationSpeed;}
+
+  public void setSpeed(int newSpeed) {simulationSpeed = newSpeed;}
+  public void HandleKeyInput() {
+    //need to implement within extended classes
+  }
 }

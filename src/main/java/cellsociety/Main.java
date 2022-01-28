@@ -82,7 +82,7 @@ public class Main extends Application {
                 model.printGrid();
             }
             catch (XMLException e) {
-                // handle error of unexpected file format
+                // handle error of unexpected file formatgetSi
                 showMessage(AlertType.ERROR, e.getMessage());
             }
             dataFile = FILE_CHOOSER.showOpenDialog(stage);
