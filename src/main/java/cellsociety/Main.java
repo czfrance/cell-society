@@ -81,7 +81,7 @@ public class Main extends Application {
         File dataFile = FILE_CHOOSER.showOpenDialog(stage);
         //while (dataFile != null) {
             try {
-                System.out.println("starting");
+                //System.out.println("starting");
                 // just showing how to use a pair :)
                 String name = dataFile.getName();
 //<<<<<<< HEAD
