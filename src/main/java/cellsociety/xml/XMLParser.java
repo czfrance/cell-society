@@ -1,6 +1,11 @@
 package cellsociety.xml;
 
+import cellsociety.models.GameOfLifeModel;
+import cellsociety.models.PercolationModel;
+import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
+import cellsociety.models.SpreadingFireModel;
+import cellsociety.models.WaTorModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,7 +55,16 @@ public class XMLParser {
     for (String field : SimulationModel.DATA_FIELDS) {
       results.put(field, getTextValue(root, field));
     }
-    return new SimulationModel(results);
+
+    System.out.println("parser: " + results.get(SimulationModel.DATA_FIELDS.get(0)));
+    switch (results.get(SimulationModel.DATA_FIELDS.get(0))) {
+      case "GameOfLife" -> {return new GameOfLifeModel(results);}
+      case "Percolation" -> {return new PercolationModel(results);}
+      case "Segregation" -> {return new SegregationModel(results);}
+      case "SpreadingFire" -> {return new SpreadingFireModel(results);}
+      case "WaTor" -> {return new WaTorModel(results);}
+      default -> throw new XMLException("not a simulation type", SimulationModel.DATA_FIELDS.get(0));
+    }
   }
 
   // get root element of an XML file

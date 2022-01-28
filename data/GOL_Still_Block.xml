@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data simulation="GameOfLife">
+  <simulationType>GameOfLife</simulationType>
   <title>Game of Life: Still Block</title>
   <author>Conway</author>
   <description>A single 2x2 block that does not change from generation to generation</description>
   <width>4</width>
   <height>4</height>
   <config>
-    0000
-    0110
-    0110
-    0000
+    1002.
+    0120.
+    0210.
+    2001
   </config>
 </data>
