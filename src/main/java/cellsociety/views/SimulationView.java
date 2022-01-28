@@ -4,6 +4,8 @@ import javafx.scene.Node;
 
 public class SimulationView {
 
+
+
   public SimulationView() {
 
   }
