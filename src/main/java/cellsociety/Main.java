@@ -72,14 +72,14 @@ public class Main extends Application {
         File dataFile = FILE_CHOOSER.showOpenDialog(stage);
         while (dataFile != null) {
             try {
-                System.out.println("starting");
                 // just showing how to use a pair :)
                 String name = dataFile.getName();
                 SimulationModel model = new XMLParser().getSimulation(dataFile);
                 //Pair<String, Game> p = new Pair<>(dataFile.getName(), new XMLParser().getSimulation(dataFile));
                 // do something "interesting" with the resulting data
-                showMessage(AlertType.INFORMATION, name + "\n" + model.toString());
                 model.printGrid();
+                showMessage(AlertType.INFORMATION, name + "\n" + model.toString());
+
             }
             catch (XMLException e) {
                 // handle error of unexpected file format
