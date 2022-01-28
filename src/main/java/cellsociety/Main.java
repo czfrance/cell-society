@@ -57,7 +57,7 @@ public class Main extends Application {
 //    );
 //
 //    private static final Map<String, SimulationModel> SIM_MODELS = Map.of(
-//        "GameOfLife", new GameOfLifeModel()
+//        "GameOfLife", new GameOfLifeModel(),
 //    );
 
 
@@ -78,26 +78,33 @@ public class Main extends Application {
         //stage.setTitle(TITLE);
         //stage.show();
 
-
         File dataFile = FILE_CHOOSER.showOpenDialog(stage);
         //while (dataFile != null) {
             try {
                 System.out.println("starting");
                 // just showing how to use a pair :)
                 String name = dataFile.getName();
-                SimulationModel model = new XMLParser().getSimulation(dataFile);
+//<<<<<<< HEAD
+                Map<String, String> info = new XMLParser().getInformation(dataFile);
+//                SimulationModel model = new SimulationModel(info);
+//                GameOfLifeModel game = new GameOfLifeModel(info);
+//                System.out.println(game.getHeight());
+//=======
+                //SimulationModel model = new XMLParser().getSimulation(dataFile);
                 SimulationView view;
+//>>>>>>> 0dedd0e (added constructors for view, model, and cell classes, wrote basic view to draw grid)
                 //Pair<String, Game> p = new Pair<>(dataFile.getName(), new XMLParser().getSimulation(dataFile));
                 // do something "interesting" with the resulting data
-                model.printGrid();
-                System.out.println(model.getSimType());
+                //model.printGrid();
+                //System.out.println(model.getSimType());
                 //showMessage(AlertType.INFORMATION, name + "\n" + model.toString());
-                switch (model.getSimType()) {
-                    case "GameOfLife" -> {view = new GameOfLifeView(model);}
-                    case "Percolation" -> {view = new PercolationView(model);}
-                    case "Segregation" -> {view = new SegregationView(model);}
-                    case "SpreadingFire" -> {view = new SpreadingFireView(model);}
-                    case "WaTor" -> {view = new WaTorView(model);}
+                //System.out.println("parser: " + info.get(SimulationModel.DATA_FIELDS.get(0)));
+                switch (info.get(SimulationModel.DATA_FIELDS.get(0))) {
+                    case "GameOfLife" -> {view = new GameOfLifeView(new GameOfLifeModel(info));}
+                    case "Percolation" -> {view = new PercolationView(new PercolationModel(info));}
+                    case "Segregation" -> {view = new SegregationView(new SegregationModel(info));}
+                    case "SpreadingFire" -> {view = new SpreadingFireView(new SpreadingFireModel(info));}
+                    case "WaTor" -> {view = new WaTorView(new WaTorModel(info));}
                     default -> throw new XMLException("not a simulation type", SimulationModel.DATA_FIELDS.get(0));
                 }
 
@@ -109,7 +116,7 @@ public class Main extends Application {
                 //browser.showPage(DEFAULT_START_PAGE);
             }
             catch (XMLException e) {
-                // handle error of unexpected file format
+                // handle error of unexpected file formatgetSi
                 showMessage(AlertType.ERROR, e.getMessage());
             }
             //dataFile = FILE_CHOOSER.showOpenDialog(stage);

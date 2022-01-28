@@ -2,7 +2,7 @@ package cellsociety.cells;
 
 public class TreeCell extends Cell {
 
-  public TreeCell(double x, double y, double size) {
-    super(x, y, size);
+  public TreeCell(int x, int y, double size, String initState) {
+    super(x, y, size, initState);
   }
 }

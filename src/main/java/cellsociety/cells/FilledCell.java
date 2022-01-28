@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class FilledCell extends Cell{
 
-  public FilledCell(double x, double y, double size) {
-    super(x, y, size);
+  public FilledCell(int x, int y, double size, String initState) {
+    super(x, y, size, initState);
   }
 }

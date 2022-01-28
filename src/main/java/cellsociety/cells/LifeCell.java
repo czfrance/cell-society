@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 
 public class LifeCell extends Cell{
 
-  public LifeCell(double x, double y, double size) {
-    super(x, y, size);
+  public LifeCell(int x, int y, double size, String initState) {
+    super(x, y, size, initState);
     this.setFill(Color.BLUE);
   }
 }

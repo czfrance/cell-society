@@ -1,5 +1,6 @@
 package cellsociety.views;
 
+import javafx.scene.Node;
 import cellsociety.cells.*;
 import cellsociety.models.SimulationModel;
 import java.util.ArrayList;
@@ -33,9 +34,8 @@ public class SimulationView {
       grid.add(new ArrayList<Cell>());
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         switch (cellGrid.get(row).get(cell)) {
-          case 0 -> {grid.get(row).add(new EmptyCell(cell*cellSize, row*cellSize, cellSize));}
-          case 1 -> {grid.get(row).add(new LifeCell(cell*cellSize, row*cellSize, cellSize));}
-          case 2 -> {grid.get(row).add(new Cell(cell*cellSize, row*cellSize, cellSize));}
+          case 0 -> {grid.get(row).add(new EmptyCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
+          case 1 -> {grid.get(row).add(new LifeCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
           default -> {}
         }
       }
@@ -49,4 +49,18 @@ public class SimulationView {
       }
     }
   }
+
+  private void initUI() {
+
+  }
+  private void update() {
+
+  }
+
+  private Node initButtons() {
+    return null;
+  }
+
+
+
 }

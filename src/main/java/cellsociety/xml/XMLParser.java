@@ -45,7 +45,7 @@ public class XMLParser {
   /**
    * Get data contained in this XML file as an object
    */
-  public SimulationModel getSimulation (File dataFile) throws XMLException {
+  public Map<String, String> getInformation (File dataFile) throws XMLException {
     Element root = getRootElement(dataFile);
 //    if (! isValidFile(root, Game.DATA_TYPE)) {
 //      throw new XMLException(ERROR_MESSAGE, Game.DATA_TYPE);
@@ -55,16 +55,7 @@ public class XMLParser {
     for (String field : SimulationModel.DATA_FIELDS) {
       results.put(field, getTextValue(root, field));
     }
-
-    System.out.println("parser: " + results.get(SimulationModel.DATA_FIELDS.get(0)));
-    switch (results.get(SimulationModel.DATA_FIELDS.get(0))) {
-      case "GameOfLife" -> {return new GameOfLifeModel(results);}
-      case "Percolation" -> {return new PercolationModel(results);}
-      case "Segregation" -> {return new SegregationModel(results);}
-      case "SpreadingFire" -> {return new SpreadingFireModel(results);}
-      case "WaTor" -> {return new WaTorModel(results);}
-      default -> throw new XMLException("not a simulation type", SimulationModel.DATA_FIELDS.get(0));
-    }
+    return results;
   }
 
   // get root element of an XML file
