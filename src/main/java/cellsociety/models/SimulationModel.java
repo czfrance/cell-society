@@ -117,10 +117,23 @@ public class SimulationModel {
    */
   public int getIteration() {return iteration;}
 
+  /**
+   * Getter method
+   * @return the speed at which the simulation is operating at
+   */
   public int getSpeed() {return simulationSpeed;}
 
+  /**
+   * Setter method
+   * @param newSpeed, the new speed the simulation should operate at
+   */
   public void setSpeed(int newSpeed) {simulationSpeed = newSpeed;}
+
+  /**
+   * Handles user input such as mouseclicks and button presses
+   */
   public void HandleKeyInput() {
     //need to implement within extended classes
   }
+
 }
