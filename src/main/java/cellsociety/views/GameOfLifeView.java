@@ -4,6 +4,8 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.LifeCell;
 import cellsociety.models.*;
 import cellsociety.view_cells.*;
+import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,13 @@ public class GameOfLifeView extends SimulationView {
 
   public GameOfLifeView(SimulationModel simModel) {
     super(simModel);
+  }
+
+  @Override
+  protected void addTitle() {
+    Text t = new Text();
+    t.setText("Game of Life");
+    root.getChildren().add(t);
   }
 
   @Override
