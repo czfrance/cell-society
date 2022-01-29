@@ -51,17 +51,6 @@ public class GameOfLifeModel extends SimulationModel {
     //myGrid = newGrid;
   }
 
-//  protected void createGrid() {
-//    myGrid = new ArrayList<>();
-//    for (int i = 0; i < HEIGHT; i++) {
-//      ArrayList<LifeCell> cellRow = new ArrayList<>();
-//      for (int j = 0; j < WIDTH; j++) {
-//        cellRow.add(new LifeCell(i * (int) CELL_SIZE, j * (int) CELL_SIZE, CELL_SIZE, "" + DICE.nextInt(2)));
-//      }
-//      myGrid.add(cellRow);
-//    }
-//  }
-
   @Override
   protected void createGrid() {
     myGrid.add(new ArrayList<>());

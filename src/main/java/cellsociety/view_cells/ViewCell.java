@@ -15,10 +15,14 @@ public class ViewCell extends Rectangle {
 
   public ViewCell(int x, int y, double size, int initState) {
     super(x * size, y * size, size, size);
-    this.setFill(Color.BLACK);
+    setFill(Color.GRAY);
     COLUMN = x;
     ROW = y;
 
     myState = initState;
+  }
+
+  public void updateState(int newState) {
+    myState = newState;
   }
 }

@@ -13,14 +13,30 @@ public class GameOfLifeView extends SimulationView {
     super(simModel);
   }
 
+  @Override
   protected void makeGrid() {
     List<List<Cell>> cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
       grid.add(new ArrayList<>());
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int c = cellGrid.get(row).get(cell).getMyState();
-        switch (c) {
-          case 0, 1 -> {grid.get(row).add(new LifeViewCell(cell, row, cellSize, c));}
+        int state = cellGrid.get(row).get(cell).getMyState();
+        switch (state) {
+          case 0, 1 -> {grid.get(row).add(new LifeViewCell(cell, row, cellSize, state));}
+          default -> {}
+        }
+      }
+    }
+  }
+
+  @Override
+  protected void updateGrid() {
+    List<List<Cell>> cellGrid = model.getGrid();
+    for (int row = 0; row < cellGrid.size(); row++) {
+      grid.add(new ArrayList<>());
+      for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
+        int state = cellGrid.get(row).get(cell).getMyState();
+        switch (state) {
+          case 0, 1 -> {grid.get(row).get(cell).updateState(state);}
           default -> {}
         }
       }

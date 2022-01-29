@@ -41,27 +41,7 @@ public class SimulationModel {
   }
 
   public void updateGrid() {
-
   }
-
-//  protected void createGrid() {
-//    myGrid.add(new ArrayList<Cell>());
-//    int rowNum = 0;
-//    for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
-//      char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
-//      switch (c) {
-//        case '.' -> {myGrid.add(new ArrayList<Cell>()); rowNum++;}
-//        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
-//        default -> {}
-//
-//      }
-//      switch (cellGrid.get(row).get(cell)) {
-//        case 0 -> {grid.get(row).add(new EmptyCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
-//        case 1 -> {grid.get(row).add(new LifeCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
-//        default -> {}
-//      }
-//    }
-//  }
 
   protected void createGrid() {
   }

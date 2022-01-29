@@ -16,6 +16,12 @@ public class LifeViewCell extends ViewCell {
         )
     );
 
-    this.setFill(states.get(initState));
+    setFill(states.get(initState));
+  }
+
+  @Override
+  public void updateState(int newState) {
+    super.updateState(newState);
+    setFill(states.get(myState));
   }
 }

@@ -44,7 +44,6 @@ public abstract class Cell { // extends Rectangle {
   }
 
   public void nextState() {
-
   }
 
   /**

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 
 public class SimulationView {
 
@@ -26,22 +27,14 @@ public class SimulationView {
     addGridToRoot();
 
     Scene scene = new Scene(root, width, height);
+    scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
 
   protected void makeGrid() {
-//    List<List<Cell>> cellGrid = model.getGrid();
-//    for (int row = 0; row < cellGrid.size(); row++) {
-//      grid.add(new ArrayList<Cell>());
-//      for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-//        switch (cellGrid.get(row).get(cell)) {
-//          case 0 -> {grid.get(row).add(new LifeViewCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
-//          case 1 -> {grid.get(row).add(new LifeCell(cell, row, cellSize, Integer.toString(cellGrid.get(row).get(cell))));}
-//          default -> {}
-//        }
-//      }
-//    }
   }
+
+  protected void updateGrid() {}
 
   private void addGridToRoot() {
     for (List<ViewCell> row : grid) {
@@ -54,14 +47,23 @@ public class SimulationView {
   private void initUI() {
 
   }
-  private void update() {
-
-  }
+//  private void update() {
+//
+//  }
 
   private Node initButtons() {
     return null;
   }
 
-
+  private void handleKeyInput(KeyCode code) {
+    switch (code) {
+      case ENTER -> {
+        model.updateGrid();
+        updateGrid();
+      }
+      default -> {
+      }
+    }
+  }
 
 }
