@@ -9,35 +9,6 @@ public class Cell4Neighbors extends Cell {
     super(x, y, initState);
   }
 
-//  @Override
-//  public void initNeighbors(int width, int height, List<List<Cell>> grid) {
-//    int corner = isCorner(width, height);
-//    int edge = isEdge(width, height);
-//    if (corner != -1) {
-//      myNeighbors = cornerNeighbors(corner, grid);
-//    } else if (edge != -1) {
-//      myNeighbors = edgeNeighbors(edge, grid);
-//    } else {
-//      myNeighbors = centerNeighbors(grid);
-//    }
-//  }
-
-//  @Override
-//  protected List<Cell> edgeNeighbors(int code, List<List<Cell>> grid) {
-//    switch (code) {
-//      case TOP_EDGE:
-//        return loop(0, 2, -1, 2, grid);
-//      case BOTTOM_EDGE:
-//        return loop(-1, 1, -1, 2, grid);
-//      case RIGHT_EDGE:
-//        return loop(-1, 2, -1, 1, grid);
-//      case LEFT_EDGE:
-//        return loop(-1, 2, 0, 2, grid);
-//      default:
-//        System.out.println("NOT AN EDGE");
-//        return null;
-//    }
-//  }
   @Override
   protected List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, List<List<Cell>> grid) {
     List<Cell> neighbors = new ArrayList<>();
@@ -60,23 +31,19 @@ public class Cell4Neighbors extends Cell {
 
     switch (code) {
       case TOP_LEFT:
-        //neighbors.add(grid.get(ROW + 1).get(COLUMN + 1));
         neighbors.add(grid.get(ROW).get(COLUMN + 1));
         neighbors.add(grid.get(ROW + 1).get(COLUMN));
         break;
       case TOP_RIGHT:
         neighbors.add(grid.get(ROW + 1).get(COLUMN));
-        //neighbors.add(grid.get(ROW + 1).get(COLUMN - 1));
         neighbors.add(grid.get(ROW).get(COLUMN - 1));
         break;
 
       case BOTTOM_LEFT:
-        //neighbors.add(grid.get(ROW - 1).get(COLUMN + 1));
         neighbors.add(grid.get(ROW - 1).get(COLUMN));
         neighbors.add(grid.get(ROW).get(COLUMN + 1));
         break;
       case BOTTOM_RIGHT:
-        //neighbors.add(grid.get(ROW - 1).get(COLUMN - 1));
         neighbors.add(grid.get(ROW).get(COLUMN - 1));
         neighbors.add(grid.get(ROW - 1).get(COLUMN));
         break;

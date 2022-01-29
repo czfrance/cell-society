@@ -1,10 +1,8 @@
 package cellsociety.cells;
 
 import java.util.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public abstract class Cell { // extends Rectangle {
+public abstract class Cell {
 
   protected final int COLUMN;
   protected final int ROW;
@@ -34,12 +32,8 @@ public abstract class Cell { // extends Rectangle {
     return myState;
   }
 
-  // FIXME: ADD THIS BACK IN ONCE CELL SUBCLASS GETNEIGHBORS() METHODS ARE WRITTEN IN
-  //    (COMMENTED IT OUT BC I DIDNT HAVE TIME TO WRITE LMAO)
-  //public abstract ArrayList<Cell> getNeighbors();
 
-
-  protected List<Cell> getMyNeighbors() {
+  public List<Cell> getMyNeighbors() {
     return myNeighbors;
   }
 
