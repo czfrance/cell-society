@@ -1,6 +1,6 @@
 package cellsociety.cells;
 
-public class FishCell extends Cell4Neighbors {
+public class FishCell extends Cell {
 
   public FishCell(int x, int y, int initState) {
     super(x, y, initState);
