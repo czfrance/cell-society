@@ -86,4 +86,7 @@ public abstract class Cell extends Rectangle {
     return -1;
   }
 
+  public String getMyState() {
+    return myState;
+  }
 }
