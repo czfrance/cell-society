@@ -2,7 +2,7 @@ package cellsociety.cells;
 
 import java.util.*;
 
-public class LifeCell extends Cell8Neighbors {
+public class LifeCell extends Cell {
 
   public LifeCell(int x, int y, int initState) {
     super(x, y, initState);
