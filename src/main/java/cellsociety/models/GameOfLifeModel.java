@@ -7,14 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
-
-  //private ArrayList<ArrayList<LifeCell>> myGrid;
-  //private Random DICE = new Random();
+  
 
   public GameOfLifeModel(Map<String, String> dataValues) {
     super(dataValues);
     simType = "GameOfLife";
-    //createGrid();
     initGrid();
   }
 
@@ -23,32 +20,12 @@ public class GameOfLifeModel extends SimulationModel {
   }
 
 
-//  public void updateGrid() {
-//    ArrayList<ArrayList<LifeCell>> newGrid = new ArrayList<>();
-//    for (ArrayList<LifeCell> row : myGrid) {
-//      ArrayList<LifeCell> newRow = new ArrayList<>();
-//      for (LifeCell cell : row) {
-//        cell.nextState();
-//        newRow.add(cell);
-//      }
-//      newGrid.add(newRow);
-//    }
-//
-//    myGrid = newGrid;
-//  }
-
   public void updateGrid() {
-    //ArrayList<ArrayList<LifeCell>> newGrid = new ArrayList<>();
-    for (int row = 0; row < myGrid.size(); row++) { //ArrayList<LifeCell> row : myGrid) {
-      //ArrayList<LifeCell> newRow = new ArrayList<>();
-      for (int cell = 0; cell < myGrid.get(row).size(); cell++) { //LifeCell cell : row) {
+    for (int row = 0; row < myGrid.size(); row++) {
+      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
         myGrid.get(row).get(cell).nextState();
-        //newRow.add(cell);
       }
-      //newGrid.add(newRow);
     }
-
-    //myGrid = newGrid;
   }
 
   @Override
