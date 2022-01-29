@@ -23,23 +23,27 @@ public class LifeCell extends Cell{
   }
 
   private ArrayList<Cell> edgeNeighbors(int code, ArrayList<ArrayList<Cell>> grid) {
-    ArrayList<Cell> neighbors = new ArrayList<>();
-
     switch (code) {
       case TOP_EDGE:
-
-        break;
+        return loop(0, 2, -1, 2, grid);
       case BOTTOM_EDGE:
-
-        break;
+        return loop(-1, 1, -1, 2, grid);
       case RIGHT_EDGE:
-
-        break;
+        return loop(-1, 2, -1, 1, grid);
       case LEFT_EDGE:
-
-        break;
+        return loop(-1, 2, 0, 2, grid);
       default:
         System.out.println("NOT AN EDGE");
+        return null;
+    }
+  }
+
+  private ArrayList<Cell> loop(int outerStart, int outerEnd, int innerStart, int innerEnd, ArrayList<ArrayList<Cell>> grid) {
+    ArrayList<Cell> neighbors = new ArrayList<>();
+    for (;outerStart < outerEnd; outerStart++) {
+      for (;innerStart < innerEnd; outerStart++) {
+        neighbors.add(grid.get(ROW + outerStart).get(COLUMN + innerStart));
+      }
     }
     return neighbors;
   }
@@ -50,6 +54,7 @@ public class LifeCell extends Cell{
     switch (code) {
       case TOP_LEFT:
 
+        neighbors.add(grid.get(ROW + 1).get(COLUMN + 1));
         break;
       case TOP_RIGHT:
 
