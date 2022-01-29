@@ -21,11 +21,13 @@ public class SimulationModel {
 
   protected List<List<Cell>> myGrid = new ArrayList<>();
 
-  private final int WIDTH;
-  private final int HEIGHT;
+  public final int WIDTH;
+  public final int HEIGHT;
 
   private int iteration;
   private int simulationSpeed;
+
+  public final double CELL_SIZE = 10;
 
   public SimulationModel(Map<String, String> dataValues) {
     simInfo = dataValues;
@@ -52,21 +54,22 @@ public class SimulationModel {
   }
 
   protected void createGrid() {
-    rawGrid.add(new ArrayList<Integer>());
+    myGrid.add(new ArrayList<Cell>());
     int rowNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
-        case '.' -> {rawGrid.add(new ArrayList<Integer>()); rowNum++;}
-        case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> rawGrid.get(rowNum).add(Character.getNumericValue(c));
+        case '.' -> {myGrid.add(new ArrayList<Cell>()); rowNum++;}
+        //need to fix this
+        //case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
         default -> {}
       }
     }
   }
 
-  public List<List<Integer>> getGrid() {
-    return rawGrid;
-  }
+//  public List<List<Integer>> getGrid() {
+//    return myGrid;
+//  }
 
   public int[] getGridSize() {
     return new int[] {Integer.parseInt(simInfo.get("width")), Integer.parseInt(simInfo.get("height"))};
@@ -76,7 +79,7 @@ public class SimulationModel {
    * Prints the current grid
    */
   public void printGrid() {
-    for (List l : rawGrid) {
+    for (List l : myGrid) {
       for (Object i : l) {
         System.out.print(i);
       }
