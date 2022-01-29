@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="GameOfLife">
+  <simulationType>GameOfLife</simulationType>
+  <title>Game of Life: Still Block</title>
+  <author>Conway</author>
+  <description>A single 2x2 block that does not change from generation to generation</description>
+  <width>6</width>
+  <height>6</height>
+  <config>
+    000000.
+    011000.
+    011000.
+    000110.
+    000110.
+    000000
+  </config>
+</data>

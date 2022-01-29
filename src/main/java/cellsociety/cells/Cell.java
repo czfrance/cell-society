@@ -29,11 +29,6 @@ public abstract class Cell {
     myState = initState;
   }
 
-//  public int getState() {
-//    return myState;
-//  }
-
-
   public List<Cell> getMyNeighbors() {
     return myNeighbors;
   }
@@ -172,7 +167,7 @@ public abstract class Cell {
 
   @Override
   public String toString() {
-    return String.format("State %s, Neighbors %d, numNeighborsAlive %d", myState, myNeighbors.size(), numAlive());
+    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);
   }
   public boolean isAlive() {return myState == 1;}
   public int numAlive() {
@@ -186,24 +181,3 @@ public abstract class Cell {
   public void update() {}
 
 }
-
-
-/*
-
-State 1, Neighbors 3, numNeighborsAlive 3
-State 1, Neighbors 5, numNeighborsAlive 3
-State 0, Neighbors 5, numNeighborsAlive 2
-State 0, Neighbors 3, numNeighborsAlive 0
-State 1, Neighbors 5, numNeighborsAlive 3
-State 0, Neighbors 8, numNeighborsAlive 4
-State 1, Neighbors 8, numNeighborsAlive 3
-State 1, Neighbors 5, numNeighborsAlive 3
-State 0, Neighbors 5, numNeighborsAlive 1
-State 0, Neighbors 8, numNeighborsAlive 4
-State 0, Neighbors 8, numNeighborsAlive 5
-State 0, Neighbors 5, numNeighborsAlive 4
-State 0, Neighbors 3, numNeighborsAlive 0
-State 0, Neighbors 5, numNeighborsAlive 1
-State 0, Neighbors 5, numNeighborsAlive 1
-State 0, Neighbors 3, numNeighborsAlive 0
- */

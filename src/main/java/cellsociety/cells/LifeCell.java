@@ -1,10 +1,7 @@
 package cellsociety.cells;
 
-import java.util.*;
-
 public class LifeCell extends Cell {
 
-  //FOR GAME OF LIFE
   public LifeCell(int x, int y, int initState) {
     super(x, y, initState);
   }
@@ -21,11 +18,9 @@ public class LifeCell extends Cell {
 
   private int numNeighborsAlive() {
     int numAlive = 0;
-    for (int c = 0; c < myNeighbors.size(); c++) {
-      LifeCell cell = (LifeCell) myNeighbors.get(c);
-      if (cell.isAlive()) {
-        numAlive++;
-      }
+    for (Cell myNeighbor : myNeighbors) {
+      LifeCell cell = (LifeCell) myNeighbor;
+      if (cell.isAlive()) numAlive++;
     }
     return numAlive;
   }

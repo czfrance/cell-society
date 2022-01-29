@@ -42,7 +42,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class Main extends Application {
 
   // useful names for constant values used
-  public static final String TITLE = "Example JavaFX Animation";
+  public static final String TITLE = "Cell Society";
   public static final int SIZE = 700;
 
   // kind of data files to look for

@@ -33,20 +33,14 @@ public class SimulationModel {
     initGrid();
   }
 
-  private void init() {
-
-  }
-
-  private void step() {
-
-  }
-
   public void updateGrid() {
+
     for (List<Cell> row : myGrid) {
       for (Cell cell : row) {
         cell.nextState();
       }
     }
+
     for (List<Cell> row : myGrid) {
       for (Cell cell : row) {
         cell.update();
