@@ -4,6 +4,7 @@ import java.util.*;
 
 public class LifeCell extends Cell {
 
+  //FOR GAME OF LIFE
   public LifeCell(int x, int y, int initState) {
     super(x, y, initState);
   }

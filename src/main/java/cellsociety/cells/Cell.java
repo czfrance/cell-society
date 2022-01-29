@@ -28,9 +28,9 @@ public abstract class Cell {
     myState = initState;
   }
 
-  public int getState() {
-    return myState;
-  }
+//  public int getState() {
+//    return myState;
+//  }
 
 
   public List<Cell> getMyNeighbors() {
