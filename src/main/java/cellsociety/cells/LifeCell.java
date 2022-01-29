@@ -13,8 +13,10 @@ public class LifeCell extends Cell {
   public void nextState() {
     int numAlive = numNeighborsAlive();
 
-    if (numAlive == 2 || numAlive == 3) myState = 1;
-    else myState = 0;
+    if (numAlive == 2 && isAlive()) nextState = 1;
+    else if (numAlive == 3) nextState = 1;
+    else nextState = 0;
+
   }
 
   private int numNeighborsAlive() {
@@ -30,5 +32,8 @@ public class LifeCell extends Cell {
 
   public boolean isAlive() {
     return myState == 1;
+  }
+  public void update() {
+    myState = nextState;
   }
 }

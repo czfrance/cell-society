@@ -42,12 +42,18 @@ public class SimulationModel {
   }
 
   public void updateGrid() {
-    for (int row = 0; row < myGrid.size(); row++) {
-      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-        myGrid.get(row).get(cell).nextState();
+    for (List<Cell> row : myGrid) {
+      for (Cell cell : row) {
+        cell.nextState();
+      }
+    }
+    for (List<Cell> row : myGrid) {
+      for (Cell cell : row) {
+        cell.update();
       }
     }
   }
+
 
   protected void createGrid() {
   }
