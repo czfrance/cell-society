@@ -19,9 +19,8 @@ public class SimulationModel {
   public final String HEIGHT_INFO = "height";
   public final String WIDTH_INFO = "width";
 
-  protected List<List<Integer>> rawGrid = new ArrayList<>();
+  protected List<List<Cell>> myGrid = new ArrayList<>();
 
-  //private Cell[][] myGrid;
   private final int WIDTH;
   private final int HEIGHT;
 
@@ -119,10 +118,23 @@ public class SimulationModel {
    */
   public int getIteration() {return iteration;}
 
+  /**
+   * Getter method
+   * @return the speed at which the simulation is operating at
+   */
   public int getSpeed() {return simulationSpeed;}
 
+  /**
+   * Setter method
+   * @param newSpeed, the new speed the simulation should operate at
+   */
   public void setSpeed(int newSpeed) {simulationSpeed = newSpeed;}
+
+  /**
+   * Handles user input such as mouseclicks and button presses
+   */
   public void HandleKeyInput() {
     //need to implement within extended classes
   }
+
 }
