@@ -4,7 +4,7 @@ import java.util.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Cell extends Rectangle {
+public abstract class Cell { // extends Rectangle {
 
   protected final int COLUMN;
   protected final int ROW;
@@ -19,20 +19,18 @@ public abstract class Cell extends Rectangle {
   public final int TOP_EDGE = 3;
   public final int BOTTOM_EDGE = 4;
 
-  private String myState;
+  protected int myState;
 
   protected ArrayList<Cell> myNeighbors;
 
-  public Cell(int x, int y, double size, String initState) {
-    super(x * size, y * size, size, size);
-    this.setFill(Color.BLACK);
+  public Cell(int x, int y, int initState) {
     COLUMN = x;
     ROW = y;
 
     myState = initState;
   }
 
-  public String getState() {
+  public int getState() {
     return myState;
   }
 
@@ -40,12 +38,13 @@ public abstract class Cell extends Rectangle {
   //    (COMMENTED IT OUT BC I DIDNT HAVE TIME TO WRITE LMAO)
   //public abstract ArrayList<Cell> getNeighbors();
 
-  public void setColor(Color c) {
-    this.setFill(c);
-  }
 
   protected ArrayList<Cell> getMyNeighbors() {
     return myNeighbors;
+  }
+
+  public void nextState() {
+
   }
 
   /**
@@ -61,9 +60,9 @@ public abstract class Cell extends Rectangle {
    */
   public int isEdge(int width, int height) {
     if (COLUMN == 0) return LEFT_EDGE;
-    if (COLUMN == width) return RIGHT_EDGE;
+    if (COLUMN == width-1) return RIGHT_EDGE;
     if (ROW == 0) return TOP_EDGE;
-    if (ROW == height) return BOTTOM_EDGE;
+    if (ROW == height-1) return BOTTOM_EDGE;
     return -1;
   }
 
@@ -80,13 +79,17 @@ public abstract class Cell extends Rectangle {
    */
   public int isCorner(int width, int height) {
     if (COLUMN == 0 && ROW == 0) return TOP_LEFT;
-    if (COLUMN == 0 && ROW == height) return BOTTOM_LEFT;
-    if (COLUMN == width && ROW == 0) return TOP_RIGHT;
-    if (COLUMN == width && ROW == height) return BOTTOM_RIGHT;
+    if (COLUMN == 0 && ROW == height-1) return BOTTOM_LEFT;
+    if (COLUMN == width-1 && ROW == 0) return TOP_RIGHT;
+    if (COLUMN == width-1 && ROW == height-1) return BOTTOM_RIGHT;
     return -1;
   }
 
-  public String getMyState() {
+  public int getMyState() {
     return myState;
+  }
+
+  public void initNeighbors(int width, int height, List<List<Cell>> grid) {
+
   }
 }
