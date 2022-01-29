@@ -28,8 +28,9 @@ public class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
-
+    // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
     createGrid();
+    initGrid();
   }
 
   private void init() {
@@ -41,6 +42,11 @@ public class SimulationModel {
   }
 
   public void updateGrid() {
+    for (int row = 0; row < myGrid.size(); row++) {
+      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
+        myGrid.get(row).get(cell).nextState();
+      }
+    }
   }
 
   protected void createGrid() {
@@ -137,4 +143,11 @@ public class SimulationModel {
     //need to implement within extended classes
   }
 
+  private void initGrid() {
+    for (List<Cell> l : myGrid) {
+      for (Cell c : l) {
+        c.initNeighbors(WIDTH, HEIGHT, myGrid);
+      }
+    }
+  }
 }
