@@ -1,10 +1,8 @@
 package cellsociety.cells;
 
 import java.util.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public abstract class Cell { // extends Rectangle {
+public abstract class Cell {
 
   protected final int COLUMN;
   protected final int ROW;
@@ -21,7 +19,7 @@ public abstract class Cell { // extends Rectangle {
 
   protected int myState;
 
-  protected ArrayList<Cell> myNeighbors;
+  protected List<Cell> myNeighbors;
 
   public Cell(int x, int y, int initState) {
     COLUMN = x;
@@ -34,12 +32,8 @@ public abstract class Cell { // extends Rectangle {
     return myState;
   }
 
-  // FIXME: ADD THIS BACK IN ONCE CELL SUBCLASS GETNEIGHBORS() METHODS ARE WRITTEN IN
-  //    (COMMENTED IT OUT BC I DIDNT HAVE TIME TO WRITE LMAO)
-  //public abstract ArrayList<Cell> getNeighbors();
 
-
-  protected ArrayList<Cell> getMyNeighbors() {
+  public List<Cell> getMyNeighbors() {
     return myNeighbors;
   }
 
@@ -89,6 +83,37 @@ public abstract class Cell { // extends Rectangle {
   }
 
   public void initNeighbors(int width, int height, List<List<Cell>> grid) {
-
+    int corner = isCorner(width, height);
+    int edge = isEdge(width, height);
+    if (corner != -1) {
+      myNeighbors = cornerNeighbors(corner, grid);
+    } else if (edge != -1) {
+      myNeighbors = edgeNeighbors(edge, grid);
+    } else {
+      myNeighbors = centerNeighbors(grid);
+    }
   }
+
+  private List<Cell> edgeNeighbors(int code, List<List<Cell>> grid) {
+    switch (code) {
+      case TOP_EDGE:
+        return findEdgeNeighbors(0, 2, -1, 2, grid);
+      case BOTTOM_EDGE:
+        return findEdgeNeighbors(-1, 1, -1, 2, grid);
+      case RIGHT_EDGE:
+        return findEdgeNeighbors(-1, 2, -1, 1, grid);
+      case LEFT_EDGE:
+        return findEdgeNeighbors(-1, 2, 0, 2, grid);
+      default:
+        System.out.println("NOT AN EDGE");
+        return null;
+    }
+  }
+
+  protected abstract List<Cell> cornerNeighbors(int code, List<List<Cell>> grid);
+
+  protected abstract List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, List<List<Cell>> grid);
+
+  protected abstract List<Cell> centerNeighbors(List<List<Cell>> grid);
+
 }
