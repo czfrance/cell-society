@@ -3,6 +3,7 @@ package cellsociety.views;
 import cellsociety.view_cells.ViewCell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import cellsociety.cells.*;
 import cellsociety.models.SimulationModel;
@@ -14,14 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class SimulationView {
 
-  protected Group root = new Group();
+  protected BorderPane root = new BorderPane();
   protected SimulationModel model;
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
@@ -32,6 +33,8 @@ public class SimulationView {
   private Button SpreadingFire;
   private Button WaTor;
 
+  private HBox homeBox;
+
   public SimulationView(SimulationModel simModel) {
     model = simModel;
   }
@@ -40,8 +43,20 @@ public class SimulationView {
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
     FlowPane topPane = new FlowPane();
     topPane.getChildren().add(makePanel());
+    root.setRight(topPane);
+
     makeGrid();
-    addGridToRoot();
+
+//    addGridToRoot();
+
+//    homeBox = new HBox();
+//    addGridToNode(homeBox);
+//    homeBox.setAlignment(Pos.CENTER);
+//    homeBox.setLayoutX(100);
+
+
+    Node tmp = addGridToNode();
+    root.setCenter(tmp);
     addTitle();
 
     Scene scene = new Scene(root, width, height);
@@ -49,21 +64,38 @@ public class SimulationView {
     return scene;
   }
 
-  protected void addTitle() {
-  }
-
   private Node makePanel() {
-    HBox homeBox = new HBox();
+    VBox result = new VBox();
     GameofLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
     SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
     WaTor = makeButton("WaTor", event -> wator());
-    
-    homeBox.getChildren().add(GameofLife);
 
-    return homeBox;
+    result.getChildren().add(GameofLife);
+    result.getChildren().add(Percolation);
+    result.getChildren().add(Segregation);
+    result.getChildren().add(SpreadingFire);
+    result.getChildren().add(WaTor);
+
+    return result;
   }
+
+  protected void addTitle() {
+  }
+
+//  private Node makePanel() {
+//    HBox homeBox = new HBox();
+//    GameofLife = makeButton("Game of Life", event -> GoL());
+//    Percolation = makeButton("Percolation", event -> Percolation());
+//    Segregation = makeButton("Segregation", event -> Segregation());
+//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
+//    WaTor = makeButton("WaTor", event -> wator());
+//
+//    homeBox.getChildren().add(GameofLife);
+//
+//    return homeBox;
+//  }
 
   private Button makeButton (String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
@@ -77,24 +109,18 @@ public class SimulationView {
 
   protected void updateGrid() {}
 
-  private void addGridToRoot() {
+  private Node addGridToNode() {
+    FlowPane temp = new FlowPane();
     for (List<ViewCell> row : grid) {
+      HBox temp2 = new HBox();
       for (ViewCell cell : row) {
-        root.getChildren().add(cell);
+        temp2.getChildren().add(cell);
       }
+      temp.getChildren().add(temp2);
     }
+    return temp;
   }
 
-  private void initUI() {
-
-  }
-//  private void update() {
-//
-//  }
-
-  private Node initButtons() {
-    return null;
-  }
 
   private void Segregation() {
   }

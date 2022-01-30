@@ -4,6 +4,7 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.LifeCell;
 import cellsociety.models.*;
 import cellsociety.view_cells.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ public class GameOfLifeView extends SimulationView {
 
   @Override
   protected void addTitle() {
-    Text t = new Text();
+    Text t = new Text(400, 100, "Game of Life");
+    t.setFont(Font.font ("Verdana", 20));
     t.setText("Game of Life");
-    root.getChildren().add(t);
+    root.setTop(t);
   }
 
   @Override
