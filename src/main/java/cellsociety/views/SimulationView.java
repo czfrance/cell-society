@@ -3,17 +3,12 @@ package cellsociety.views;
 import cellsociety.view_cells.ViewCell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import cellsociety.cells.*;
 import cellsociety.models.SimulationModel;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
@@ -25,7 +20,7 @@ public abstract class SimulationView {
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
 
-  private Button GameofLife;
+  private Button GameOfLife;
   private Button Percolation;
   private Button Segregation;
   private Button SpreadingFire;
@@ -54,13 +49,13 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox(6);
-    GameofLife = makeButton("Game of Life", event -> GoL());
+    GameOfLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
     SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
     WaTor = makeButton("WaTor", event -> wator());
 
-    result.getChildren().add(GameofLife);
+    result.getChildren().add(GameOfLife);
     result.getChildren().add(Percolation);
     result.getChildren().add(Segregation);
     result.getChildren().add(SpreadingFire);
