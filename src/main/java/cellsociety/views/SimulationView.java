@@ -3,6 +3,7 @@ package cellsociety.views;
 import cellsociety.view_cells.ViewCell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import cellsociety.models.SimulationModel;
 import java.util.ArrayList;
@@ -35,16 +36,31 @@ public abstract class SimulationView {
   public Scene makeScene(int width, int height) {
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
     root.setRight(makePanel());
+    root.setBottom(controlAnimation());
 
     makeGrid();
 
     Node tmp = addGridToNode();
+    tmp.setLayoutX(200);
     root.setCenter(tmp);
     addTitle();
 
     Scene scene = new Scene(root, width, height);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
+  }
+  private Node addGridToNode() {
+    VBox temp = new VBox();
+    temp.setAlignment(Pos.CENTER);
+    for (List<ViewCell> row : grid) {
+      HBox temp2 = new HBox();
+      temp2.setAlignment(Pos.CENTER);
+      for (ViewCell cell : row) {
+        temp2.getChildren().add(cell);
+      }
+      temp.getChildren().add(temp2);
+    }
+    return temp;
   }
 
   private Node makePanel() {
@@ -74,22 +90,21 @@ public abstract class SimulationView {
     result.setOnAction(handler);
     return result;
   }
+  private Node controlAnimation() {
+    HBox mediaBar = new HBox();
+    mediaBar.setAlignment(Pos.CENTER);
+
+    final Button playButton  = new Button(">");
+    final Button pauseButton  = new Button("||");
+    mediaBar.getChildren().addAll(playButton, pauseButton);
+    return mediaBar;
+  }
 
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
 
-  private Node addGridToNode() {
-    FlowPane temp = new FlowPane();
-    for (List<ViewCell> row : grid) {
-      HBox temp2 = new HBox();
-      for (ViewCell cell : row) {
-        temp2.getChildren().add(cell);
-      }
-      temp.getChildren().add(temp2);
-    }
-    return temp;
-  }
+
 
 
   private void Segregation() {
