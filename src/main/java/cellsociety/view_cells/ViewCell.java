@@ -16,6 +16,8 @@ public abstract class ViewCell extends Rectangle {
   public ViewCell(int x, int y, double size, int initState) {
     super(x * size, y * size, size, size);
     setFill(Color.GRAY);
+    setStroke(Color.GRAY);
+    setStrokeWidth(2);
     COLUMN = x;
     ROW = y;
 
