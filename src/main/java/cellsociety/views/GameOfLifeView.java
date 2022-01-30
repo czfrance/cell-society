@@ -70,7 +70,6 @@ public class GameOfLifeView extends SimulationView {
   protected void updateGrid() {
     List<List<Cell>> cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
-      grid.add(new ArrayList<>());
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         int state = cellGrid.get(row).get(cell).getMyState();
         switch (state) {

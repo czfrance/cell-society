@@ -41,12 +41,35 @@ public class SimulationModel {
 
   }
 
+//  public void updateGrid() {
+//    for (int row = 0; row < myGrid.size(); row++) {
+//      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
+//        myGrid.get(row).get(cell).nextState();
+//      }
+//    }
+//  }
+
   public void updateGrid() {
+    List<List<Integer>> newStates = getCellNextStates();
     for (int row = 0; row < myGrid.size(); row++) {
       for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-        myGrid.get(row).get(cell).nextState();
+        myGrid.get(row).get(cell).setState(newStates.get(row).get(cell));
       }
     }
+  }
+
+  private List<List<Integer>> getCellNextStates() {
+    List<List<Integer>> newStates = new ArrayList<>();
+    newStates.add(new ArrayList<>());
+
+    for (int row = 0; row < myGrid.size(); row++) {
+      for (Cell c : myGrid.get(row)) {
+        newStates.get(row).add(c.getNextState());
+      }
+      newStates.add(new ArrayList<>());
+    }
+
+    return newStates;
   }
 
   protected void createGrid() {

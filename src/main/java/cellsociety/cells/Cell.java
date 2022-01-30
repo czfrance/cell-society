@@ -37,7 +37,11 @@ public abstract class Cell {
     return myNeighbors;
   }
 
-  public void nextState() {
+//  public void nextState() {
+//  }
+
+  public void setState(int state) {
+    myState = state;
   }
 
   /**
@@ -77,6 +81,8 @@ public abstract class Cell {
     if (COLUMN == width-1 && ROW == height-1) return BOTTOM_RIGHT;
     return -1;
   }
+
+  public int getNextState() { return myState; }
 
   public int getMyState() {
     return myState;
