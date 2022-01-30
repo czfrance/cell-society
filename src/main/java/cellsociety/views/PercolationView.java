@@ -46,6 +46,7 @@ public class PercolationView extends SimulationView {
 
     homebox.getChildren().addAll(t, button);
 
+    root.getChildren().add(homebox);
     root.setTop(homebox);
   }
 

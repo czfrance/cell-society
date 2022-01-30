@@ -92,6 +92,8 @@ public class Main extends Application {
       stage.setTitle(TITLE);
       // add our user interface components to Frame and show it
       stage.setScene(view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height));
+      stage.setHeight(700);
+      stage.setWidth(800);
       stage.show();
       // start somewhere, less typing for debugging
     } catch (XMLException e) {
