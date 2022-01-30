@@ -1,14 +1,15 @@
 package cellsociety.views;
 
+
 import cellsociety.view_cells.ViewCell;
 import javafx.scene.Node;
-import cellsociety.cells.*;
 import cellsociety.models.SimulationModel;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.FlowPane;
 
 public class SimulationView {
 
@@ -65,5 +66,4 @@ public class SimulationView {
       }
     }
   }
-
 }

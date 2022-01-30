@@ -3,9 +3,10 @@ package cellsociety.cells;
 import java.util.*;
 
 public abstract class Cell {
+  protected int ID;
 
-  protected final int COLUMN;
-  protected final int ROW;
+  protected int COLUMN;
+  protected int ROW;
 
   public final int TOP_LEFT = 1;
   public final int TOP_RIGHT = 2;
@@ -167,9 +168,14 @@ public abstract class Cell {
 
   @Override
   public String toString() {
-    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);
+    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d",
+                          myState, myNeighbors == null ? 0 : myNeighbors.size(),
+                          myNeighbors == null ? 0 : numAlive(),
+                          ROW, COLUMN);
   }
+
   public boolean isAlive() {return myState == 1;}
+
   public int numAlive() {
     int counter = 0;
     for (Cell c : myNeighbors) {
@@ -178,6 +184,13 @@ public abstract class Cell {
     return counter;
   }
 
-  public void update() {}
+  public void update() {
 
+  }
+
+  public int getID() {return ID;}
+
+  public int getRow() {return ROW;}
+
+  public int getColumn() {return COLUMN;}
 }

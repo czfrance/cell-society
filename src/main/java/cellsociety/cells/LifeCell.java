@@ -3,7 +3,9 @@ package cellsociety.cells;
 public class LifeCell extends Cell {
 
   public LifeCell(int x, int y, int initState) {
+
     super(x, y, initState);
+
   }
 
   @Override
@@ -25,10 +27,7 @@ public class LifeCell extends Cell {
     return numAlive;
   }
 
-  public boolean isAlive() {
-    return myState == 1;
-  }
-  public void update() {
-    myState = nextState;
-  }
+  public boolean isAlive() {return myState == 1;}
+
+  public void update() {myState = nextState;}
 }

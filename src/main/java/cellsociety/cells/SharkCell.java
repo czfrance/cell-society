@@ -10,5 +10,7 @@ public class SharkCell extends Cell {
     myHealth = health;
   }
 
+  public void move() {
 
+  }
 }
