@@ -17,10 +17,14 @@ public class PercolatingCell extends Cell {
   @Override
   public int getNextState() {
     for (Cell c : myNeighbors) {
-      if ((c instanceof PercolatingCell) && (c.getMyState() == FILLED) || myState == FILLED) {
+      if (flowsInFrom(c) || myState == FILLED) {
         return FILLED;
       }
     }
     return EMPTY;
+  }
+
+  private boolean flowsInFrom(Cell c) {
+    return (c instanceof PercolatingCell) && (c.getMyState() == FILLED) && (c.ROW <= this.ROW);
   }
 }

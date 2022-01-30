@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Percolation">
+  <simulationType>Percolation</simulationType>
+  <title>Percolation: Example 3</title>
+  <author>Cynthia France</author>
+  <description>A more complex grid, percolates</description>
+  <width>17</width>
+  <height>17</height>
+  <config>
+    00110001110000100.
+    00010000110000100.
+    00010001010000100.
+    00111100011000100.
+    00110101011100100.
+    01110010001000100.
+    00011000001100100.
+    00010000010010100.
+    00010000010000100.
+    01111100011000100.
+    00111100001000100.
+    00011100001100100.
+    00111000000000100.
+    00010000000011100.
+    00110000000001100.
+    00011000001111100.
+    00001000000011100
+  </config>
+</data>
