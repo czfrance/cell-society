@@ -42,14 +42,14 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class Main extends Application {
 
   // useful names for constant values used
-  public static final String TITLE = "Example JavaFX Animation";
+  public static final String TITLE = "Cell Society";
   public static final int SIZE = 700;
 
   // kind of data files to look for
   public static final String DATA_FILE_EXTENSION = "*.xml";
   // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
   public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_EXTENSION);
-  public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
+  public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
   private static final int GAME_SIZE = 900;
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
