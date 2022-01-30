@@ -10,6 +10,16 @@ public class SegregationView extends SimulationView{
   }
 
   @Override
+  protected String getRules() {
+    return "Rules: ";
+  }
+
+  @Override
+  protected String getName() {
+    return "Segregation";
+  }
+
+  @Override
   protected void addTitle() {
     Text t = new Text();
     t.setText("Segregation");
