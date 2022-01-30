@@ -67,7 +67,7 @@ public class SharkCell extends Cell {
   }
 
   public void reproduction() {
-    
+
   }
 
   private Cell death() {
