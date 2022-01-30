@@ -51,4 +51,9 @@ public class FishCell extends Cell {
   private void reproduction() {
 
   }
+
+  @Override
+  public int getNextState() {
+    return myState;
+  }
 }

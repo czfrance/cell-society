@@ -73,4 +73,9 @@ public class SharkCell extends Cell {
   private Cell death() {
     return new EmptyCell(getColumn(), getRow(), 0);
   }
+
+  @Override
+  public int getNextState() {
+    return myState;
+  }
 }

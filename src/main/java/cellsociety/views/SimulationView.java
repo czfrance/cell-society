@@ -4,30 +4,26 @@ package cellsociety.views;
 import cellsociety.view_cells.ViewCell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import cellsociety.models.SimulationModel;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 import javafx.scene.layout.FlowPane;
 
 import javafx.scene.layout.*;
 
-public class SimulationView {
+public abstract class SimulationView {
 
   protected BorderPane root = new BorderPane();
   protected SimulationModel model;
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
 
-  private Button GameofLife;
+  private Button GameOfLife;
   private Button Percolation;
   private Button Segregation;
   private Button SpreadingFire;
@@ -45,6 +41,7 @@ public class SimulationView {
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
     root.setRight(topPane);
+    root.setRight(makePanel());
 
     makeGrid();
 
@@ -59,13 +56,13 @@ public class SimulationView {
 
   private Node makePanel() {
     HBox result = new HBox();
-    GameofLife = makeButton("Game of Life", event -> GoL());
+    GameOfLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
     SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
     WaTor = makeButton("WaTor", event -> wator());
 
-    result.getChildren().add(GameofLife);
+    result.getChildren().add(GameOfLife);
     result.getChildren().add(Percolation);
     result.getChildren().add(Segregation);
     result.getChildren().add(SpreadingFire);
@@ -76,18 +73,18 @@ public class SimulationView {
 
   protected void addTitle() {
   }
-  
-  private Button makeButton(String label, EventHandler<ActionEvent> handler) {
+
+
+  Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     result.setText(label);
     result.setOnAction(handler);
     return result;
   }
 
-  protected void makeGrid() {
-  }
+  protected abstract void makeGrid();
 
-  protected void updateGrid() {}
+  protected abstract void updateGrid();
 
   private Node addGridToNode() {
     FlowPane temp = new FlowPane();

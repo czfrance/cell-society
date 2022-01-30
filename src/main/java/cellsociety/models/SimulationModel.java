@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SimulationModel {
+public abstract class SimulationModel {
 
   public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
       "description", "width", "height", "config");
@@ -48,9 +48,7 @@ public class SimulationModel {
     }
   }
 
-
-  protected void createGrid() {
-  }
+  protected void createGrid() {}
 
   public List<List<Cell>> getGrid() {
     return myGrid;

@@ -9,4 +9,8 @@ public class EmptyCell extends Cell {
     ID = EMPTY;
   }
 
+  @Override
+  public int getNextState() {
+    return myState;
+  }
 }

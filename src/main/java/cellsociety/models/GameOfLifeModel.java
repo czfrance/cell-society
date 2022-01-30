@@ -12,7 +12,6 @@ public class GameOfLifeModel extends SimulationModel {
     simType = "GameOfLife";
   }
 
-
   @Override
   protected void createGrid() {
     myGrid.add(new ArrayList<>());

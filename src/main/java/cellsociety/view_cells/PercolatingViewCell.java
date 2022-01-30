@@ -4,15 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
-public class LifeViewCell extends ViewCell {
+public class PercolatingViewCell extends ViewCell {
 
-  public LifeViewCell(int x, int y, double size, int initState) {
+  public static final int EMPTY = 0;
+  public static final int FILLED = 1;
+
+  public PercolatingViewCell(int x, int y, double size, int initState) {
     super(x, y, size, initState);
 
     states = new HashMap<>(
         Map.of(
-            0, Color.BLACK,
-            1, Color.LIGHTGREEN
+            EMPTY, Color.WHITE,
+            FILLED, Color.LIGHTBLUE
         )
     );
 

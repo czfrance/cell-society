@@ -38,8 +38,16 @@ public abstract class Cell {
     return myNeighbors;
   }
 
-  public void nextState() {
+  public void nextState() {}
 
+  public void setState(int state) {
+    myState = state;
+  }
+
+  public abstract int getNextState();
+
+  public int getMyState() {
+    return myState;
   }
 
   /**
@@ -78,10 +86,6 @@ public abstract class Cell {
     if (COLUMN == width-1 && ROW == 0) return TOP_RIGHT;
     if (COLUMN == width-1 && ROW == height-1) return BOTTOM_RIGHT;
     return -1;
-  }
-
-  public int getMyState() {
-    return myState;
   }
 
   public void initNeighbors(int width, int height, List<List<Cell>> grid) {
