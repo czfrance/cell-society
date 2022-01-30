@@ -15,4 +15,14 @@ public class SegregationView extends SimulationView{
     t.setText("Segregation");
     root.getChildren().add(t);
   }
+
+  @Override
+  protected void makeGrid() {
+
+  }
+
+  @Override
+  protected void updateGrid() {
+
+  }
 }

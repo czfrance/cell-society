@@ -21,7 +21,7 @@ public class LifeViewCell extends ViewCell {
 
   @Override
   public void updateState(int newState) {
-    super.updateState(newState);
+    myState = newState;
     setFill(states.get(myState));
   }
 }

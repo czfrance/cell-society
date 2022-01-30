@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Percolation">
+  <simulationType>Percolation</simulationType>
+  <title>Percolation: Example 1</title>
+  <author>Cynthia France</author>
+  <description>A random pathway for water to flow</description>
+  <width>4</width>
+  <height>4</height>
+  <config>
+    0010.
+    0010.
+    0010.
+    0010
+  </config>
+</data>

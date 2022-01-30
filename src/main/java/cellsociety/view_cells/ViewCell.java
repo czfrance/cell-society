@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-public class ViewCell extends Rectangle {
+public abstract class ViewCell extends Rectangle {
 
   protected final int COLUMN;
   protected final int ROW;
@@ -22,7 +22,5 @@ public class ViewCell extends Rectangle {
     myState = initState;
   }
 
-  public void updateState(int newState) {
-    myState = newState;
-  }
+  public abstract void updateState(int newState);
 }
