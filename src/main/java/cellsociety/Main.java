@@ -50,6 +50,9 @@ public class Main extends Application {
   // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
   public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_EXTENSION);
   public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
+  private static final int GAME_SIZE = 900;
+  private static final int FRAMES_PER_SECOND = 60;
+  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
 
   /**
