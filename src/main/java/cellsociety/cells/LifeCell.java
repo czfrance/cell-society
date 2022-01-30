@@ -9,7 +9,6 @@ public class LifeCell extends Cell {
 
   //FOR GAME OF LIFE
   public LifeCell(int x, int y, int initState) {
-
     super(x, y, initState);
 
   }
@@ -23,7 +22,6 @@ public class LifeCell extends Cell {
     else {nextState = DEAD; return DEAD;}
   }
 
-
   private int numNeighborsAlive() {
     int numAlive = 0;
     for (Cell myNeighbor : myNeighbors) {
@@ -35,5 +33,7 @@ public class LifeCell extends Cell {
 
   public boolean isAlive() {return myState == 1;}
 
-  public void update() {myState = nextState;}
+  public void update() {
+    myState = nextState;
+  }
 }

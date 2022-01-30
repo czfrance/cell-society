@@ -193,7 +193,7 @@ public abstract class Cell {
   }
 
   public void update() {
-
+    myState = nextState;
   }
 
   public int getID() {return ID;}

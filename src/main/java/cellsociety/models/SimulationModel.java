@@ -37,7 +37,7 @@ public abstract class SimulationModel {
 
     for (List<Cell> row : myGrid) {
       for (Cell cell : row) {
-        cell.nextState();
+        cell.getNextState();
       }
     }
 
