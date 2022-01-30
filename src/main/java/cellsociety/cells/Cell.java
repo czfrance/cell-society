@@ -44,6 +44,12 @@ public abstract class Cell {
     myState = state;
   }
 
+  public abstract int getNextState();
+
+  public int getMyState() {
+    return myState;
+  }
+
   /**
    * This method is unique in the fact that it identifies if the cell is not only an
    * edge piece, but identifies which edge it is on
@@ -80,12 +86,6 @@ public abstract class Cell {
     if (COLUMN == width-1 && ROW == 0) return TOP_RIGHT;
     if (COLUMN == width-1 && ROW == height-1) return BOTTOM_RIGHT;
     return -1;
-  }
-
-  public int getNextState() { return myState; }
-
-  public int getMyState() {
-    return myState;
   }
 
   public void initNeighbors(int width, int height, List<List<Cell>> grid) {
