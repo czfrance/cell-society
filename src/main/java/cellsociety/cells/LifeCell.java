@@ -1,7 +1,5 @@
 package cellsociety.cells;
 
-import java.util.*;
-
 public class LifeCell extends Cell {
 
   public static final int DEAD = 0;
@@ -11,14 +9,6 @@ public class LifeCell extends Cell {
   public LifeCell(int x, int y, int initState) {
     super(x, y, initState);
   }
-
-//  @Override
-//  public void nextState() {
-//    int numAlive = numNeighborsAlive();
-//
-//    if (numAlive == 2 || numAlive == 3) myState = 1;
-//    else myState = 0;
-//  }
 
   @Override
   public int getNextState() {

@@ -28,17 +28,9 @@ public abstract class Cell {
     myState = initState;
   }
 
-//  public int getState() {
-//    return myState;
-//  }
-
-
   public List<Cell> getMyNeighbors() {
     return myNeighbors;
   }
-
-//  public void nextState() {
-//  }
 
   public void setState(int state) {
     myState = state;

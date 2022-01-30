@@ -41,14 +41,6 @@ public abstract class SimulationModel {
 
   }
 
-//  public void updateGrid() {
-//    for (int row = 0; row < myGrid.size(); row++) {
-//      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-//        myGrid.get(row).get(cell).nextState();
-//      }
-//    }
-//  }
-
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
     for (int row = 0; row < myGrid.size(); row++) {
