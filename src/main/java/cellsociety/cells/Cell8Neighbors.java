@@ -10,6 +10,11 @@ public class Cell8Neighbors extends Cell {
     super(x, y, initState);
   }
 
+  @Override
+  public int getNextState() {
+    return myState;
+  }
+
 //  @Override
 //  protected List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, List<List<Cell>> grid) {
 //    List<Cell> neighbors = new ArrayList<>();

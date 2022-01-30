@@ -7,4 +7,9 @@ public class SpreadingFireModel extends SimulationModel {
   public SpreadingFireModel(Map<String, String> dataValues) {
     super(dataValues);
   }
+
+  @Override
+  protected void createGrid() {
+
+  }
 }

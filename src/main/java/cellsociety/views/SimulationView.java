@@ -18,7 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 
-public class SimulationView {
+public abstract class SimulationView {
 
   protected BorderPane root = new BorderPane();
   protected SimulationModel model;
@@ -80,10 +80,9 @@ public class SimulationView {
     return result;
   }
 
-  protected void makeGrid() {
-  }
+  protected abstract void makeGrid();
 
-  protected void updateGrid() {}
+  protected abstract void updateGrid();
 
   private Node addGridToNode() {
     FlowPane temp = new FlowPane();

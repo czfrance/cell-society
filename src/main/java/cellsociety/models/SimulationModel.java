@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SimulationModel {
+public abstract class SimulationModel {
 
   public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
       "description", "width", "height", "config");
@@ -42,15 +42,29 @@ public class SimulationModel {
   }
 
   public void updateGrid() {
+    List<List<Integer>> newStates = getCellNextStates();
     for (int row = 0; row < myGrid.size(); row++) {
       for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-        myGrid.get(row).get(cell).nextState();
+        myGrid.get(row).get(cell).setState(newStates.get(row).get(cell));
       }
     }
   }
 
-  protected void createGrid() {
+  private List<List<Integer>> getCellNextStates() {
+    List<List<Integer>> newStates = new ArrayList<>();
+    newStates.add(new ArrayList<>());
+
+    for (int row = 0; row < myGrid.size(); row++) {
+      for (Cell c : myGrid.get(row)) {
+        newStates.get(row).add(c.getNextState());
+      }
+      newStates.add(new ArrayList<>());
+    }
+
+    return newStates;
   }
+
+  protected abstract void createGrid();
 
   public List<List<Cell>> getGrid() {
     return myGrid;

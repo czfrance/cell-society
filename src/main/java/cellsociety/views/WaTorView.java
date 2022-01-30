@@ -15,4 +15,14 @@ public class WaTorView extends SimulationView{
     t.setText("WaTor");
     root.getChildren().add(t);
   }
+
+  @Override
+  protected void makeGrid() {
+
+  }
+
+  @Override
+  protected void updateGrid() {
+
+  }
 }

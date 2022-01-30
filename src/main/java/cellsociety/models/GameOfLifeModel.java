@@ -12,21 +12,7 @@ public class GameOfLifeModel extends SimulationModel {
   public GameOfLifeModel(Map<String, String> dataValues) {
     super(dataValues);
     simType = "GameOfLife";
-    //initGrid();
   }
-
-//  public void step() {
-//    updateGrid();
-//  }
-
-
-//  public void updateGrid() {
-//    for (int row = 0; row < myGrid.size(); row++) {
-//      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-//        myGrid.get(row).get(cell).nextState();
-//      }
-//    }
-//  }
 
   @Override
   protected void createGrid() {
@@ -44,12 +30,4 @@ public class GameOfLifeModel extends SimulationModel {
       }
     }
   }
-
-//  private void initGrid() {
-//    for (List<Cell> l : myGrid) {
-//      for (Cell c : l) {
-//        c.initNeighbors(WIDTH, HEIGHT, myGrid);
-//      }
-//    }
-//  }
 }

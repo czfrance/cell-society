@@ -1,8 +1,9 @@
 package cellsociety.cells;
 
-import java.util.*;
-
 public class LifeCell extends Cell {
+
+  public static final int DEAD = 0;
+  public static final int ALIVE = 1;
 
   //FOR GAME OF LIFE
   public LifeCell(int x, int y, int initState) {
@@ -10,12 +11,20 @@ public class LifeCell extends Cell {
   }
 
   @Override
-  public void nextState() {
+  public int getNextState() {
     int numAlive = numNeighborsAlive();
 
-    if (numAlive == 2 || numAlive == 3) myState = 1;
-    else myState = 0;
+    if (this.isAlive() && (numAlive == 2 || numAlive == 3)) {
+      return ALIVE;
+    }
+    else if (numAlive == 3) {
+      return ALIVE;
+    }
+    else {
+      return DEAD;
+    }
   }
+
 
   private int numNeighborsAlive() {
     int numAlive = 0;
