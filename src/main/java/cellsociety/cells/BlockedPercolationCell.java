@@ -6,4 +6,9 @@ public class BlockedPercolationCell extends Cell {
   public BlockedPercolationCell(int x, int y, int initState) {
     super(x, y, initState);
   }
+
+  @Override
+  public int getNextState() {
+    return myState;
+  }
 }
