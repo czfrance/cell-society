@@ -8,6 +8,7 @@ public class SegregationModel extends SimulationModel{
     super(dataValues);
   }
 
+
   @Override
   protected void createGrid() {
 

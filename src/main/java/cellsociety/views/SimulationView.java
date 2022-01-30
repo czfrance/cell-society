@@ -10,8 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 
 public abstract class SimulationView {
@@ -29,23 +36,29 @@ public abstract class SimulationView {
 
   private HBox homeBox;
 
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+  public static final String STYLESHEET = "default.css";
+
   public SimulationView(SimulationModel simModel) {
     model = simModel;
   }
 
   public Scene makeScene(int width, int height) {
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
-    root.setRight(makePanel());
+    root.setLeft(makePanel());
     root.setBottom(controlAnimation());
-
     makeGrid();
-
     Node tmp = addGridToNode();
     tmp.setLayoutX(200);
     root.setCenter(tmp);
     addTitle();
 
     Scene scene = new Scene(root, width, height);
+
+//    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
+//    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
+    scene.getStylesheets().add("/default.css");
+//    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
@@ -81,7 +94,35 @@ public abstract class SimulationView {
   }
 
   protected void addTitle() {
+    HBox homebox = new HBox(10);
+    Text t = new Text(getName());
+    t.setFont(Font.font ("Courier New", 25));
+
+    Dialog<String> dialog = new Dialog<String>();
+    dialog.setTitle(getName()+" Rules");
+    ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+    dialog.setContentText(getRules());
+    dialog.getDialogPane().getButtonTypes().add(type);
+    Text txt = new Text("Click the button to show the dialog");
+    Font font = Font.font("Courier New", FontWeight.BOLD, FontPosture.REGULAR, 12);
+    txt.setFont(font);
+    Button button = new Button("Info");
+    button.setOnAction(e -> {
+      dialog.showAndWait();
+    });
+
+
+    homebox.getChildren().addAll(t, button);
+    // will move this to css file
+    homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+            + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
+    homebox.setAlignment(Pos.CENTER);
+    root.setTop(homebox);
   }
+
+  protected abstract String getRules();
+  protected abstract String getName();
 
 
   Button makeButton(String label, EventHandler<ActionEvent> handler) {
