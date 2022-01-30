@@ -76,8 +76,8 @@ public class SimulationView {
 
   protected void addTitle() {
   }
-
-  private Button makeButton (String label, EventHandler<ActionEvent> handler) {
+  
+  private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     result.setText(label);
     result.setOnAction(handler);
@@ -114,7 +114,7 @@ public class SimulationView {
   private void wator() {
   }
 
-  private void GoL() {
+  void GoL() {
   }
   private void handleKeyInput(KeyCode code) {
     switch (code) {
