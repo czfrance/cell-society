@@ -10,7 +10,6 @@ public class GameOfLifeModel extends SimulationModel {
   public GameOfLifeModel(Map<String, String> dataValues) {
     super(dataValues);
     simType = "GameOfLife";
-    //initGrid();
   }
 
 

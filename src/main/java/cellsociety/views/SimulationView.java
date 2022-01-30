@@ -42,30 +42,23 @@ public class SimulationView {
   public Scene makeScene(int width, int height) {
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
     FlowPane topPane = new FlowPane();
-    topPane.getChildren().add(makePanel());
+    Node buttonPanel = makePanel();
+    root.setBottom(buttonPanel);
     root.setRight(topPane);
 
     makeGrid();
-
-//    addGridToRoot();
-
-//    homeBox = new HBox();
-//    addGridToNode(homeBox);
-//    homeBox.setAlignment(Pos.CENTER);
-//    homeBox.setLayoutX(100);
-
 
     Node tmp = addGridToNode();
     root.setCenter(tmp);
     addTitle();
 
-    Scene scene = new Scene(root, width, height);
+    Scene scene = new Scene(root, width, root.getBoundsInParent().getHeight() + 100);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
 
   private Node makePanel() {
-    VBox result = new VBox();
+    HBox result = new HBox();
     GameofLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
@@ -83,19 +76,6 @@ public class SimulationView {
 
   protected void addTitle() {
   }
-
-//  private Node makePanel() {
-//    HBox homeBox = new HBox();
-//    GameofLife = makeButton("Game of Life", event -> GoL());
-//    Percolation = makeButton("Percolation", event -> Percolation());
-//    Segregation = makeButton("Segregation", event -> Segregation());
-//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-//    WaTor = makeButton("WaTor", event -> wator());
-//
-//    homeBox.getChildren().add(GameofLife);
-//
-//    return homeBox;
-//  }
 
   private Button makeButton (String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();

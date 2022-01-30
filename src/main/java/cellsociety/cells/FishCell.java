@@ -5,38 +5,50 @@ import java.util.*;
 
 public class FishCell extends Cell {
 
-  private final int REPRODUCTION_TIMER;
+  private final int INTIAL_REPROTIMER;
+  private int reproductionTimer;
   private final int NUTRITION_VALUE;
   private final Random DICE = new Random();
 
   public FishCell(int x, int y, int initState, int reproductionTimer, int nutritionValue) {
     super(x, y, initState);
 
-    REPRODUCTION_TIMER = reproductionTimer;
+    INTIAL_REPROTIMER = reproductionTimer;
+    this.reproductionTimer = reproductionTimer;
     NUTRITION_VALUE = nutritionValue;
 
+    ID = FISH;
   }
 
   public void move(int width, int height, List<List<Cell>> grid) {
     initNeighbors(width, height, grid);
-    ArrayList<ArrayList<Integer>> potentialMove = getPotentialMove();
-    ArrayList<Integer> selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
+    List<Cell> potentialMove = getPotentialMove();
+    Cell selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
 
-    COLUMN = selectedMove.get(0);
-    ROW = selectedMove.get(1);
+    reproductionTimer--;
+    if(reproductionTimer == 0) {
+      reproduction();
+      reproductionTimer = INTIAL_REPROTIMER;
+    }
+
+    COLUMN = selectedMove.getColumn();
+    ROW = selectedMove.getRow();
+
   }
 
-  private ArrayList<ArrayList<Integer>> getPotentialMove() {
-    ArrayList<ArrayList<Integer>> potentialMove = new ArrayList<>();
+  private List<Cell> getPotentialMove() {
+    List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getID() == 0) {
-        ArrayList<Integer> coords = new ArrayList<>();
-        coords.add(c.getColumn());
-        coords.add(c.getRow());
-        potentialMove.add(coords);
+      if (c.getID() == EMPTY) {
+        potentialMove.add(c);
       }
     }
     return potentialMove;
   }
 
+  public int getNutrition() {return NUTRITION_VALUE;}
+
+  private void reproduction() {
+
+  }
 }

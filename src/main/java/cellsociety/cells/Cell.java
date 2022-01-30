@@ -21,6 +21,10 @@ public abstract class Cell {
   protected int myState;
   protected int nextState;
 
+  public final int EMPTY = 0;
+  public final int FISH = 1;
+  public final int SHARK = 2;
+
   protected List<Cell> myNeighbors;
 
   public Cell(int x, int y, int initState) {
@@ -193,4 +197,8 @@ public abstract class Cell {
   public int getRow() {return ROW;}
 
   public int getColumn() {return COLUMN;}
+
+  protected int getNutrition() {
+    return -1;
+  }
 }

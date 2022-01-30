@@ -6,7 +6,7 @@ public class EmptyCell extends Cell {
 
   public EmptyCell(int x, int y, int initState) {
     super(x, y, initState);
-    ID = 0;
+    ID = EMPTY;
   }
 
 }

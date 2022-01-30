@@ -24,11 +24,15 @@ public class WaTorModel extends SimulationModel {
     switch (c) {
       case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
       case '1' -> {myGrid.get(rowNum).add(new FishCell(colNum, rowNum, 0, 0, 0));colNum++;}
-      case '2' -> {myGrid.get(rowNum).add(new SharkCell(colNum, rowNum, 0, 2));colNum++;}
+      case '2' -> {myGrid.get(rowNum).add(new SharkCell(colNum, rowNum, 0, 2, 5));colNum++;}
       case '3' -> {myGrid.get(rowNum).add(new EmptyCell(colNum, rowNum, 0));colNum++;}
       default -> {}
       }
     }
+  }
+
+  private void clashPrevention() {
+
   }
 }
 
