@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class PercolationModel extends SimulationModel {
 
+  boolean initStateIsSet = false;
+
   public PercolationModel(Map<String, String> dataValues) {
     super(dataValues);
-    initFilledCells();
+    //initFilledCells();
   }
 
   @Override
@@ -30,6 +32,17 @@ public class PercolationModel extends SimulationModel {
         //case '2', '3', '4', '5', '6', '7', '8', '9' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
         default -> {}
       }
+    }
+  }
+
+  @Override
+  public void updateGrid() {
+    if (!initStateIsSet) {
+      initFilledCells();
+      initStateIsSet = true;
+    }
+    else {
+      super.updateGrid();
     }
   }
 
