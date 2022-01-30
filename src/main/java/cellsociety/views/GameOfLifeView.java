@@ -4,16 +4,14 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.LifeCell;
 import cellsociety.models.*;
 import cellsociety.view_cells.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +24,12 @@ public class GameOfLifeView extends SimulationView {
 
   @Override
   protected void addTitle() {
-    HBox homebox = new HBox();
-    Text t = new Text(400, 100, "Game of Life");
+    HBox homebox = new HBox(10);
+    Text t = new Text("Game of Life");
     t.setFont(Font.font ("Verdana", 20));
 
     Dialog<String> dialog = new Dialog<String>();
-    dialog.setTitle("Dialog");
+    dialog.setTitle("Game of Life Rules");
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText("Game of Life Rules");
     dialog.getDialogPane().getButtonTypes().add(type);
@@ -45,12 +43,12 @@ public class GameOfLifeView extends SimulationView {
 
 
     homebox.getChildren().addAll(t, button);
-
+    // will move this to css file
+    homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+            + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
+    homebox.setAlignment(Pos.CENTER);
     root.setTop(homebox);
-  }
-
-  private void GoLinfo() {
-
   }
 
   @Override
