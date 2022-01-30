@@ -96,78 +96,20 @@ public abstract class Cell {
     }
   }
 
-  private List<Cell> edgeNeighbors(int code, List<List<Cell>> grid) {
-    switch (code) {
-      case TOP_EDGE:
-        return findEdgeNeighbors(0, 2, -1, 2, grid);
-      case BOTTOM_EDGE:
-        return findEdgeNeighbors(-1, 1, -1, 2, grid);
-      case RIGHT_EDGE:
-        return findEdgeNeighbors(-1, 2, -1, 1, grid);
-      case LEFT_EDGE:
-        return findEdgeNeighbors(-1, 2, 0, 2, grid);
-      default:
-        System.out.println("NOT AN EDGE");
-        return null;
-    }
-  }
-
-  private List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, List<List<Cell>> grid) {
-    List<Cell> neighbors = new ArrayList<>();
-    int currOut = outerStart;
-    int currIn;
-    for (;currOut < outerEnd; currOut++) {
-      currIn = innerStart;
-      for (;currIn < innerEnd; currIn++) {
-        if (currOut!=0 || currIn!=0) {
-          neighbors.add(grid.get(ROW + currOut).get(COLUMN + currIn));
+  private List<Cell> searchNeighbors(int width, int height, List<List<Cell>> grid) {
+    List<Cell> ret = new ArrayList<Cell>();
+    for (int i = -1; i < -2; i++) {
+      for (int j = -1; j < -2; j++) {
+        if (inBounds(width, height, ROW + i, COLUMN + j)) {
+          ret.add(grid.get(ROW + i).get(COLUMN + j));
         }
       }
     }
-    return neighbors;
+    return ret;
   }
 
-  private List<Cell> cornerNeighbors(int code, List<List<Cell>> grid) {
-    List<Cell> neighbors = new ArrayList<>();
-
-    switch (code) {
-      case TOP_LEFT:
-        neighbors.add(grid.get(ROW + 1).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW + 1).get(COLUMN));
-        break;
-      case TOP_RIGHT:
-        neighbors.add(grid.get(ROW + 1).get(COLUMN));
-        neighbors.add(grid.get(ROW + 1).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW).get(COLUMN - 1));
-        break;
-
-      case BOTTOM_LEFT:
-        neighbors.add(grid.get(ROW - 1).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW - 1).get(COLUMN));
-        neighbors.add(grid.get(ROW).get(COLUMN + 1));
-        break;
-      case BOTTOM_RIGHT:
-        neighbors.add(grid.get(ROW - 1).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW - 1).get(COLUMN));
-        break;
-      default:
-        System.out.println("NOT A CORNER");
-    }
-    return neighbors;
-  }
-
-  private List<Cell> centerNeighbors(List<List<Cell>> grid) {
-    List<Cell> neighbors = new ArrayList<>();
-    for (int i = -1; i < 2; i++) {
-      for (int j = -1; j < 2; j++) {
-        if (i!=0 || j!=0) {
-          neighbors.add(grid.get(ROW + i).get(COLUMN + j));
-        }
-      }
-    }
-    return neighbors;
+  private boolean inBounds(int width, int height, int x, int y) {
+    return (x > 0 && x < width) && (y > 0 && y < height);
   }
 
   @Override

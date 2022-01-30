@@ -76,7 +76,7 @@ public class SimulationView {
 
   protected void addTitle() {
   }
-  
+
   private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     result.setText(label);
