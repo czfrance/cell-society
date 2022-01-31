@@ -31,7 +31,8 @@ public abstract class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
-    SATISFIED = Double.parseDouble((simInfo.get(SATISFIED_INFO)));
+    if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
+    else SATISFIED = 0;
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
     createGrid();
     initGrid();
