@@ -1,20 +1,19 @@
 package cellsociety.views;
 
 
+import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import cellsociety.models.SimulationModel;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
-
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
 
 public abstract class SimulationView {
 
@@ -60,7 +59,7 @@ public abstract class SimulationView {
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
     SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-    WaTor = makeButton("WaTor", event -> wator());
+    WaTor = makeButton("WaTor", event -> Wator());
 
     result.getChildren().add(GameOfLife);
     result.getChildren().add(Percolation);
@@ -108,7 +107,7 @@ public abstract class SimulationView {
   private void SoF() {
   }
 
-  private void wator() {
+  private void Wator() {
   }
 
   void GoL() {

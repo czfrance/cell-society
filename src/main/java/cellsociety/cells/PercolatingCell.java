@@ -23,4 +23,6 @@ public class PercolatingCell extends Cell {
     }
     return EMPTY;
   }
+
+  public Cell death() {return null;}
 }

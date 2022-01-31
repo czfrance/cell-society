@@ -8,14 +8,18 @@ public class SharkCell extends Cell {
   private int reproductionTimer;
   private final int INITIAL_HEALTH;
   private final int INITAL_REPROTIMER;
+  private boolean isDead;
   private Random DICE = new Random();
 
   public SharkCell(int x, int y, int initState, int health, int reproductionTimer) {
+
     super(x, y, initState);
     myHealth = health;
     ID = SHARK;
     INITAL_REPROTIMER = reproductionTimer;
     INITIAL_HEALTH = health;
+    myState = SHARK;
+    isDead = false;
   }
 
   public Cell move(int width, int height, List<List<Cell>> grid) {
@@ -29,6 +33,7 @@ public class SharkCell extends Cell {
       myHealth--;
     } else {
       selectedMove = fishList.get(DICE.nextInt(fishList.size()));
+      selectedMove.death();
       myHealth += selectedMove.getNutrition();
     }
 
@@ -39,6 +44,7 @@ public class SharkCell extends Cell {
       reproduction();
       reproductionTimer = INITAL_REPROTIMER;
     }
+
     COLUMN = selectedMove.getColumn();
     ROW = selectedMove.getRow();
 
@@ -66,16 +72,24 @@ public class SharkCell extends Cell {
     return potentialMove;
   }
 
-  public void reproduction() {
+  public Cell reproduction() {
 
+
+    return new SharkCell(getColumn(), getRow(), SHARK, INITIAL_HEALTH, INITAL_REPROTIMER);
   }
 
-  private Cell death() {
-    return new EmptyCell(getColumn(), getRow(), 0);
+  public Cell death() {
+    isDead = true;
+    return new EmptyCell(getColumn(), getRow(), EMPTY);
   }
 
   @Override
   public int getNextState() {
     return myState;
+  }
+
+  public SharkCell update(int width, int height, List<List<Cell>> grid) {
+    move(width, height, grid);
+    return this;
   }
 }

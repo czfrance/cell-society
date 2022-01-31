@@ -9,6 +9,7 @@ public class FishCell extends Cell {
   private int reproductionTimer;
   private final int NUTRITION_VALUE;
   private final Random DICE = new Random();
+  private boolean isDead;
 
   public FishCell(int x, int y, int initState, int reproductionTimer, int nutritionValue) {
     super(x, y, initState);
@@ -18,6 +19,9 @@ public class FishCell extends Cell {
     NUTRITION_VALUE = nutritionValue;
 
     ID = FISH;
+    myState = FISH;
+
+    isDead = false;
   }
 
   public void move(int width, int height, List<List<Cell>> grid) {
@@ -55,5 +59,17 @@ public class FishCell extends Cell {
   @Override
   public int getNextState() {
     return myState;
+  }
+
+  public Cell death() {
+    isDead = true;
+    return new EmptyCell(getColumn(), getRow(), 0);
+  }
+
+  public boolean isDead() {return isDead;}
+
+  public FishCell update(int width, int height, List<List<Cell>> grid) {
+    move(width, height, grid);
+    return this;
   }
 }

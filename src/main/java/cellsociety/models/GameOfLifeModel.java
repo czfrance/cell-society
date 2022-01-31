@@ -1,6 +1,6 @@
 package cellsociety.models;
 
-import cellsociety.cells.*;
+import cellsociety.cells.LifeCell;
 import java.util.ArrayList;
 import java.util.Map;
 

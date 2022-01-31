@@ -10,4 +10,6 @@ public class BurningCell extends Cell{
   public int getNextState() {
     return myState;
   }
+
+  public Cell death(){return null;}
 }

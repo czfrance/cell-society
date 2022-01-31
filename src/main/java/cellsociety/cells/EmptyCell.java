@@ -13,4 +13,6 @@ public class EmptyCell extends Cell {
   public int getNextState() {
     return myState;
   }
+
+  public Cell death(){return null;}
 }

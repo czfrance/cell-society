@@ -1,6 +1,7 @@
 package cellsociety.cells;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Cell {
   protected int ID;
@@ -40,15 +41,11 @@ public abstract class Cell {
 
   public void nextState() {}
 
-  public void setState(int state) {
-    myState = state;
-  }
+  public void setState(int state) {myState = state;}
 
   public abstract int getNextState();
 
-  public int getMyState() {
-    return myState;
-  }
+  public int getMyState() {return myState;}
 
   /**
    * This method is unique in the fact that it identifies if the cell is not only an
@@ -175,12 +172,7 @@ public abstract class Cell {
   }
 
   @Override
-  public String toString() {
-    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d",
-                          myState, myNeighbors == null ? 0 : myNeighbors.size(),
-                          myNeighbors == null ? 0 : numAlive(),
-                          ROW, COLUMN);
-  }
+  public String toString() {return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);}
 
   public boolean isAlive() {return myState == 1;}
 
@@ -192,9 +184,7 @@ public abstract class Cell {
     return counter;
   }
 
-  public void update() {
-    myState = nextState;
-  }
+  public void update() {}
 
   public int getID() {return ID;}
 
@@ -202,7 +192,12 @@ public abstract class Cell {
 
   public int getColumn() {return COLUMN;}
 
-  protected int getNutrition() {
-    return -1;
-  }
+  protected int getNutrition() {return -1;}
+
+  protected abstract Cell death();
+
+  protected boolean isDead() {return false;}
+
+  public int getState() {return myState;}
+
 }
