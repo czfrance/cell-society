@@ -27,13 +27,6 @@ public class SegregationView extends SimulationView{
   }
 
   @Override
-  protected void addTitle() {
-    Text t = new Text();
-    t.setText("Segregation");
-    root.getChildren().add(t);
-  }
-
-  @Override
   protected void makeGrid() {
     List<List<Cell>> cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
