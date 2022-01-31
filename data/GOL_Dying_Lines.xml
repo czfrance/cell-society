@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="GameOfLife">
+  <simulationType>GameOfLife</simulationType>
+  <title>Game of Life: Dying Lines</title>
+  <author>Conway</author>
+  <description>Two lines of cells on opposite edges, eventually all die off</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    11111.
+    00000.
+    00000.
+    00000.
+    11111
+  </config>
+</data>

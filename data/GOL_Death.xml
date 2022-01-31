@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="GameOfLife">
+  <simulationType>GameOfLife</simulationType>
+  <title>Game of Life: Death</title>
+  <author>Conway</author>
+  <description>Configuration of cells on edges. All die after one period/generation.</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    10101.
+    00000.
+    00000.
+    00000.
+    10101
+  </config>
+</data>
