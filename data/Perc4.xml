@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data simulation="Percolation">
   <simulationType>Percolation</simulationType>
-  <title>Percolation: Example 1</title>
+  <title>Percolation: Example 4</title>
   <author>Cynthia France</author>
-  <description>A straight pathway for water to flow, percolates</description>
+  <description>Top is blocked, does not percolate</description>
   <width>4</width>
   <height>4</height>
   <config>
-    0010.
-    0010.
-    0010.
-    0010
+    0000.
+    1111.
+    1110.
+    0111
   </config>
 </data>

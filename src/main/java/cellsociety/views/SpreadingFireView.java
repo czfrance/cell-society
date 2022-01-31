@@ -11,6 +11,16 @@ public class SpreadingFireView extends SimulationView{
 
 
   @Override
+  protected String getRules() {
+    return "Rules: ";
+  }
+
+  @Override
+  protected String getName() {
+    return "Spreading of Fire";
+  }
+
+  @Override
   protected void addTitle() {
     Text t = new Text();
     t.setText("Spreading of Fire");

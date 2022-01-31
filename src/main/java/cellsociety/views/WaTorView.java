@@ -2,11 +2,13 @@ package cellsociety.views;
 
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
+
 import cellsociety.view_cells.LifeViewCell;
 import cellsociety.view_cells.WaTorViewCell;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.text.Text;
+
 
 public class WaTorView extends SimulationView{
 
@@ -15,10 +17,13 @@ public class WaTorView extends SimulationView{
   }
 
   @Override
-  protected void addTitle() {
-    Text t = new Text();
-    t.setText("WaTor");
-    root.getChildren().add(t);
+  protected String getRules() {
+    return "Rules: ";
+  }
+
+  @Override
+  protected String getName() {
+    return "WaTor";
   }
 
   @Override
