@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: all are burning</title>
+  <author>Cynthia France</author>
+  <description>All trees are burning</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    11111.
+    11111.
+    11111.
+    11111.
+    11111
+  </config>
+  <probCatch>0.5</probCatch>
+</data>

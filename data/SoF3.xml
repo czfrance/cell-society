@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: all will be dead</title>
+  <author>Cynthia France</author>
+  <description>All trees must catch on fire, so everything will eventually be dead</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    00000.
+    00000.
+    00100.
+    00000.
+    00000
+  </config>
+  <probCatch>1</probCatch>
+</data>
