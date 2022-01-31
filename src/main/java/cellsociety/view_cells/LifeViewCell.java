@@ -12,7 +12,7 @@ public class LifeViewCell extends ViewCell {
     states = new HashMap<>(
         Map.of(
             0, Color.BLACK,
-            1, Color.LIGHTGREEN
+            1, Color.WHITE
         )
     );
 

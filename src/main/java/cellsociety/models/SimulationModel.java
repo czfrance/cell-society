@@ -1,6 +1,6 @@
 package cellsociety.models;
 
-import cellsociety.cells.*;
+import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,19 +38,17 @@ public abstract class SimulationModel {
     initGrid();
   }
 
-  private void init() {
-
-  }
-
-  private void step() {
-
-  }
-
   public void updateGrid() {
-    List<List<Integer>> newStates = getCellNextStates();
-    for (int row = 0; row < myGrid.size(); row++) {
-      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-        myGrid.get(row).get(cell).setState(newStates.get(row).get(cell));
+
+    for (List<Cell> row : myGrid) {
+      for (Cell cell : row) {
+        cell.getNextState();
+      }
+    }
+    
+    for (List<Cell> row : myGrid) {
+      for (Cell cell : row) {
+        cell.update();
       }
     }
   }
@@ -63,16 +61,14 @@ public abstract class SimulationModel {
       for (Cell c : myGrid.get(row)) {
         newStates.get(row).add(c.getNextState());
       }
-      newStates.add(new ArrayList<>());
     }
-
-    return newStates;
   }
 
-  protected abstract void createGrid();
+  protected void createGrid() {}
 
   public List<List<Cell>> getGrid() {
-    return myGrid;
+    List<List<Cell>> list = this.myGrid;
+    return this.myGrid;
   }
 
   public int[] getGridSize() {

@@ -1,20 +1,24 @@
 package cellsociety.views;
 
+
+import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import cellsociety.models.SimulationModel;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -46,20 +50,30 @@ public abstract class SimulationView {
 
   public Scene makeScene(int width, int height) {
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
+
+    FlowPane topPane = new FlowPane();
+    Node buttonPanel = makePanel();
+    root.setBottom(buttonPanel);
+    root.setRight(topPane);
+    root.setRight(makePanel());
+
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
+
     makeGrid();
     Node tmp = addGridToNode();
     tmp.setLayoutX(200);
     root.setCenter(tmp);
     addTitle();
 
-    Scene scene = new Scene(root, width, height);
+    Scene scene = new Scene(root, width, root.getBoundsInParent().getHeight() + 100);
+
 
 //    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
 //    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
     scene.getStylesheets().add("/default.css");
 //    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
@@ -78,12 +92,12 @@ public abstract class SimulationView {
   }
 
   private Node makePanel() {
-    VBox result = new VBox(6);
+    HBox result = new HBox();
     GameOfLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
     SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-    WaTor = makeButton("WaTor", event -> wator());
+    WaTor = makeButton("WaTor", event -> Wator());
 
     result.getChildren().add(GameOfLife);
     result.getChildren().add(Percolation);
@@ -160,7 +174,7 @@ public abstract class SimulationView {
   private void SoF() {
   }
 
-  private void wator() {
+  private void Wator() {
   }
 
   void GoL() {
@@ -175,5 +189,4 @@ public abstract class SimulationView {
       }
     }
   }
-
 }

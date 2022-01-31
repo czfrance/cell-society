@@ -1,11 +1,13 @@
 package cellsociety.cells;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Cell {
+  protected int ID;
 
-  protected final int COLUMN;
-  protected final int ROW;
+  protected int COLUMN;
+  protected int ROW;
 
   public final int TOP_LEFT = 1;
   public final int TOP_RIGHT = 2;
@@ -18,6 +20,11 @@ public abstract class Cell {
   public final int BOTTOM_EDGE = 4;
 
   protected int myState;
+  protected int nextState;
+
+  public final int EMPTY = 0;
+  public final int FISH = 1;
+  public final int SHARK = 2;
 
   protected List<Cell> myNeighbors;
 
@@ -32,15 +39,13 @@ public abstract class Cell {
     return myNeighbors;
   }
 
-  public void setState(int state) {
-    myState = state;
-  }
+  public void nextState() {}
+
+  public void setState(int state) {myState = state;}
 
   public abstract int getNextState();
 
-  public int getMyState() {
-    return myState;
-  }
+  public int getMyState() {return myState;}
 
   /**
    * This method is unique in the fact that it identifies if the cell is not only an
@@ -166,4 +171,30 @@ public abstract class Cell {
     return neighbors;
   }
 
+  @Override
+  public String toString() {return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);}
+
+  public boolean isAlive() {return myState == 1;}
+
+  public int numAlive() {
+    int counter = 0;
+    for (Cell c : myNeighbors) {
+      if (c.isAlive()) counter++;
+    }
+    return counter;
+  }
+
+  public void update() {}
+
+  public int getID() {return ID;}
+
+  public int getRow() {return ROW;}
+
+  public int getColumn() {return COLUMN;}
+
+  public int getState() {return myState;}
+
+  protected void death() {}
+
+  protected int getNutrition() {return -1;}
 }

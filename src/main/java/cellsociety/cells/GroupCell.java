@@ -1,8 +1,8 @@
 package cellsociety.cells;
 
-public class BurningCell extends Cell{
+public class GroupCell extends Cell {
 
-  public BurningCell(int x, int y, int initState) {
+  public GroupCell(int x, int y, int initState) {
     super(x, y, initState);
   }
 
@@ -11,5 +11,5 @@ public class BurningCell extends Cell{
     return myState;
   }
 
-  public void death(){}
+  public void death() {}
 }

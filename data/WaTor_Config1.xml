@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="WaTor">
+  <simulationType>WaTor</simulationType>
+  <title>WaTor - config1</title>
+  <author>Conway</author>
+  <description>A single 2x2 block that does not change from generation to generation</description>
+  <width>14</width>
+  <height>9</height>
+  <config>
+    10201201021012.
+    20210210210210.
+    00001201200012.
+    20001020201020.
+    02010000021020.
+    00021020010110.
+    00000001110002.
+    21110000200000.
+    00001010002000
+  </config>
+</data>

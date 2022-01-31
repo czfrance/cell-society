@@ -10,4 +10,7 @@ public class TreeCell extends Cell {
   public int getNextState() {
     return myState;
   }
+
+  public void death() {}
+
 }

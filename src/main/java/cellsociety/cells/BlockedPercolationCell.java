@@ -11,4 +11,6 @@ public class BlockedPercolationCell extends Cell {
   public int getNextState() {
     return myState;
   }
+
+  public void death() {}
 }

@@ -4,12 +4,14 @@
   <title>Game of Life: Still Block</title>
   <author>Conway</author>
   <description>A single 2x2 block that does not change from generation to generation</description>
-  <width>4</width>
-  <height>4</height>
+  <width>6</width>
+  <height>6</height>
   <config>
-    0000.
-    0110.
-    0111.
-    0000
+    000000.
+    011000.
+    011000.
+    000110.
+    000110.
+    000000
   </config>
 </data>

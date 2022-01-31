@@ -1,9 +1,7 @@
 package cellsociety.models;
 
-import java.util.*;
-import cellsociety.cells.*;
+import cellsociety.cells.LifeCell;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
@@ -22,10 +20,9 @@ public class GameOfLifeModel extends SimulationModel {
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
-        case '.' -> {myGrid.add(new ArrayList<>()); rowNum++; colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 0)); colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 1)); colNum++;}
-        //case '2', '3', '4', '5', '6', '7', '8', '9' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
+        case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
+        case '0' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 0));colNum++;}
+        case '1' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 1));colNum++;}
         default -> {}
       }
     }

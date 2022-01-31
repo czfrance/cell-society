@@ -3,13 +3,15 @@
   <simulationType>GameOfLife</simulationType>
   <title>Game of Life: Still Block</title>
   <author>Conway</author>
-  <description>Two 2x2 blocks in which the bottom left and top right corners flash back & forth like a beacon (2 period)</description>
-  <width>4</width>
-  <height>4</height>
+  <description>A single 2x2 block that does not change from generation to generation</description>
+  <width>6</width>
+  <height>6</height>
   <config>
-    1100.
-    1100.
-    0011.
-    0011
+    000000.
+    000000.
+    001110.
+    011100.
+    000000.
+    000000
   </config>
 </data>
