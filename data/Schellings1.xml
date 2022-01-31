@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Segregation">
+  <simulationType>Segregation</simulationType>
+  <title>Schelling's Model of Segregation: Example 1</title>
+  <author>Cynthia France</author>
+  <description>A basic segregation example</description>
+  <width>4</width>
+  <height>4</height>
+  <config>
+    1110.
+    2112.
+    0012.
+    2002
+  </config>
+  <satisfied>0.5</satisfied>
+</data>

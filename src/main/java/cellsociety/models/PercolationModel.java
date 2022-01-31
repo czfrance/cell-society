@@ -12,7 +12,6 @@ public class PercolationModel extends SimulationModel {
 
   public PercolationModel(Map<String, String> dataValues) {
     super(dataValues);
-    //initFilledCells();
   }
 
   @Override

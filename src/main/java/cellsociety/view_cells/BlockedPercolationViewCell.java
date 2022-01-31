@@ -16,10 +16,4 @@ public class BlockedPercolationViewCell extends ViewCell {
     );
     setFill(states.get(initState));
   }
-
-  @Override
-  public void updateState(int newState) {
-    myState = newState;
-    setFill(states.get(myState));
-  }
 }

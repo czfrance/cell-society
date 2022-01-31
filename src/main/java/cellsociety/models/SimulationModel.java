@@ -8,26 +8,31 @@ import java.util.Map;
 public abstract class SimulationModel {
 
   public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
-      "description", "width", "height", "config");
+      "description", "width", "height", "config", "satisfied");
 
   protected Map<String, String> simInfo;
   protected String simType;
 
   public final String HEIGHT_INFO = "height";
   public final String WIDTH_INFO = "width";
+  public final String SATISFIED_INFO = "satisfied";
 
   protected List<List<Cell>> myGrid = new ArrayList<>();
 
   public final int WIDTH;
   public final int HEIGHT;
+  public final double SATISFIED;
 
   private int iteration;
   private int simulationSpeed;
+
 
   public SimulationModel(Map<String, String> dataValues) {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
+    if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
+    else SATISFIED = 0;
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
     createGrid();
     initGrid();
@@ -50,7 +55,7 @@ public abstract class SimulationModel {
     }
   }
 
-  private List<List<Integer>> getCellNextStates() {
+  protected List<List<Integer>> getCellNextStates() {
     List<List<Integer>> newStates = new ArrayList<>();
     newStates.add(new ArrayList<>());
 
