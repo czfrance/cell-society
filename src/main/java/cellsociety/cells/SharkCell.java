@@ -24,17 +24,17 @@ public class SharkCell extends Cell {
 
   public Cell move(int width, int height, List<List<Cell>> grid) {
     initNeighbors(width, height, grid);
-    List<Cell> fishList = searchForFish();
+    List<Cell> fishList = searchForFish(grid);
     Cell selectedMove;
 
     if (fishList.size() == 0) {
-      List<Cell> potentialMove = getPotentialMove();
+      List<Cell> potentialMove = getPotentialMove(grid);
       selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
       myHealth--;
     } else {
       selectedMove = fishList.get(DICE.nextInt(fishList.size()));
       selectedMove.death();
-      myHealth += selectedMove.getNutrition();
+      myHealth += ((WaTorCell) selectedMove).getFish().getNutrition();
     }
 
     if (myHealth == 0) {
@@ -55,20 +55,21 @@ public class SharkCell extends Cell {
     return this;
   }
 
-  private List<Cell> searchForFish() {
+  private List<Cell> searchForFish(List<List<Cell>> grid) {
     List<Cell> fishList = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getID() == FISH) {
+      int k = ((WaTorCell) c).getCurrentState();
+      if (k == FISH && !((WaTorCell) grid.get(c.getRow()).get(c.getColumn())).isBlocked()){
         fishList.add(c);
       }
     }
     return fishList;
   }
 
-  private List<Cell> getPotentialMove() {
+  private List<Cell> getPotentialMove(List<List<Cell>> grid) {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getID() == EMPTY) {
+      if ((((WaTorCell) c).getCurrentState() == EMPTY && !((WaTorCell) grid.get(c.getRow()).get(c.getColumn())).isBlocked())) {
         potentialMove.add(c);
       }
     }
@@ -90,4 +91,6 @@ public class SharkCell extends Cell {
     return myState;
   }
 
+  public boolean isDead() {return isDead;}
+  public int getHealth() {return myHealth;}
 }

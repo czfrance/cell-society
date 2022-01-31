@@ -84,4 +84,5 @@ public class WaTorCell extends Cell{
     return String.format("%d ", currentState);
   }
   public boolean isBlocked() {return blocked;}
+  public void block() {blocked = true;}
 }
