@@ -49,24 +49,27 @@ public abstract class SimulationView {
   }
 
   public Scene makeScene(int width, int height) {
-    cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
-
-    FlowPane topPane = new FlowPane();
-    Node buttonPanel = makePanel();
-    root.setBottom(buttonPanel);
-    root.setRight(topPane);
-    root.setRight(makePanel());
-
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
+    addTitle();
 
+    double topHeight = root.getTop().getBoundsInParent().getMaxY()-root.getTop().getBoundsInParent().getMinY();
+    double botHeight = root.getBottom().getBoundsInParent().getMaxY()-root.getBottom().getBoundsInParent().getMinY();
+    double gridHeight = height - topHeight - botHeight;
+    double leftWidth = root.getLeft().getBoundsInParent().getMaxX()-root.getLeft().getBoundsInParent().getMinX();
+    double rightWidth = 0; //root.getRight().getBoundsInParent().getMaxX()-root.getRight().getBoundsInParent().getMinX();
+    double gridWidth = width - leftWidth - rightWidth;
+
+    System.out.println(width + " " + gridWidth + " " + height + " " + gridHeight);
+
+    cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
     makeGrid();
     Node tmp = addGridToNode();
     tmp.setLayoutX(200);
     root.setCenter(tmp);
-    addTitle();
 
-    Scene scene = new Scene(root, width, root.getBoundsInParent().getHeight() + 100);
+
+    Scene scene = new Scene(root, width, height);
 
 
 //    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
@@ -92,7 +95,7 @@ public abstract class SimulationView {
   }
 
   private Node makePanel() {
-    HBox result = new HBox();
+    VBox result = new VBox();
     GameOfLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
@@ -140,10 +143,8 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  Button makeButton(String property, EventHandler<ActionEvent> handler) {
+  Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
-    String label = property;
-//    String label = model.getMyResources().getString(property);
     result.setText(label);
     result.setOnAction(handler);
     return result;
