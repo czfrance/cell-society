@@ -25,6 +25,7 @@ public class SchellingGroupCell extends Cell {
         }
       }
     }
+    if (totalNeighbors == 0) return myState;
     if (totalSameGroupNeighbors/totalNeighbors < satisfied) return myState*-1;
     return myState;
   }

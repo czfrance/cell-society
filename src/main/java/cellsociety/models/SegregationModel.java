@@ -1,11 +1,12 @@
 package cellsociety.models;
 
-import cellsociety.cells.BlockedPercolationCell;
-import cellsociety.cells.PercolatingCell;
+import cellsociety.cells.*;
 import cellsociety.cells.SchellingGroupCell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import java.util.Random;
 
 public class SegregationModel extends SimulationModel{
 
@@ -35,19 +36,53 @@ public class SegregationModel extends SimulationModel{
     }
   }
 
-//  @Override
-//  public void updateGrid() {
-//    if (!initStateIsSet) {
-//      initFilledCells();
-//      initStateIsSet = true;
-//    }
-//    else {
-//      super.updateGrid();
-//    }
-//  }
+  //FIXME: get the grid of empty cells, and count of how many unhappy cells in each group
+  //  then fill them in in the new grid (randomized locations)
 
-//  private List<List<Integer>> tempVacatedStates getVacatedGrid() {
-//    List<List<Integer>> vacatedCellStates = getCellNextStates();
-//    for (List<>)
-//  }
+  @Override
+  public void updateGrid() {
+    Random rand = new Random();
+    List<Cell> emptyCells = getEmptyCells();
+    for (int i = 0; i < numUnhappy1; i++) {
+      int index = rand.nextInt(emptyCells.size());
+      Cell c = emptyCells.get(index);
+      c.setState(1);
+      emptyCells.remove(index);
+    }
+    for (int i = 0; i < numUnhappy2; i++) {
+      int index = rand.nextInt(emptyCells.size());
+      Cell c = emptyCells.get(index);
+      c.setState(2);
+      emptyCells.remove(index);
+    }
+    numUnhappy1 = 0;
+    numUnhappy2 = 0;
+  }
+
+  private List<Cell> getEmptyCells() {
+    List<Cell> emptyCells = new ArrayList<>();
+    List<List<Integer>> vacatedCellStates = getCellNextStates();
+    for (int row = 0; row < vacatedCellStates.size(); row++) { //<Integer> row : vacatedCellStates) {
+      for (int col = 0; col < vacatedCellStates.get(row).size(); col++) { //: row) {
+        int state = vacatedCellStates.get(row).get(col);
+        if (state == -1) {
+          numUnhappy1++;
+          myGrid.get(row).get(col).setState(0);
+          emptyCells.add(myGrid.get(row).get(col));
+        }
+        else if (state == -2) {
+          numUnhappy2++;
+          myGrid.get(row).get(col).setState(0);
+          emptyCells.add(myGrid.get(row).get(col));
+        }
+        else if (state == 0) {
+          emptyCells.add(myGrid.get(row).get(col));
+        }
+        else {
+          continue;
+        }
+      }
+    }
+    return emptyCells;
+  }
 }
