@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Segregation">
+  <simulationType>Segregation</simulationType>
+  <title>Schelling's Model of Segregation: Example 3</title>
+  <author>Cynthia France</author>
+  <description>A larger segregation example where no cells are happy & most likely won't ever be.</description>
+  <width>17</width>
+  <height>17</height>
+  <config>
+    01201201201201201.
+    12012012012012012.
+    20120120120120120.
+    01201201201201201.
+    12012012012012012.
+    20120120120120120.
+    01201201201201201.
+    12012012012012012.
+    20120120120120120.
+    01201201201201201.
+    12012012012012012.
+    20120120120120120.
+    01201201201201201.
+    12012012012012012.
+    20120120120120120.
+    01201201201201201.
+    12012012012012012.
+  </config>
+  <satisfied>0.9</satisfied>
+</data>
