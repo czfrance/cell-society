@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="WaTor">
+  <simulationType>WaTor</simulationType>
+  <title>WaTor: fish thrive</title>
+  <author>Cynthia France</author>
+  <description>there are only fish. they thrive!</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    11111.
+    00000.
+    11111.
+    00000.
+    11111
+  </config>
+</data>
