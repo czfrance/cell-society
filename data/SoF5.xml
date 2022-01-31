@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: death only</title>
+  <author>Cynthia France</author>
+  <description>All trees are already dead, but they're never supposed to have caught fire in the first place. How did this happen?</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    22222.
+    22222.
+    22222.
+    22222.
+    22222
+  </config>
+  <probCatch>0</probCatch>
+</data>

@@ -21,13 +21,6 @@ public class SpreadingFireView extends SimulationView{
   }
 
   @Override
-  protected void addTitle() {
-    Text t = new Text();
-    t.setText("Spreading of Fire");
-    root.getChildren().add(t);
-  }
-
-  @Override
   protected void makeGrid() {
 
   }

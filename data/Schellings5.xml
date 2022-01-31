@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Segregation">
+  <simulationType>Segregation</simulationType>
+  <title>Schelling's Model of Segregation: No Discrimination</title>
+  <author>Cynthia France</author>
+  <description>An example where there is no discrimination, so all cells are always happy</description>
+  <width>4</width>
+  <height>4</height>
+  <config>
+    1212.
+    2121.
+    1212.
+    2121
+  </config>
+  <satisfied>0</satisfied>
+</data>

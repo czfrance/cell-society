@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="WaTor">
+  <simulationType>WaTor</simulationType>
+  <title>WaTor: feeding frenzy</title>
+  <author>Cynthia France</author>
+  <description>fish are surrounded by sharks. they will die.</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    21212.
+    22222.
+    22122.
+    22222.
+    21212
+  </config>
+</data>

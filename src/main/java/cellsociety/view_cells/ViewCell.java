@@ -24,5 +24,8 @@ public abstract class ViewCell extends Rectangle {
     myState = initState;
   }
 
-  public abstract void updateState(int newState);
+  public void updateState(int newState) {
+    myState = newState;
+    setFill(states.get(myState));
+  }
 }

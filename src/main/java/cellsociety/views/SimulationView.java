@@ -40,6 +40,7 @@ public abstract class SimulationView {
 
   private HBox homeBox;
 
+
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public static final String STYLESHEET = "default.css";
 
@@ -139,8 +140,10 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  Button makeButton(String label, EventHandler<ActionEvent> handler) {
+  Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
+    String label = property;
+//    String label = model.getMyResources().getString(property);
     result.setText(label);
     result.setOnAction(handler);
     return result;
