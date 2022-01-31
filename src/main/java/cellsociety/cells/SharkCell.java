@@ -37,7 +37,10 @@ public class SharkCell extends Cell {
       myHealth += selectedMove.getNutrition();
     }
 
-    if (myHealth == 0) return death();
+    if (myHealth == 0) {
+      death();
+      return this;
+    }
 
     reproductionTimer--;
     if (reproductionTimer == 0) {
@@ -78,9 +81,8 @@ public class SharkCell extends Cell {
     return new SharkCell(getColumn(), getRow(), SHARK, INITIAL_HEALTH, INITAL_REPROTIMER);
   }
 
-  public Cell death() {
+  public void death() {
     isDead = true;
-    return new EmptyCell(getColumn(), getRow(), EMPTY);
   }
 
   @Override
@@ -88,8 +90,4 @@ public class SharkCell extends Cell {
     return myState;
   }
 
-  public SharkCell update(int width, int height, List<List<Cell>> grid) {
-    move(width, height, grid);
-    return this;
-  }
 }

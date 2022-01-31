@@ -1,7 +1,5 @@
 package cellsociety.cells;
 
-import javafx.scene.paint.Color;
-
 public class EmptyCell extends Cell {
 
   public EmptyCell(int x, int y, int initState) {
@@ -14,5 +12,5 @@ public class EmptyCell extends Cell {
     return myState;
   }
 
-  public Cell death(){return null;}
+  public void death(){}
 }

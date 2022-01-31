@@ -11,5 +11,5 @@ public class BurningCell extends Cell{
     return myState;
   }
 
-  public Cell death(){return null;}
+  public void death(){}
 }

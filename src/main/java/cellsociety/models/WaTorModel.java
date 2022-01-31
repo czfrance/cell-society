@@ -1,10 +1,12 @@
 package cellsociety.models;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.EmptyWaTorCell;
 import cellsociety.cells.FishCell;
 import cellsociety.cells.SharkCell;
 import cellsociety.cells.EmptyCell;
 
+import cellsociety.cells.WaTorCell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,11 +23,14 @@ public class WaTorModel extends SimulationModel {
   public WaTorModel(Map<String, String> dataValues) {
     super(dataValues);
     simType = "WaTor";
-    grid = new Cell[HEIGHT][WIDTH];
+    grid = new WaTorCell[HEIGHT][WIDTH];
+
   }
 
   @Override
   protected void createGrid() {
+    myGrid = new ArrayList<>();
+
     myGrid.add(new ArrayList<>());
     int rowNum = 0;
     int colNum = 0;
@@ -33,9 +38,9 @@ public class WaTorModel extends SimulationModel {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
         case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new EmptyCell(colNum, rowNum, 0));colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new FishCell(colNum, rowNum, 1, 0, 0));colNum++;}
-        case '2' -> {myGrid.get(rowNum).add(new SharkCell(colNum, rowNum, 2, 2, 5));colNum++;}
+        case '0' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, 0, 0, 0, 0, 0));colNum++;}
+        case '1' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, FISH, FISH, 5, 5, 5));colNum++;}
+        case '2' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, SHARK, 5, 5, 5));colNum++;}
         default -> {}
         }
       }
@@ -46,28 +51,50 @@ public class WaTorModel extends SimulationModel {
   private void clashPrevention() {
 
   }
+  private void makeTempGrid() {
+    grid = new Cell[HEIGHT][WIDTH];
+    for (List<Cell> list : myGrid) {
+      for (Cell cell : list) {
+        ((WaTorCell) cell).updateCell(WIDTH, HEIGHT, myGrid);
 
+        int code = ((WaTorCell) cell).getCurrentState();
+        if (code == FISH) {
+          FishCell fish = ((WaTorCell) cell).getFish();
+          grid[fish.getRow()][fish.getColumn()] = fish;
+        } else if (code == SHARK) {
+          SharkCell shark = ((WaTorCell) cell).getShark();
+          grid[shark.getRow()][shark.getColumn()] = shark;
+        }
+        ((WaTorCell) cell).setEmpty(false);
+      }
+    }
+  }
   public void updateGrid() {
-    for (List<Cell> cellList : myGrid) {
-      for (Cell cell : cellList) {
-        int id = cell.getID();
-        if (id == SHARK) {
-          SharkCell c = ((SharkCell)cell).update(WIDTH, HEIGHT, myGrid);
-          grid[c.getRow()][c.getColumn()] = c;
+    makeTempGrid();
 
-        } else if (id == FISH) {
-          FishCell c = ((FishCell)cell).update(WIDTH, HEIGHT, myGrid);
-          grid[c.getRow()][c.getColumn()] = c;
+
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int j = 0; j < WIDTH; j++) {
+        int id = grid[i][j] == null ? EMPTY : grid[i][j].getID();
+        WaTorCell cell = ((WaTorCell) myGrid.get(i).get(j));
+        if (id == SHARK) {
+
+          if (cell.getID() == FISH) {
+            cell.getFish().death();
+            cell.setEmpty(true);
+          }
+
+          cell.setShark((SharkCell) grid[i][j]);
+
+        }  else if (id == FISH && !((FishCell) grid[i][j]).isDead()) {
+            cell.setFish((FishCell) grid[i][j]);
+        } else {
+            ((WaTorCell) myGrid.get(i).get(j)).setEmpty(false);
         }
       }
     }
 
-    myGrid.clear();
-    for (Cell[] cellList : grid) {
-      List<Cell> list = new ArrayList<Cell>();
-      Collections.addAll(list, cellList);
-      myGrid.add(list);
-    }
+
     System.out.println("\n\n");
     System.out.println(this);
 
@@ -76,7 +103,7 @@ public class WaTorModel extends SimulationModel {
   public String toString() {
     for (List<Cell> list : myGrid) {
       for (Cell c : list) {
-        System.out.print(c.getState() + " ");
+        System.out.print((WaTorCell) c);
       }
       System.out.println();
     }

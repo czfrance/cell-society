@@ -11,5 +11,5 @@ public class GroupCell extends Cell {
     return myState;
   }
 
-  public Cell death() {return null;}
+  public void death() {}
 }

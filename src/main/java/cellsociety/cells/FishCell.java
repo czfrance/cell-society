@@ -27,7 +27,11 @@ public class FishCell extends Cell {
   public void move(int width, int height, List<List<Cell>> grid) {
     initNeighbors(width, height, grid);
     List<Cell> potentialMove = getPotentialMove();
-    Cell selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
+    if (potentialMove.size() != 0) {
+      Cell selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
+      COLUMN = selectedMove.getColumn();
+      ROW = selectedMove.getRow();
+    }
 
     reproductionTimer--;
     if(reproductionTimer == 0) {
@@ -35,14 +39,13 @@ public class FishCell extends Cell {
       reproductionTimer = INTIAL_REPROTIMER;
     }
 
-    COLUMN = selectedMove.getColumn();
-    ROW = selectedMove.getRow();
 
   }
 
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
+      int test = c.getID();
       if (c.getID() == EMPTY) {
         potentialMove.add(c);
       }
@@ -61,15 +64,10 @@ public class FishCell extends Cell {
     return myState;
   }
 
-  public Cell death() {
+  public void death() {
     isDead = true;
-    return new EmptyCell(getColumn(), getRow(), 0);
   }
 
   public boolean isDead() {return isDead;}
 
-  public FishCell update(int width, int height, List<List<Cell>> grid) {
-    move(width, height, grid);
-    return this;
-  }
 }

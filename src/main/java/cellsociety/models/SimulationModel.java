@@ -51,7 +51,8 @@ public abstract class SimulationModel {
   protected void createGrid() {}
 
   public List<List<Cell>> getGrid() {
-    return myGrid;
+    List<List<Cell>> list = this.myGrid;
+    return this.myGrid;
   }
 
   public int[] getGridSize() {

@@ -192,12 +192,9 @@ public abstract class Cell {
 
   public int getColumn() {return COLUMN;}
 
-  protected int getNutrition() {return -1;}
-
-  protected abstract Cell death();
-
-  protected boolean isDead() {return false;}
-
   public int getState() {return myState;}
 
+  protected void death() {}
+
+  protected int getNutrition() {return -1;}
 }

@@ -24,7 +24,7 @@ public class PercolatingCell extends Cell {
     return EMPTY;
   }
 
-  public Cell death() {return null;}
+  public void death() {}
 
   private boolean flowsInFrom(Cell c) {
     return (c instanceof PercolatingCell) && (c.getMyState() == FILLED) && (c.ROW <= this.ROW);
