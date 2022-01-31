@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: invincible trees</title>
+  <author>Cynthia France</author>
+  <description>A tree is burning, but no trees will ever catch on fire</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    22222.
+    20002.
+    20102.
+    20002.
+    22222
+  </config>
+  <probCatch>0.0</probCatch>
+</data>

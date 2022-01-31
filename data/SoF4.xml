@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: dangerous territory</title>
+  <author>Cynthia France</author>
+  <description>All trees are flammable, but none are burning</description>
+  <width>5</width>
+  <height>5</height>
+  <config>
+    00000.
+    00000.
+    00000.
+    00000.
+    00000
+  </config>
+  <probCatch>1</probCatch>
+</data>

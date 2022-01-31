@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Percolation">
+  <simulationType>Percolation</simulationType>
+  <title>Percolation: Example 4</title>
+  <author>Cynthia France</author>
+  <description>All cells are unblocked. Complete Percolation</description>
+  <width>17</width>
+  <height>17</height>
+  <config>
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111.
+    11111111111111111
+  </config>
+</data>
