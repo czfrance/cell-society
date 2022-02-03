@@ -55,7 +55,6 @@ public abstract class SimulationView {
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
     root.setRight(topPane);
-    root.setRight(makePanel());
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
@@ -66,7 +65,7 @@ public abstract class SimulationView {
     root.setCenter(tmp);
     addTitle();
 
-    Scene scene = new Scene(root, width, root.getBoundsInParent().getHeight() + 100);
+    Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
 
 //    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
@@ -92,7 +91,7 @@ public abstract class SimulationView {
   }
 
   private Node makePanel() {
-    HBox result = new HBox();
+    VBox result = new VBox();
     GameOfLife = makeButton("Game of Life", event -> GoL());
     Percolation = makeButton("Percolation", event -> Percolation());
     Segregation = makeButton("Segregation", event -> Segregation());
@@ -161,8 +160,6 @@ public abstract class SimulationView {
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
-
-
 
 
   private void Segregation() {

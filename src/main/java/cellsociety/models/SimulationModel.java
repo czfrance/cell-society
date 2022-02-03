@@ -45,7 +45,7 @@ public abstract class SimulationModel {
         cell.getNextState();
       }
     }
-    
+
     for (List<Cell> row : myGrid) {
       for (Cell cell : row) {
         cell.update();
@@ -62,6 +62,7 @@ public abstract class SimulationModel {
         newStates.get(row).add(c.getNextState());
       }
     }
+    return newStates;
   }
 
   protected void createGrid() {}

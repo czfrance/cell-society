@@ -43,24 +43,29 @@ public class WaTorModel extends SimulationModel {
 
   }
 
-  private void clashPrevention() {
-
-  }
-
   private void makeTempGrid() {
+
     grid = new Cell[HEIGHT][WIDTH];
     for (List<Cell> list : myGrid) {
       for (Cell cell : list) {
 
-        ((WaTorCell) cell).updateCell(WIDTH, HEIGHT, myGrid);
+        WaTorCell c = (WaTorCell) cell;
+        int ID = c.getID();
+        if (checkReproduction(c)) {
+          System.out.println("REPRODUCE");
+          grid[c.getRow()][c.getColumn()] = ID == FISH ? c.getFish().reproduction() : c.getShark().reproduction();
+        }
+        c.updateCell(WIDTH, HEIGHT, myGrid);
+
         int code = ((WaTorCell) cell).getCurrentState();
 
-        if (code == FISH) {
-          FishCell fish = ((WaTorCell) cell).getFish();
+        if (code == FISH && !c.getFish().isDead()) {
+          FishCell fish = c.getFish();
           grid[fish.getRow()][fish.getColumn()] = fish;
 
         } else if (code == SHARK && !((WaTorCell) cell).getShark().isDead()) {
-          SharkCell shark = ((WaTorCell) cell).getShark();
+          SharkCell shark = c.getShark();
+          System.out.println(shark.getRepoTimer());
           grid[shark.getRow()][shark.getColumn()] = shark;
           ((WaTorCell) myGrid.get(shark.getRow()).get(shark.getColumn())).block();
         }
@@ -69,7 +74,6 @@ public class WaTorModel extends SimulationModel {
   }
 
   private void transferTempToGrid() {
-    printTempGrid();
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
         int id = grid[i][j] == null ? EMPTY : grid[i][j].getID();
@@ -82,8 +86,8 @@ public class WaTorModel extends SimulationModel {
           }
           cell.setShark((SharkCell) grid[i][j]);
 
-        }  else if (id == FISH && !((FishCell) grid[i][j]).isDead()) {
-          cell.setFish((FishCell) grid[i][j]);
+        }else if (id == FISH && !((FishCell) grid[i][j]).isDead()) {
+            cell.setFish((FishCell) grid[i][j]);
 
         } else {
           ((WaTorCell) myGrid.get(i).get(j)).setEmpty(false);
@@ -95,35 +99,16 @@ public class WaTorModel extends SimulationModel {
   public void updateGrid() {
     makeTempGrid();
 
-    System.out.println(printBoard() + "\n\n\n");
-
     transferTempToGrid();
 
   }
-  public void printTempGrid() {
-    for (Cell[] list : grid) {
-      for (Cell c : list) {
-        int d = c == null ? 0 : c.getID();
-        if (d == 2) {
-          int l = ((SharkCell) c).getHealth();
-          System.out.print(l + " ");
-        } else {
-          System.out.print(d + " ");
-        }
-      }
-      System.out.println();
-    }
-  }
 
-  public String printBoard() {
-    for (List<Cell> list : myGrid) {
-      for (Cell cell : list) {
-        int d = cell == null ? 0 : cell.getID();
-        System.out.print(d + " ");
-      }
-      System.out.println();
-    }
-    return "";
+
+  public boolean checkReproduction(WaTorCell cell) {
+    int id = cell.getID();
+    if (id == FISH) return cell.getFish().isReproducing();
+    if (id == SHARK) return cell.getShark().isReproducing();
+    return false;
   }
 }
 
