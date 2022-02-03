@@ -1,20 +1,23 @@
 package cellsociety.cells;
 
 import java.util.List;
-import java.util.*;
+import java.util.Random;
+import java.util.ArrayList;
 
 public class FishCell extends Cell {
 
-  private final int INTIAL_REPROTIMER;
+  private final int INITIAL_REPROTIMER;
   private int reproductionTimer;
+
   private final int NUTRITION_VALUE;
   private final Random DICE = new Random();
   private boolean isDead;
+  private boolean isReproducing;
 
   public FishCell(int x, int y, int initState, int reproductionTimer, int nutritionValue) {
     super(x, y, initState);
 
-    INTIAL_REPROTIMER = reproductionTimer;
+    INITIAL_REPROTIMER = reproductionTimer;
     this.reproductionTimer = reproductionTimer;
     NUTRITION_VALUE = nutritionValue;
 
@@ -35,17 +38,15 @@ public class FishCell extends Cell {
 
     reproductionTimer--;
     if(reproductionTimer == 0) {
+      isReproducing = true;
       reproduction();
-      reproductionTimer = INTIAL_REPROTIMER;
-    }
-
-
+      reproductionTimer = INITIAL_REPROTIMER;
+    } else isReproducing = false;
   }
 
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      int test = c.getID();
       if (c.getID() == EMPTY) {
         potentialMove.add(c);
       }
@@ -55,8 +56,9 @@ public class FishCell extends Cell {
 
   public int getNutrition() {return NUTRITION_VALUE;}
 
-  private void reproduction() {
+  public FishCell reproduction() {
 
+    return new FishCell(getColumn(), getRow(), FISH, INITIAL_REPROTIMER, NUTRITION_VALUE);
   }
 
   @Override
@@ -70,4 +72,5 @@ public class FishCell extends Cell {
 
   public boolean isDead() {return isDead;}
 
+  public boolean isReproducing() {return isReproducing;}
 }

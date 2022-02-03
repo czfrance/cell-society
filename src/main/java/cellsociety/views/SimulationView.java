@@ -24,7 +24,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
 public abstract class SimulationView {
 
   protected BorderPane root = new BorderPane();
@@ -49,6 +48,14 @@ public abstract class SimulationView {
   }
 
   public Scene makeScene(int width, int height) {
+
+    cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
+
+    FlowPane topPane = new FlowPane();
+    Node buttonPanel = makePanel();
+    root.setBottom(buttonPanel);
+    root.setRight(topPane);
+
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
     addTitle();
@@ -68,8 +75,7 @@ public abstract class SimulationView {
     tmp.setLayoutX(200);
     root.setCenter(tmp);
 
-
-    Scene scene = new Scene(root, width, height);
+    Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
 
 //    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
@@ -129,7 +135,6 @@ public abstract class SimulationView {
       dialog.showAndWait();
     });
 
-
     homebox.getChildren().addAll(t, button);
     // will move this to css file
     homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
@@ -162,8 +167,6 @@ public abstract class SimulationView {
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
-
-
 
 
   private void Segregation() {
