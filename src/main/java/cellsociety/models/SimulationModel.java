@@ -1,14 +1,22 @@
 package cellsociety.models;
 
-import cellsociety.cells.*;
+import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class SimulationModel {
 
-  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
-      "description", "width", "height", "config", "satisfied");
+  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "satisfied");
+
+  public static final int SIMULATION_TYPE = 0;
+  public static final int TITLE = 1;
+  public static final int AUTHOR = 2;
+  public static final int DESCRIPTION = 3;
+  public static final int WIDTH_FIELD = 4;
+  public static final int HEIGHT_FIELD = 5;
+  public static final int CONFIG = 6;
+  public static final int SATISFIED_FIELD = 7;
 
   protected Map<String, String> simInfo;
   protected String simType;
@@ -108,15 +116,15 @@ public abstract class SimulationModel {
   @Override
   public String toString() {
     return String.join("\n",
-        String.format("%s = [", simInfo.get(DATA_FIELDS.get(0))),
-        String.format("  %s = '%s',", DATA_FIELDS.get(1), simInfo.get(DATA_FIELDS.get(1))),
-        String.format("  %s = '%s',", DATA_FIELDS.get(2), simInfo.get(DATA_FIELDS.get(2))),
-        String.format("  %s = '%s',", DATA_FIELDS.get(3), simInfo.get(DATA_FIELDS.get(3))),
-        String.format("  %s = '%d',", DATA_FIELDS.get(4),
-            Integer.parseInt(simInfo.get(DATA_FIELDS.get(4)))),
-        String.format("  %s = '%d',", DATA_FIELDS.get(5),
-            Integer.parseInt(simInfo.get(DATA_FIELDS.get(5)))),
-        String.format("  %s = '%s',", DATA_FIELDS.get(6), simInfo.get(DATA_FIELDS.get(6))),
+        String.format("%s = [", simInfo.get(DATA_FIELDS.get(SIMULATION_TYPE))),
+        String.format("  %s = '%s',", DATA_FIELDS.get(TITLE), simInfo.get(DATA_FIELDS.get(TITLE))),
+        String.format("  %s = '%s',", DATA_FIELDS.get(AUTHOR), simInfo.get(DATA_FIELDS.get(AUTHOR))),
+        String.format("  %s = '%s',", DATA_FIELDS.get(DESCRIPTION), simInfo.get(DATA_FIELDS.get(DESCRIPTION))),
+        String.format("  %s = '%d',", DATA_FIELDS.get(WIDTH_FIELD),
+            Integer.parseInt(simInfo.get(DATA_FIELDS.get(WIDTH_FIELD)))),
+        String.format("  %s = '%d',", DATA_FIELDS.get(HEIGHT_FIELD),
+            Integer.parseInt(simInfo.get(DATA_FIELDS.get(HEIGHT_FIELD)))),
+        String.format("  %s = '%s',", DATA_FIELDS.get(CONFIG), simInfo.get(DATA_FIELDS.get(CONFIG))),
         "]");
   }
 
