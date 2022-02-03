@@ -49,6 +49,7 @@ public abstract class SimulationView {
   }
 
   public Scene makeScene(int width, int height) {
+
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
 
     FlowPane topPane = new FlowPane();
@@ -58,12 +59,22 @@ public abstract class SimulationView {
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
+    addTitle();
 
+    double topHeight = root.getTop().getBoundsInParent().getMaxY()-root.getTop().getBoundsInParent().getMinY();
+    double botHeight = root.getBottom().getBoundsInParent().getMaxY()-root.getBottom().getBoundsInParent().getMinY();
+    double gridHeight = height - topHeight - botHeight;
+    double leftWidth = root.getLeft().getBoundsInParent().getMaxX()-root.getLeft().getBoundsInParent().getMinX();
+    double rightWidth = 0; //root.getRight().getBoundsInParent().getMaxX()-root.getRight().getBoundsInParent().getMinX();
+    double gridWidth = width - leftWidth - rightWidth;
+
+    System.out.println(width + " " + gridWidth + " " + height + " " + gridHeight);
+
+    cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
     makeGrid();
     Node tmp = addGridToNode();
     tmp.setLayoutX(200);
     root.setCenter(tmp);
-    addTitle();
 
     Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
@@ -139,10 +150,8 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  Button makeButton(String property, EventHandler<ActionEvent> handler) {
+  Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
-    String label = property;
-//    String label = model.getMyResources().getString(property);
     result.setText(label);
     result.setOnAction(handler);
     return result;
