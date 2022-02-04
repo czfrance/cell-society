@@ -26,7 +26,7 @@ public abstract class SimulationModel {
   public static final String SATISFIED_INFO = "satisfied";
   public static final String PROBCATCH_INFO = "probCatch";
 
-  protected List<List<Cell>> myGrid = new ArrayList<>();
+  protected Grid myGrid = new Grid();
 
   public final int WIDTH;
   public final int HEIGHT;
@@ -70,11 +70,6 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-    for (int row = 0; row < myGrid.size(); row++) {
-      for (int cell = 0; cell < myGrid.get(row).size(); cell++) {
-        myGrid.get(row).get(cell).setState(newStates.get(row).get(cell));
-      }
-    }
   }
 
   protected List<List<Integer>> getCellNextStates() {
@@ -82,7 +77,7 @@ public abstract class SimulationModel {
     newStates.add(new ArrayList<>());
 
     for (int row = 0; row < myGrid.size(); row++) {
-      for (Cell c : myGrid.get(row)) {
+      for (Cell c : myGrid.getRow(row)) {
         newStates.get(row).add(c.getNextState());
       }
       newStates.add(new ArrayList<>());
@@ -93,7 +88,7 @@ public abstract class SimulationModel {
 
   protected abstract void createGrid();
 
-  public List<List<Cell>> getGrid() {
+  public Grid getGrid() {
     return myGrid;
   }
 
@@ -187,8 +182,9 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(WIDTH, HEIGHT, myGrid);
+        c.initNeighbors(WIDTH, HEIGHT, myGrid.getGrid());
       }
     }
   }
 }
+

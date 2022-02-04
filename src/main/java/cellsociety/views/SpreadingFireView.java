@@ -1,6 +1,7 @@
 package cellsociety.views;
 
 import cellsociety.cells.Cell;
+import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BurningViewCell;
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class SpreadingFireView extends SimulationView{
 
   @Override
   protected void makeGrid() {
-    List<List<Cell>> cellGrid = model.getGrid();
+    Grid cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
       grid.add(new ArrayList<>());
-      for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = cellGrid.get(row).get(cell).getMyState();
+      for (int cell = 0; cell < cellGrid.getRow(row).size(); cell++) {
+        int state = cellGrid.getRow(row).get(cell).getMyState();
         switch (state) {
           case TREE, BURNING, DEAD -> {
             grid.get(row).add(new BurningViewCell(cell, row, cellSize, state));
@@ -47,10 +48,10 @@ public class SpreadingFireView extends SimulationView{
 
   @Override
   protected void updateGrid() {
-    List<List<Cell>> cellGrid = model.getGrid();
+    Grid cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
-      for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = cellGrid.get(row).get(cell).getMyState();
+      for (int cell = 0; cell < cellGrid.getRow(row).size(); cell++) {
+        int state = cellGrid.getRow(row).get(cell).getMyState();
         switch (state) {
           case TREE, BURNING, DEAD -> {grid.get(row).get(cell).updateState(state);}
           default -> {}

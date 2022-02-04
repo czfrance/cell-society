@@ -16,7 +16,7 @@ public class PercolationModel extends SimulationModel {
 
   @Override
   protected void createGrid() {
-    myGrid.add(new ArrayList<>());
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
@@ -24,10 +24,10 @@ public class PercolationModel extends SimulationModel {
 
       //0 = blocked, 1 = empty, 2 = filled
       switch (c) {
-        case '.' -> {myGrid.add(new ArrayList<>()); rowNum++; colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new BlockedPercolationCell(colNum, rowNum, 0)); colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new PercolatingCell(colNum, rowNum, 0)); colNum++;}
-        case '2' -> {myGrid.get(rowNum).add(new PercolatingCell(colNum, rowNum, 1)); colNum++;}
+        case '.' -> {myGrid.addRow(); rowNum++; colNum = 0;}
+        case '0' -> {myGrid.getRow(rowNum).add(new BlockedPercolationCell(colNum, rowNum, 0)); colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 0)); colNum++;}
+        case '2' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 1)); colNum++;}
         //case '2', '3', '4', '5', '6', '7', '8', '9' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
         default -> {}
       }
@@ -46,7 +46,7 @@ public class PercolationModel extends SimulationModel {
   }
 
   private void initFilledCells() {
-    for (Cell c : myGrid.get(0)) {
+    for (Cell c : myGrid.getRow(0)) {
       if ((c instanceof PercolatingCell)) {
         ((PercolatingCell) c).makeFilled();;
       }

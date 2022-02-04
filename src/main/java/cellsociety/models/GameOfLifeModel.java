@@ -16,15 +16,15 @@ public class GameOfLifeModel extends SimulationModel {
 
   @Override
   protected void createGrid() {
-    myGrid.add(new ArrayList<>());
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
-        case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, DEAD));colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, ALIVE));colNum++;}
+        case '.' -> {myGrid.addRow();rowNum++;colNum = 0;}
+        case '0' -> {myGrid.getRow(rowNum).add(new LifeCell(colNum, rowNum, DEAD));colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new LifeCell(colNum, rowNum, ALIVE));colNum++;}
         default -> {}
       }
     }
