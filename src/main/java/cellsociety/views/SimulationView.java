@@ -1,9 +1,8 @@
 package cellsociety.views;
 
-
+import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,11 +22,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import java.util.ArrayList;
 
 public abstract class SimulationView {
 
   protected BorderPane root = new BorderPane();
   protected SimulationModel model;
+  //TODO NEED TO CHANGE THIS TO A ABSTRACTION OF SOME SORT AND FIX ALL THE ISSUES THAT ARISE
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
 

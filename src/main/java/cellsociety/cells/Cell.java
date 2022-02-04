@@ -2,6 +2,7 @@ package cellsociety.cells;
 
 import java.util.ArrayList;
 import java.util.List;
+import cellsociety.models.Grid;
 
 public abstract class Cell {
   protected int ID;
@@ -33,13 +34,8 @@ public abstract class Cell {
     ROW = y;
 
     myState = initState;
+    ID = initState;
   }
-
-  public List<Cell> getMyNeighbors() {
-    return myNeighbors;
-  }
-
-  public void nextState() {}
 
   public void setState(int state) {myState = state;}
 
@@ -85,7 +81,7 @@ public abstract class Cell {
     return -1;
   }
 
-  public void initNeighbors(int width, int height, List<List<Cell>> grid) {
+  public void initNeighbors(int width, int height, Grid grid) {
     int corner = isCorner(width, height);
     int edge = isEdge(width, height);
     if (corner != -1) {
@@ -97,7 +93,7 @@ public abstract class Cell {
     }
   }
 
-  private List<Cell> edgeNeighbors(int code, List<List<Cell>> grid) {
+  private List<Cell> edgeNeighbors(int code, Grid grid) {
     switch (code) {
       case TOP_EDGE:
         return findEdgeNeighbors(0, 2, -1, 2, grid);
@@ -113,7 +109,7 @@ public abstract class Cell {
     }
   }
 
-  private List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, List<List<Cell>> grid) {
+  private List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, Grid grid) {
     List<Cell> neighbors = new ArrayList<>();
     int currOut = outerStart;
     int currIn;
@@ -121,50 +117,48 @@ public abstract class Cell {
       currIn = innerStart;
       for (;currIn < innerEnd; currIn++) {
         if (currOut!=0 || currIn!=0) {
-          neighbors.add(grid.get(ROW + currOut).get(COLUMN + currIn));
+          neighbors.add(grid.getRow(ROW + currOut).get(COLUMN + currIn));
         }
       }
     }
     return neighbors;
   }
 
-  private List<Cell> cornerNeighbors(int code, List<List<Cell>> grid) {
+  private List<Cell> cornerNeighbors(int code, Grid grid) {
     List<Cell> neighbors = new ArrayList<>();
 
     switch (code) {
-      case TOP_LEFT:
-        neighbors.add(grid.get(ROW + 1).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW + 1).get(COLUMN));
-        break;
-      case TOP_RIGHT:
-        neighbors.add(grid.get(ROW + 1).get(COLUMN));
-        neighbors.add(grid.get(ROW + 1).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW).get(COLUMN - 1));
-        break;
-
-      case BOTTOM_LEFT:
-        neighbors.add(grid.get(ROW - 1).get(COLUMN + 1));
-        neighbors.add(grid.get(ROW - 1).get(COLUMN));
-        neighbors.add(grid.get(ROW).get(COLUMN + 1));
-        break;
-      case BOTTOM_RIGHT:
-        neighbors.add(grid.get(ROW - 1).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW).get(COLUMN - 1));
-        neighbors.add(grid.get(ROW - 1).get(COLUMN));
-        break;
-      default:
-        System.out.println("NOT A CORNER");
+      case TOP_LEFT -> {
+        neighbors.add(grid.getRow(ROW + 1).get(COLUMN + 1));
+        neighbors.add(grid.getRow(ROW).get(COLUMN + 1));
+        neighbors.add(grid.getRow(ROW + 1).get(COLUMN));
+      }
+      case TOP_RIGHT -> {
+        neighbors.add(grid.getRow(ROW + 1).get(COLUMN));
+        neighbors.add(grid.getRow(ROW + 1).get(COLUMN - 1));
+        neighbors.add(grid.getRow(ROW).get(COLUMN - 1));
+      }
+      case BOTTOM_LEFT -> {
+        neighbors.add(grid.getRow(ROW - 1).get(COLUMN + 1));
+        neighbors.add(grid.getRow(ROW - 1).get(COLUMN));
+        neighbors.add(grid.getRow(ROW).get(COLUMN + 1));
+      }
+      case BOTTOM_RIGHT -> {
+        neighbors.add(grid.getRow(ROW - 1).get(COLUMN - 1));
+        neighbors.add(grid.getRow(ROW).get(COLUMN - 1));
+        neighbors.add(grid.getRow(ROW - 1).get(COLUMN));
+      }
+      default -> System.out.println("NOT A CORNER");
     }
     return neighbors;
   }
 
-  private List<Cell> centerNeighbors(List<List<Cell>> grid) {
+  private List<Cell> centerNeighbors(Grid grid) {
     List<Cell> neighbors = new ArrayList<>();
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
         if (i!=0 || j!=0) {
-          neighbors.add(grid.get(ROW + i).get(COLUMN + j));
+          neighbors.add(grid.getRow(ROW + i).get(COLUMN + j));
         }
       }
     }
@@ -186,6 +180,8 @@ public abstract class Cell {
 
   public void update() {}
 
+  public void update(int width, int height, Grid grid) {}
+
   public int getID() {return ID;}
 
   public int getRow() {return ROW;}
@@ -198,5 +194,9 @@ public abstract class Cell {
 
   protected int getNutrition() {return -1;}
 
+  public Cell reupdate() { return null;}
 
+  public boolean isReproducing() {return false;}
+
+  public Cell getCurrentObject() {return null;}
 }

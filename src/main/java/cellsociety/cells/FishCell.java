@@ -3,6 +3,7 @@ package cellsociety.cells;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
+import cellsociety.models.Grid;
 
 public class FishCell extends Cell {
 
@@ -27,7 +28,7 @@ public class FishCell extends Cell {
     isDead = false;
   }
 
-  public void move(int width, int height, List<List<Cell>> grid) {
+  public void move(int width, int height, Grid grid) {
     initNeighbors(width, height, grid);
     List<Cell> potentialMove = getPotentialMove();
     if (potentialMove.size() != 0) {

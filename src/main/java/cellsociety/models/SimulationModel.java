@@ -26,7 +26,7 @@ public abstract class SimulationModel {
   public static final String SATISFIED_INFO = "satisfied";
   public static final String PROBCATCH_INFO = "probCatch";
 
-  protected Grid myGrid = new Grid();
+  protected Grid myGrid;
 
   public final int WIDTH;
   public final int HEIGHT;
@@ -41,35 +41,21 @@ public abstract class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
-    if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
+    if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
-    if (simInfo.get(PROBCATCH_INFO) != "") PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
+    if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
     else PROBCATCH = 0;
+
+    myGrid = new Grid(WIDTH, HEIGHT);
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
+
     createGrid();
     initGrid();
   }
 
-  private void init() {
-    for (List<Cell> row : myGrid) {
-      for (Cell cell : row) {
-        cell.getNextState();
-      }
-    }
-
-    for (List<Cell> row : myGrid) {
-      for (Cell cell : row) {
-        cell.update();
-      }
-    }
-  }
-
-  private void step() {
-
-  }
-
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
+    myGrid.updateGrid(newStates);
   }
 
   protected List<List<Integer>> getCellNextStates() {
@@ -95,18 +81,6 @@ public abstract class SimulationModel {
   public int[] getGridSize() {
     return new int[]{Integer.parseInt(simInfo.get("width")),
         Integer.parseInt(simInfo.get("height"))};
-  }
-
-  /**
-   * Prints the current grid
-   */
-  public void printGrid() {
-    for (List l : myGrid) {
-      for (Object i : l) {
-        System.out.print(i);
-      }
-      System.out.println();
-    }
   }
 
   /**
@@ -182,7 +156,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(WIDTH, HEIGHT, myGrid.getGrid());
+        c.initNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
   }
