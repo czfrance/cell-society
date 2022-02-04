@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class SimulationModel {
 
-  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "satisfied");
+  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "satisfied", "probCatch");
 
   public static final int SIMULATION_TYPE = 0;
   public static final int TITLE = 1;
@@ -24,12 +24,14 @@ public abstract class SimulationModel {
   public static final String HEIGHT_INFO = "height";
   public static final String WIDTH_INFO = "width";
   public static final String SATISFIED_INFO = "satisfied";
+  public static final String PROBCATCH_INFO = "probCatch";
 
   protected Grid myGrid;
 
   public final int WIDTH;
   public final int HEIGHT;
   public final double SATISFIED;
+  public final double PROBCATCH;
 
   private int iteration;
   private int simulationSpeed;
@@ -39,11 +41,12 @@ public abstract class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
-    if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
+    if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
+    if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
+    else PROBCATCH = 0;
 
     myGrid = new Grid(WIDTH, HEIGHT);
-
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
 
     createGrid();
@@ -78,18 +81,6 @@ public abstract class SimulationModel {
   public int[] getGridSize() {
     return new int[]{Integer.parseInt(simInfo.get("width")),
         Integer.parseInt(simInfo.get("height"))};
-  }
-
-  /**
-   * Prints the current grid
-   */
-  public void printGrid() {
-    for (List l : myGrid) {
-      for (Object i : l) {
-        System.out.print(i);
-      }
-      System.out.println();
-    }
   }
 
   /**

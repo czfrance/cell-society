@@ -16,6 +16,7 @@ public class GameOfLifeModel extends SimulationModel {
 
   @Override
   protected void createGrid() {
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
