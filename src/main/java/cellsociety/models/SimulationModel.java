@@ -25,7 +25,7 @@ public abstract class SimulationModel {
   public static final String WIDTH_INFO = "width";
   public static final String SATISFIED_INFO = "satisfied";
 
-  protected Grid myGrid = new Grid();
+  protected Grid myGrid;
 
   public final int WIDTH;
   public final int HEIGHT;
@@ -41,6 +41,9 @@ public abstract class SimulationModel {
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
     if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
+
+    myGrid = new Grid(WIDTH, HEIGHT);
+
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
     createGrid();
     initGrid();
@@ -66,7 +69,7 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-
+    myGrid.updateGrid(newStates);
   }
 
   protected List<List<Integer>> getCellNextStates() {
