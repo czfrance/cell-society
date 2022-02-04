@@ -197,4 +197,6 @@ public abstract class Cell {
   protected void death() {}
 
   protected int getNutrition() {return -1;}
+
+
 }

@@ -4,7 +4,6 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.FishCell;
 import cellsociety.cells.SharkCell;
 import cellsociety.cells.WaTorCell;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,18 +24,16 @@ public class WaTorModel extends SimulationModel {
 
   @Override
   protected void createGrid() {
-    myGrid = new ArrayList<>();
 
-    myGrid.add(new ArrayList<>());
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
-        case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, 0, 0, 0, 0, 0));colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, FISH, FISH, 5, 5, 5));colNum++;}
-        case '2' -> {myGrid.get(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, SHARK, 5, 5, 5));colNum++;}
+        case '.' -> {myGrid.addRow();rowNum++;colNum = 0;}
+        case '0' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, 0, 0, 0, 0, 0));colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, FISH, FISH, 5, 5, 5));colNum++;}
+        case '2' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, SHARK, 5, 5, 5));colNum++;}
         default -> {}
         }
       }

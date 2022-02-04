@@ -19,7 +19,6 @@ public class SegregationModel extends SimulationModel{
 
   @Override
   protected void createGrid() {
-    myGrid.add(new ArrayList<>());
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {
@@ -27,10 +26,10 @@ public class SegregationModel extends SimulationModel{
 
       //0 = empty, 1 = group 1, 2 = group 2
       switch (c) {
-        case '.' -> {myGrid.add(new ArrayList<>()); rowNum++; colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new SchellingGroupCell(colNum, rowNum, 0, SATISFIED)); colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new SchellingGroupCell(colNum, rowNum, 1, SATISFIED)); colNum++;}
-        case '2' -> {myGrid.get(rowNum).add(new SchellingGroupCell(colNum, rowNum, 2, SATISFIED)); colNum++;}
+        case '.' -> {myGrid.addRow(); rowNum++; colNum = 0;}
+        case '0' -> {myGrid.getRow(rowNum).add(new SchellingGroupCell(colNum, rowNum, 0, SATISFIED)); colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new SchellingGroupCell(colNum, rowNum, 1, SATISFIED)); colNum++;}
+        case '2' -> {myGrid.getRow(rowNum).add(new SchellingGroupCell(colNum, rowNum, 2, SATISFIED)); colNum++;}
         default -> {}
       }
     }
@@ -67,16 +66,16 @@ public class SegregationModel extends SimulationModel{
         int state = vacatedCellStates.get(row).get(col);
         if (state == -1) {
           numUnhappy1++;
-          myGrid.get(row).get(col).setState(0);
-          emptyCells.add(myGrid.get(row).get(col));
+          myGrid.getRow(row).get(col).setState(0);
+          emptyCells.add(myGrid.getRow(row).get(col));
         }
         else if (state == -2) {
           numUnhappy2++;
-          myGrid.get(row).get(col).setState(0);
-          emptyCells.add(myGrid.get(row).get(col));
+          myGrid.getRow(row).get(col).setState(0);
+          emptyCells.add(myGrid.getRow(row).get(col));
         }
         else if (state == 0) {
-          emptyCells.add(myGrid.get(row).get(col));
+          emptyCells.add(myGrid.getRow(row).get(col));
         }
         else {
           continue;
