@@ -45,26 +45,9 @@ public abstract class SimulationModel {
     myGrid = new Grid(WIDTH, HEIGHT);
 
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
+
     createGrid();
     initGrid();
-  }
-
-  private void init() {
-    for (List<Cell> row : myGrid) {
-      for (Cell cell : row) {
-        cell.getNextState();
-      }
-    }
-
-    for (List<Cell> row : myGrid) {
-      for (Cell cell : row) {
-        cell.update();
-      }
-    }
-  }
-
-  private void step() {
-
   }
 
   public void updateGrid() {
@@ -182,7 +165,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(WIDTH, HEIGHT, myGrid.getGrid());
+        c.initNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
   }

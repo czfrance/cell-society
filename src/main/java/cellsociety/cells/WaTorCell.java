@@ -1,53 +1,71 @@
 package cellsociety.cells;
 
-import java.util.List;
-
 public class WaTorCell extends Cell{
 
   public static final int EMPTY = 0;
   public static final int FISH = 1;
   public static final int SHARK = 2;
 
-  public SharkCell shark;
-  public FishCell fish;
-  public EmptyWaTorCell empty;
+  private int column;
+  private int row;
 
-  private boolean blocked;
+  private SharkCell shark;
+  private FishCell fish;
+  private EmptyWaTorCell empty;
+
   private int currentState;
+
+  private WaTorCell previousState;
+
+  public WaTorCell(WaTorCell cell) {
+    super(cell.getColumn(), cell.getRow(), cell.getState());
+    column = cell.getColumn();
+    row = cell.getRow();
+    shark = cell.getShark();
+    fish = cell.getFish();
+    empty = new EmptyWaTorCell(column, row, EMPTY);
+    currentState = cell.getState();
+  }
 
   public WaTorCell(int x, int y, int initState){
     super(x, y, initState);
   }
 
-  public WaTorCell(int x, int y, int initState, int code, int reproductionTimer, int nutritionValue, int health) {
-    super(x, y, initState);
+  public WaTorCell(int x, int y, int code, int reproductionTimer, int nutritionValue, int health) {
+    super(x, y, code);
 
     switch (code) {
-      case EMPTY:
-        empty = new EmptyWaTorCell(x, y, initState);
-        break;
-      case FISH:
-        fish = new FishCell(x, y, initState, reproductionTimer, nutritionValue);
-        break;
-      case SHARK:
-        shark = new SharkCell(x, y, initState, health, reproductionTimer);
+      case EMPTY -> empty = new EmptyWaTorCell(x, y, code);
+      case FISH -> fish = new FishCell(x, y, code, reproductionTimer, nutritionValue);
+      case SHARK -> shark = new SharkCell(x, y, code, health, reproductionTimer);
     }
+
     currentState = code;
-    ID = code;
-    blocked = false;
+
+    this.column = x;
+    this.row = y;
   }
 
+  @Override
+  public void update() {
+    previousState = new WaTorCell(this);
+    getCurrentObject().update();
+    column = getCurrentObject().getColumn();
+    row = getCurrentObject().getRow();
+  }
+
+  public Cell reupdate() {
+    return previousState;
+  }
   @Override
   public int getNextState() {
     return 0;
   }
-
-  protected void death() {
-
-  }
-  public int getCurrentState() {
+  @Override
+  public int getState() {
     return currentState;
   }
+
   public Cell getCurrentObject() {
     if (currentState == FISH) return fish;
     if (currentState == SHARK) return shark;
@@ -64,25 +82,27 @@ public class WaTorCell extends Cell{
     fish = f;
   }
 
-  public void updateCell(int width, int height, List<List<Cell>> grid) {
-    blocked = false;
-    if (currentState == FISH) {fish.move(width, height, grid);}
-    if (currentState == SHARK) {shark.move(width, height, grid);}
-  }
   public void setEmpty(boolean block){
     currentState = EMPTY;
-    blocked = block;
   }
+
   public FishCell getFish() {
     return fish;
   }
-  public SharkCell getShark() {
-    return shark;
-  }
+
+  public SharkCell getShark() {return shark;}
+
   @Override
-  public String toString() {
-    return String.format("%d ", currentState);
+  public String toString() {return String.format("%d ", currentState);}
+
+  @Override
+  public int getColumn() {return column;}
+
+  @Override
+  public int getRow() {return row;}
+
+  public boolean isReproducing() {
+    return getCurrentObject().isReproducing();
   }
-  public boolean isBlocked() {return blocked;}
-  public void block() {blocked = true;}
+
 }

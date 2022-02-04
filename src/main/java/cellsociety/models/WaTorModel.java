@@ -1,15 +1,15 @@
 package cellsociety.models;
 
 import cellsociety.cells.Cell;
-import cellsociety.cells.FishCell;
-import cellsociety.cells.SharkCell;
 import cellsociety.cells.WaTorCell;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class WaTorModel extends SimulationModel {
 
-  Cell[][] grid;
+  private Cell[][] tempGrid;
 
   private static final int EMPTY = 0;
   private static final int FISH = 1;
@@ -18,7 +18,7 @@ public class WaTorModel extends SimulationModel {
   public WaTorModel(Map<String, String> dataValues) {
     super(dataValues);
     simType = "WaTor";
-    grid = new WaTorCell[HEIGHT][WIDTH];
+    tempGrid = new WaTorCell[HEIGHT][WIDTH];
 
   }
 
@@ -31,81 +31,67 @@ public class WaTorModel extends SimulationModel {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
         case '.' -> {myGrid.addRow();rowNum++;colNum = 0;}
-        case '0' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, 0, 0, 0, 0, 0));colNum++;}
-        case '1' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, FISH, FISH, 5, 5, 5));colNum++;}
-        case '2' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, SHARK, 5, 5, 5));colNum++;}
+        case '0' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, EMPTY, 0, 0, 0));colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, FISH, 5, 5, 5));colNum++;}
+        case '2' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, 5, 5, 5));colNum++;}
         default -> {}
         }
       }
 
   }
 
-//  private void makeTempGrid() {
-//
-//    grid = new Cell[HEIGHT][WIDTH];
-//    for (List<Cell> list : myGrid) {
-//      for (Cell cell : list) {
-//
-//        WaTorCell c = (WaTorCell) cell;
-//        int ID = c.getID();
-//        if (checkReproduction(c)) {
-//          System.out.println("REPRODUCE");
-//          grid[c.getRow()][c.getColumn()] = ID == FISH ? c.getFish().reproduction() : c.getShark().reproduction();
-//        }
-//        c.updateCell(WIDTH, HEIGHT, myGrid);
-//
-//        int code = ((WaTorCell) cell).getCurrentState();
-//
-//        if (code == FISH && !c.getFish().isDead()) {
-//          FishCell fish = c.getFish();
-//          grid[fish.getRow()][fish.getColumn()] = fish;
-//
-//        } else if (code == SHARK && !((WaTorCell) cell).getShark().isDead()) {
-//          SharkCell shark = c.getShark();
-//          System.out.println(shark.getRepoTimer());
-//          grid[shark.getRow()][shark.getColumn()] = shark;
-//          ((WaTorCell) myGrid.get(shark.getRow()).get(shark.getColumn())).block();
-//        }
-//      }
-//    }
-//  }
-
-//  private void transferTempToGrid() {
-//    for (int i = 0; i < HEIGHT; i++) {
-//      for (int j = 0; j < WIDTH; j++) {
-//        int id = grid[i][j] == null ? EMPTY : grid[i][j].getID();
-//        WaTorCell cell = ((WaTorCell) myGrid.get(i).get(j));
-//
-//        if (id == SHARK) {
-//          if (cell.getID() == FISH) {
-//            cell.getFish().death();
-//            cell.setEmpty(true);
-//          }
-//          cell.setShark((SharkCell) grid[i][j]);
-//
-//        }else if (id == FISH && !((FishCell) grid[i][j]).isDead()) {
-//            cell.setFish((FishCell) grid[i][j]);
-//
-//        } else {
-//          ((WaTorCell) myGrid.get(i).get(j)).setEmpty(false);
-//        }
-//      }
-//    }
-//  }
-//
-//  public void updateGrid() {
-//    makeTempGrid();
-//
-//    transferTempToGrid();
-//
-//  }
-
-
-  public boolean checkReproduction(WaTorCell cell) {
-    int id = cell.getID();
-    if (id == FISH) return cell.getFish().isReproducing();
-    if (id == SHARK) return cell.getShark().isReproducing();
-    return false;
+  private Cell cellUpdater(Cell cell) {
+    cell.update();
+    int x = cell.getRow();
+    int y = cell.getColumn();
+    //TODO: BE CAREFUL ABOUT INFINITE LOOPS HERE IF A BLOCK HAS NO WHERE TO GO
+    while (tempGrid[x][y] != null) {
+      cell = cell.reupdate();
+      cell.update();
+      x = cell.getRow();
+      y = cell.getColumn();
+    }
+    return cell;
   }
+
+  private void makeTempGrid() {
+
+    tempGrid = new Cell[HEIGHT][WIDTH];
+
+    for (List<Cell> list : myGrid) {
+      for (Cell cell : list) {
+        int x = cell.getRow();
+        int y = cell.getColumn();
+        //Step 1: place cell's into new random location
+        cell = cellUpdater(cell);
+
+        if (cell.getState() != EMPTY) {
+          tempGrid[cell.getRow()][cell.getColumn()] = cell;
+        }
+
+        //Step 2: check for reproduction, if they reprodocued, place
+        if (cell.getCurrentObject().isReproducing()) {
+          tempGrid[x][y] = new WaTorCell(x, y, cell.getCurrentObject().getID(), 5, 5, 5);
+        }
+      }
+    }
+  }
+
+  private List<List<Cell>> convertTempList() {
+    List<List<Cell>> ret = new ArrayList<>();
+    for (Cell[] list : tempGrid) {
+      List<Cell> temp = new ArrayList<>(Arrays.asList(list));
+      ret.add(temp);
+    }
+    return ret;
+  }
+
+
+  public void updateGrid() {
+    makeTempGrid();
+
+    myGrid.setGrid(convertTempList());
+  }
+
 }
 

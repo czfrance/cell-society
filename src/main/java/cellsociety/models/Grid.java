@@ -47,7 +47,7 @@ public class Grid implements Iterable<List<Cell>> {
   }
 
   public void addRow() {
-    myGrid.add(new ArrayList<Cell>());
+    myGrid.add(new ArrayList<>());
   }
 
   public void updateGrid(List<List<Integer>> newGrid) {
