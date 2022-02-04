@@ -12,9 +12,9 @@ public class WaTorModel extends SimulationModel {
 
   Cell[][] grid;
 
-  private final int EMPTY = 0;
-  private final int FISH = 1;
-  private final int SHARK = 2;
+  private static final int EMPTY = 0;
+  private static final int FISH = 1;
+  private static final int SHARK = 2;
 
   public WaTorModel(Map<String, String> dataValues) {
     super(dataValues);

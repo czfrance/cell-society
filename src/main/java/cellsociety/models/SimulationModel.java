@@ -21,9 +21,9 @@ public abstract class SimulationModel {
   protected Map<String, String> simInfo;
   protected String simType;
 
-  public final String HEIGHT_INFO = "height";
-  public final String WIDTH_INFO = "width";
-  public final String SATISFIED_INFO = "satisfied";
+  public static final String HEIGHT_INFO = "height";
+  public static final String WIDTH_INFO = "width";
+  public static final String SATISFIED_INFO = "satisfied";
 
   protected List<List<Cell>> myGrid = new ArrayList<>();
 

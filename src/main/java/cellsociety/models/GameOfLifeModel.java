@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
 
-  private final int DEAD = 0;
-  private final int ALIVE = 1;
+  private static final int DEAD = 0;
+  private static final int ALIVE = 1;
 
   public GameOfLifeModel(Map<String, String> dataValues) {
     super(dataValues);
