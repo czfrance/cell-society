@@ -4,11 +4,9 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.WaTorCell;
 import cellsociety.models.SimulationModel;
 
-import cellsociety.view_cells.LifeViewCell;
 import cellsociety.view_cells.WaTorViewCell;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.text.Text;
 
 
 public class WaTorView extends SimulationView{
@@ -29,7 +27,7 @@ public class WaTorView extends SimulationView{
 
   @Override
   protected void makeGrid() {
-    List<List<Cell>> cellGrid = model.getGrid();
+    List<List<Cell>> cellGrid = model.getGrid().getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
       grid.add(new ArrayList<>());
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
@@ -45,10 +43,10 @@ public class WaTorView extends SimulationView{
 
   @Override
   protected void updateGrid() {
-    List<List<Cell>> cellGrid = model.getGrid();
+    List<List<Cell>> cellGrid = model.getGrid().getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = ((WaTorCell) cellGrid.get(row).get(cell)).getCurrentState();
+        int state = ((WaTorCell) cellGrid.get(row).get(cell)).getState();
         switch (state) {
           case 0, 1, 2 -> {grid.get(row).get(cell).updateState(state);}
           default -> {}
