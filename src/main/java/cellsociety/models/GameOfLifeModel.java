@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
 
+  private static final int DEAD = 0;
+  private static final int ALIVE = 1;
 
   public GameOfLifeModel(Map<String, String> dataValues) {
     super(dataValues);
@@ -21,8 +23,8 @@ public class GameOfLifeModel extends SimulationModel {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
         case '.' -> {myGrid.add(new ArrayList<>());rowNum++;colNum = 0;}
-        case '0' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 0));colNum++;}
-        case '1' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, 1));colNum++;}
+        case '0' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, DEAD));colNum++;}
+        case '1' -> {myGrid.get(rowNum).add(new LifeCell(colNum, rowNum, ALIVE));colNum++;}
         default -> {}
       }
     }

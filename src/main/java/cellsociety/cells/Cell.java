@@ -9,22 +9,22 @@ public abstract class Cell {
   protected int COLUMN;
   protected int ROW;
 
-  public final int TOP_LEFT = 1;
-  public final int TOP_RIGHT = 2;
-  public final int BOTTOM_LEFT = 3;
-  public final int BOTTOM_RIGHT = 4;
+  public static final int TOP_LEFT = 1;
+  public static final int TOP_RIGHT = 2;
+  public static final int BOTTOM_LEFT = 3;
+  public static final int BOTTOM_RIGHT = 4;
 
-  public final int LEFT_EDGE = 1;
-  public final int RIGHT_EDGE = 2;
-  public final int TOP_EDGE = 3;
-  public final int BOTTOM_EDGE = 4;
+  public static final int LEFT_EDGE = 1;
+  public static final int RIGHT_EDGE = 2;
+  public static final int TOP_EDGE = 3;
+  public static final int BOTTOM_EDGE = 4;
 
   protected int myState;
   protected int nextState;
 
-  public final int EMPTY = 0;
-  public final int FISH = 1;
-  public final int SHARK = 2;
+  public static final int EMPTY = 0;
+  public static final int FISH = 1;
+  public static final int SHARK = 2;
 
   protected List<Cell> myNeighbors;
 

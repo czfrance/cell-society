@@ -24,7 +24,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
 public abstract class SimulationView {
 
   protected BorderPane root = new BorderPane();
@@ -135,7 +134,6 @@ public abstract class SimulationView {
     button.setOnAction(e -> {
       dialog.showAndWait();
     });
-
 
     homebox.getChildren().addAll(t, button);
     // will move this to css file

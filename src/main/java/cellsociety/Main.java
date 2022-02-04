@@ -67,27 +67,7 @@ public class Main extends Application {
 
       Map<String, String> info = new XMLParser().getInformation(dataFile);
 
-      SimulationView view;
-
-      switch (info.get(SimulationModel.DATA_FIELDS.get(0))) {
-        case "GameOfLife" -> {
-          view = new GameOfLifeView(new GameOfLifeModel(info));
-        }
-        case "Percolation" -> {
-          view = new PercolationView(new PercolationModel(info));
-        }
-        case "Segregation" -> {
-          view = new SegregationView(new SegregationModel(info));
-        }
-        case "SpreadingFire" -> {
-          view = new SpreadingFireView(new SpreadingFireModel(info));
-        }
-        case "WaTor" -> {
-          view = new WaTorView(new WaTorModel(info));
-        }
-        default -> throw new XMLException("not a simulation type",
-            SimulationModel.DATA_FIELDS.get(0));
-      }
+      SimulationView view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
 
       stage.setTitle(TITLE);
       // add our user interface components to Frame and show it
@@ -95,6 +75,8 @@ public class Main extends Application {
       stage.setHeight(740);
       stage.setWidth(810);
       stage.show();
+
+
       // start somewhere, less typing for debugging
     } catch (XMLException e) {
       // handle error of unexpected file formatgetSi
@@ -102,7 +84,21 @@ public class Main extends Application {
     }
     //dataFile = FILE_CHOOSER.showOpenDialog(stage);
   }
+  private SimulationView selectView(String type, Map<String, String> info) {
+    switch (type) {
+      case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info));}
 
+      case "Percolation" -> {return new PercolationView(new PercolationModel(info));}
+
+      case "Segregation" -> {return new SegregationView(new SegregationModel(info));}
+
+      case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info));}
+
+      case "WaTor" -> {return new WaTorView(new WaTorModel(info));}
+
+      default -> throw new XMLException("not a simulation type", type);
+    }
+  }
   // display given message to user using the given type of Alert dialog box
   private void showMessage(AlertType type, String message) {
     new Alert(type, message).showAndWait();
