@@ -168,14 +168,14 @@ public abstract class SimulationView {
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
-    String label = model.getMyResources().getString(property);
+    //String label = model.getMyResources().getString(property);
 
-    if (label.matches(IMAGEFILE_SUFFIXES)) {
-      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
-    }
-    else {
-      result.setText(label);
-    }
+//    if (label.matches(IMAGEFILE_SUFFIXES)) {
+//      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
+//    }
+//    else {
+//      result.setText(label);
+//    }
 
 
     result.setOnAction(handler);

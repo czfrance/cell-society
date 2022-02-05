@@ -1,5 +1,7 @@
 package cellsociety.cells;
 
+import cellsociety.models.Grid;
+
 public class WaTorCell extends Cell{
 
   public static final int EMPTY = 0;
@@ -17,12 +19,14 @@ public class WaTorCell extends Cell{
 
   private WaTorCell previousState;
 
+  private boolean tempBlock;
+
   public WaTorCell(WaTorCell cell) {
     super(cell.getColumn(), cell.getRow(), cell.getState());
     column = cell.getColumn();
     row = cell.getRow();
-    shark = cell.getShark();
-    fish = cell.getFish();
+    shark = new SharkCell(cell.getShark());
+    fish = new  FishCell(cell.getFish());
     empty = new EmptyWaTorCell(column, row, EMPTY);
     currentState = cell.getState();
   }
@@ -34,11 +38,9 @@ public class WaTorCell extends Cell{
   public WaTorCell(int x, int y, int code, int reproductionTimer, int nutritionValue, int health) {
     super(x, y, code);
 
-    switch (code) {
-      case EMPTY -> empty = new EmptyWaTorCell(x, y, code);
-      case FISH -> fish = new FishCell(x, y, code, reproductionTimer, nutritionValue);
-      case SHARK -> shark = new SharkCell(x, y, code, health, reproductionTimer);
-    }
+    empty = new EmptyWaTorCell(x, y, code);
+    fish = new FishCell(x, y, code, reproductionTimer, nutritionValue);
+    shark = new SharkCell(x, y, code, health, reproductionTimer);
 
     currentState = code;
 
@@ -47,9 +49,13 @@ public class WaTorCell extends Cell{
   }
 
   @Override
-  public void update() {
+  public void update(int width, int height, Grid grid) {
+    if (currentState == EMPTY) return;
     previousState = new WaTorCell(this);
-    getCurrentObject().update();
+    getCurrentObject().update(width, height, grid);
+
+    if (getCurrentObject().isDead()) currentState = EMPTY;
+
     column = getCurrentObject().getColumn();
     row = getCurrentObject().getRow();
   }
@@ -82,7 +88,7 @@ public class WaTorCell extends Cell{
     fish = f;
   }
 
-  public void setEmpty(boolean block){
+  public void setEmpty(){
     currentState = EMPTY;
   }
 
@@ -105,4 +111,10 @@ public class WaTorCell extends Cell{
     return getCurrentObject().isReproducing();
   }
 
+  public void block() {tempBlock = true;}
+  public void unblock() {tempBlock = false;}
+  public boolean isBlocked() {return tempBlock;}
+  public void setNew(int state,int repoTimer, int nutVal) {
+    if (state == FISH) setFish(new FishCell(getColumn(), getRow(), state, repoTimer, nutVal));
+  }
 }

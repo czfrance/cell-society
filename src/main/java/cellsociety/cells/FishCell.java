@@ -12,8 +12,21 @@ public class FishCell extends Cell {
 
   private final int NUTRITION_VALUE;
   private final Random DICE = new Random();
-  private boolean isDead;
-  private boolean isReproducing;
+  private boolean isDead = false;
+  private boolean isReproducing = false;
+
+  public FishCell (FishCell cell) {
+    super(cell.getColumn(), cell.getRow(), cell.getID());
+    reproductionTimer = cell.reproductionTimer;
+    isDead = cell.isDead;
+    isReproducing = cell.isReproducing;
+
+    INITIAL_REPROTIMER = cell.INITIAL_REPROTIMER;
+    NUTRITION_VALUE = cell.NUTRITION_VALUE;
+
+    ID = FISH;
+    myState = FISH;
+  }
 
   public FishCell(int x, int y, int initState, int reproductionTimer, int nutritionValue) {
     super(x, y, initState);
@@ -24,31 +37,31 @@ public class FishCell extends Cell {
 
     ID = FISH;
     myState = FISH;
-
-    isDead = false;
   }
 
-  public void move(int width, int height, Grid grid) {
-    initNeighbors(width, height, grid);
+  public void update(int width, int height, Grid grid) {
+    move(width, height, grid);
+  }
+
+  private void move(int width, int height, Grid grid) {
+    initFiniteNeighbors(width, height, grid);
     List<Cell> potentialMove = getPotentialMove();
+
     if (potentialMove.size() != 0) {
       Cell selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
       COLUMN = selectedMove.getColumn();
       ROW = selectedMove.getRow();
+      isReproducing = reproductionTimer <= 0;
     }
 
     reproductionTimer--;
-    if(reproductionTimer == 0) {
-      isReproducing = true;
-      reproduction();
-      reproductionTimer = INITIAL_REPROTIMER;
-    } else isReproducing = false;
+
   }
 
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getID() == EMPTY) {
+      if (c.getID() == EMPTY && !c.isBlocked()) {
         potentialMove.add(c);
       }
     }
@@ -57,16 +70,6 @@ public class FishCell extends Cell {
 
   public int getNutrition() {return NUTRITION_VALUE;}
 
-  public FishCell reproduction() {
-
-    return new FishCell(getColumn(), getRow(), FISH, INITIAL_REPROTIMER, NUTRITION_VALUE);
-  }
-
-  @Override
-  public int getNextState() {
-    return myState;
-  }
-
   public void death() {
     isDead = true;
   }
@@ -74,4 +77,15 @@ public class FishCell extends Cell {
   public boolean isDead() {return isDead;}
 
   public boolean isReproducing() {return isReproducing;}
+
+
+  @Override
+  public int getNextState() {
+    return 0;
+  }
+  public void resetReproductionTimer() {
+    reproductionTimer = INITIAL_REPROTIMER;
+    isReproducing = false;
+  }
+
 }

@@ -25,9 +25,7 @@ public class Grid implements Iterable<List<Cell>> {
     HEIGHT = (WIDTH == 0) ? grid.get(0).size() : 0;
   }
 
-  public void setGrid(List<List<Cell>> newGrid) {
-    myGrid = newGrid;
-  }
+  public void setGrid(List<List<Cell>> newGrid) {myGrid = newGrid;}
 
   public List<List<Cell>> getGrid() {
     return myGrid;
@@ -38,9 +36,7 @@ public class Grid implements Iterable<List<Cell>> {
   }
 
   @Override
-  public Iterator<List<Cell>> iterator() {
-    return myGrid.iterator();
-  }
+  public Iterator<List<Cell>> iterator() {return myGrid.iterator();}
 
   public List<Cell> getRow(int x) {
     return myGrid.get(x);
@@ -50,11 +46,31 @@ public class Grid implements Iterable<List<Cell>> {
     myGrid.add(new ArrayList<>());
   }
 
+  public void addRow(List<Cell> row) {myGrid.add(row);}
+
   public void updateGrid(List<List<Integer>> newGrid) {
     for (int i = 0; i < HEIGHT; i++) {
       for (int k = 0; k < WIDTH; k++) {
         myGrid.get(i).get(k).setState(newGrid.get(i).get(k));
       }
     }
+  }
+  public void initNeighbors() {
+    for (List<Cell> list : myGrid) {
+      for (Cell cell : list) {
+        cell.initWrapNeighbors(WIDTH, HEIGHT, this);
+      }
+    }
+  }
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (List<Cell> list : myGrid) {
+      for (Cell cell : list) {
+        sb.append(cell).append(" ");
+      }
+      sb.append("\n");
+    }
+    return sb.toString();
   }
 }

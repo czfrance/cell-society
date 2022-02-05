@@ -2,24 +2,22 @@ package cellsociety.views;
 
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
-import cellsociety.view_cells.LifeViewCell;
+import cellsociety.view_cells.RPSViewCell;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameOfLifeView extends SimulationView {
+public class RPSView extends SimulationView{
 
-  public GameOfLifeView(SimulationModel simModel) {
-    super(simModel);
-  }
+  public RPSView(SimulationModel simModel) {super(simModel);}
 
   @Override
   protected String getRules() {
-    return "Rules: ";
+    return null;
   }
 
   @Override
   protected String getName() {
-    return "Game of Life";
+    return null;
   }
 
   @Override
@@ -30,7 +28,7 @@ public class GameOfLifeView extends SimulationView {
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         int state = cellGrid.get(row).get(cell).getMyState();
         switch (state) {
-          case 0, 1 -> {grid.get(row).add(new LifeViewCell(cell, row, cellSize, state));}
+          case 0, 1, 2 -> {grid.get(row).add(new RPSViewCell(cell, row, cellSize, state));}
           default -> {}
         }
       }
@@ -44,7 +42,7 @@ public class GameOfLifeView extends SimulationView {
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         int state = cellGrid.get(row).get(cell).getMyState();
         switch (state) {
-          case 0, 1 -> {grid.get(row).get(cell).updateState(state);}
+          case 0, 1, 2 -> {grid.get(row).get(cell).updateState(state);}
           default -> {}
         }
       }

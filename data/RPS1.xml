@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="Rock Paper Scissors">
+  <simulationType>Rock Paper Scissors</simulationType>
+  <title>WaTor: feeding frenzy</title>
+  <author>Cynthia France</author>
+  <description>fish are surrounded by sharks. they will die.</description>
+  <width>33</width>
+  <height>6</height>
+  <config>
+    012021021021021012021021012021021.
+    021012012021000222201010202010210.
+    000100011122200020020020001102022.
+    111122222000111220011100222210202.
+    122222111020102010120202201201021.
+    120012012010120120120120120120202
+  </config>
+</data>
