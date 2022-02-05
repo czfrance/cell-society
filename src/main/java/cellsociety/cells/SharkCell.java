@@ -16,7 +16,17 @@ public class SharkCell extends Cell {
   private Random DICE = new Random();
   private boolean isReproducing;
 
-  public int getRepoTimer() {return reproductionTimer;}
+  public SharkCell(SharkCell cell) {
+    super(cell.getColumn(), cell.getRow(), cell.getID());
+
+    myHealth = cell.myHealth;
+    ID = SHARK;
+    INITAL_REPROTIMER = cell.INITAL_REPROTIMER;
+    INITIAL_HEALTH = cell.INITIAL_HEALTH;
+    myState = SHARK;
+    isDead = cell.isDead();
+
+  }
   public SharkCell(int x, int y, int initState, int health, int reproductionTimer) {
 
     super(x, y, initState);
@@ -38,16 +48,23 @@ public class SharkCell extends Cell {
     Cell selectedMove;
     reproductionTimer--;
 
-    checkForReproduction();
-
     if (fishList.size() == 0) {
       List<Cell> potentialMove = getPotentialMove();
-      if (potentialMove.size() != 0) selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
+      if (potentialMove.size() != 0) {
+        selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
+        COLUMN = selectedMove.getColumn();
+        ROW = selectedMove.getRow();
+        checkForReproduction();
+      }
+
       myHealth--;
     } else {
       selectedMove = fishList.get(DICE.nextInt(fishList.size()));
-      ((WaTorCell)selectedMove).getFish().death();
-      myHealth += ((WaTorCell) selectedMove).getFish().getNutrition();
+      selectedMove.getFish().death();
+      myHealth += selectedMove.getFish().getNutrition();
+      COLUMN = selectedMove.getColumn();
+      ROW = selectedMove.getRow();
+      checkForReproduction();
     }
 
     if (myHealth == 0) {
@@ -61,7 +78,7 @@ public class SharkCell extends Cell {
     List<Cell> fishList = new ArrayList<>();
     for (Cell c : myNeighbors) {
       int k = c.getState();
-      if (k == FISH) fishList.add(c);
+      if (k == FISH && !c.isBlocked()) fishList.add(c);
     }
     return fishList;
   }
@@ -69,11 +86,10 @@ public class SharkCell extends Cell {
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getState() == EMPTY) potentialMove.add(c);
+      if (c.getState() == EMPTY && !c.isBlocked()) potentialMove.add(c);
     }
     return potentialMove;
   }
-
 
   public void death() {
     isDead = true;
@@ -86,15 +102,13 @@ public class SharkCell extends Cell {
 
   public boolean isDead() {return isDead;}
 
-  public int getHealth() {return myHealth;}
-
   public boolean isReproducing() {return isReproducing;}
 
   private void checkForReproduction() {
-    if (reproductionTimer == 0) {
-      isReproducing = true;
-      reproductionTimer = INITAL_REPROTIMER;
-
-    } else isReproducing = false;
+    isReproducing = reproductionTimer < 0;
+  }
+  public void resetReproductionTimer() {
+    reproductionTimer = INITAL_REPROTIMER;
+    isReproducing = false;
   }
 }

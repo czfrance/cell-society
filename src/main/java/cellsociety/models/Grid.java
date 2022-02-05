@@ -25,9 +25,7 @@ public class Grid implements Iterable<List<Cell>> {
     HEIGHT = (WIDTH == 0) ? grid.get(0).size() : 0;
   }
 
-  public void setGrid(List<List<Cell>> newGrid) {
-    myGrid = newGrid;
-  }
+  public void setGrid(List<List<Cell>> newGrid) {myGrid = newGrid;}
 
   public List<List<Cell>> getGrid() {
     return myGrid;
@@ -49,6 +47,8 @@ public class Grid implements Iterable<List<Cell>> {
   public void addRow() {
     myGrid.add(new ArrayList<>());
   }
+
+  public void addRow(List<Cell> row) {myGrid.add(row);}
 
   public void updateGrid(List<List<Integer>> newGrid) {
     for (int i = 0; i < WIDTH; i++) {

@@ -190,8 +190,6 @@ public abstract class Cell {
 
   public int getState() {return myState;}
 
-  protected void death() {}
-
   protected int getNutrition() {return -1;}
 
   public Cell reupdate() { return null;}
@@ -199,4 +197,17 @@ public abstract class Cell {
   public boolean isReproducing() {return false;}
 
   public Cell getCurrentObject() {return null;}
+
+  public boolean isDead() {return false;}
+
+  public void block() {}
+  public void unblock() {}
+  public boolean isBlocked() {return false;}
+  public void resetReproductionTimer() {}
+  public void setFish(FishCell f){}
+  public void setShark(SharkCell s){}
+  public FishCell getFish() {return null;}
+  public SharkCell getShark(){return null;}
+  public void setEmpty() {}
+  public void setNew(int state, int repoTimer, int nutVal) {}
 }
