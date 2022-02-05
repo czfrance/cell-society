@@ -34,8 +34,8 @@ public abstract class SimulationView {
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
 
-  private Button GameOfLife;
-  private Button Percolation;
+  private Button newConfigButton;
+  private Button saveConfig;
   private Button Segregation;
   private Button SpreadingFire;
   private Button WaTor;
@@ -44,7 +44,7 @@ public abstract class SimulationView {
   private final double simulationSpeed; //generations per second
   private boolean play = true;
 
-  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+  public static final String DEFAULT_RESOURCE_PACKAGE = "src/main/resources/";
   public static final String STYLESHEET = "default.css";
 
   public SimulationView(SimulationModel simModel) {
@@ -87,8 +87,10 @@ public abstract class SimulationView {
 
 //    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
 //    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
-    scene.getStylesheets().add("/default.css");
-//    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+    //scene.getStylesheets().add("/default.css");
+    //scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+    //System.out.println(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+    //scene.getStylesheets().add(getClass().getResource(DEFAULT_RESOURCE_PACKAGE + STYLESHEET).toExternalForm());
 
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
@@ -117,17 +119,18 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    GameOfLife = makeButton("Game of Life", event -> GoL());
-    Percolation = makeButton("Percolation", event -> Percolation());
-    Segregation = makeButton("Segregation", event -> Segregation());
-    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-    WaTor = makeButton("WaTor", event -> Wator());
+    newConfigButton = makeButton("Load New", event -> doNewConfig());
+    saveConfig = makeButton("Percolation", event -> doSaveConfig());
+//    Percolation = makeButton("Percolation", event -> Percolation());
+    //Segregation = makeButton("Segregation", event -> Segregation());
+//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
+//    WaTor = makeButton("WaTor", event -> Wator());
 
-    result.getChildren().add(GameOfLife);
-    result.getChildren().add(Percolation);
-    result.getChildren().add(Segregation);
-    result.getChildren().add(SpreadingFire);
-    result.getChildren().add(WaTor);
+    result.getChildren().add(newConfigButton);
+//    result.getChildren().add(Percolation);
+//    result.getChildren().add(Segregation);
+//    result.getChildren().add(SpreadingFire);
+//    result.getChildren().add(WaTor);
 
     return result;
   }
@@ -178,15 +181,25 @@ public abstract class SimulationView {
     return mediaBar;
   }
 
+  public Button getNewConfigButton() {
+    return newConfigButton;
+  }
+
+  public Button getSaveConfigButton() {
+    return saveConfig;
+  }
+
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
 
 
-  private void Segregation() {
+  private void doNewConfig() {
+
   }
 
-  private void Percolation() {
+  private void doSaveConfig() {
+
   }
 
   private void SoF() {
