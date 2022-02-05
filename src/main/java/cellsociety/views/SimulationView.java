@@ -140,9 +140,6 @@ public abstract class SimulationView {
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
-//    Text txt = new Text("Click the button to show the dialog");
-//    Font font = Font.font("Courier New", FontWeight.BOLD, FontPosture.REGULAR, 12);
-//    txt.setFont(font);
     Button button = new Button("Info");
     button.setOnAction(e -> {
       dialog.showAndWait();
@@ -161,19 +158,22 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  Button makeButton(String label, EventHandler<ActionEvent> handler) {
+  private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     result.setText(label);
     result.setOnAction(handler);
     return result;
   }
+
   private Node controlAnimation() {
     HBox mediaBar = new HBox();
     mediaBar.setAlignment(Pos.CENTER);
 
-    final Button playButton  = new Button(">");
-    final Button pauseButton  = new Button("||");
-    mediaBar.getChildren().addAll(playButton, pauseButton);
+    final Button togglePlayButton = makeButton(">||", e -> doTogglePlayButton()); //new Button(">||");
+    //final Button pauseButton  = new Button("||");
+    final Button stepButton = makeButton(">>|", e -> doStepButton()); //new Button(">>|");
+    mediaBar.getChildren().addAll(togglePlayButton, stepButton);
+    mediaBar.setSpacing(10);
     return mediaBar;
   }
 
@@ -194,8 +194,18 @@ public abstract class SimulationView {
   private void Wator() {
   }
 
-  void GoL() {
+  private void GoL() {
   }
+
+  private void doTogglePlayButton() {
+    play = !play;
+  }
+
+  private void doStepButton() {
+    model.updateGrid();
+    updateGrid();
+  }
+
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case ENTER -> {
