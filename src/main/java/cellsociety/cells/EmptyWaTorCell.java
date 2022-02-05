@@ -8,6 +8,7 @@ public class EmptyWaTorCell extends Cell{
     super(x, y, initState);
   }
 
+
   @Override
   public int getNextState() {
     return 0;

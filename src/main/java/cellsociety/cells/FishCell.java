@@ -78,6 +78,7 @@ public class FishCell extends Cell {
 
   public boolean isReproducing() {return isReproducing;}
 
+
   @Override
   public int getNextState() {
     return 0;

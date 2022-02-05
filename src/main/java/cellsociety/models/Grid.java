@@ -36,9 +36,7 @@ public class Grid implements Iterable<List<Cell>> {
   }
 
   @Override
-  public Iterator<List<Cell>> iterator() {
-    return myGrid.iterator();
-  }
+  public Iterator<List<Cell>> iterator() {return myGrid.iterator();}
 
   public List<Cell> getRow(int x) {
     return myGrid.get(x);
@@ -51,9 +49,16 @@ public class Grid implements Iterable<List<Cell>> {
   public void addRow(List<Cell> row) {myGrid.add(row);}
 
   public void updateGrid(List<List<Integer>> newGrid) {
-    for (int i = 0; i < WIDTH; i++) {
-      for (int k = 0; k < HEIGHT; k++) {
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int k = 0; k < WIDTH; k++) {
         myGrid.get(i).get(k).setState(newGrid.get(i).get(k));
+      }
+    }
+  }
+  public void initNeighbors() {
+    for (List<Cell> list : myGrid) {
+      for (Cell cell : list) {
+        cell.initNeighbors(WIDTH, HEIGHT, this);
       }
     }
   }

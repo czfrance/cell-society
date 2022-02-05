@@ -52,18 +52,20 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
+    myGrid.initNeighbors();
     myGrid.updateGrid(newStates);
   }
 
   protected List<List<Integer>> getCellNextStates() {
     List<List<Integer>> newStates = new ArrayList<>();
-    newStates.add(new ArrayList<>());
 
     for (int row = 0; row < myGrid.size(); row++) {
-      for (Cell c : myGrid.getRow(row)) {
-        newStates.get(row).add(c.getNextState());
-      }
       newStates.add(new ArrayList<>());
+      for (Cell c : myGrid.getRow(row)) {
+        int k  = c.getNextState();
+        newStates.get(row).add(k);
+      }
+
     }
 
     return newStates;

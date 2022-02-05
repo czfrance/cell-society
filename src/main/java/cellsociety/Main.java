@@ -2,12 +2,14 @@ package cellsociety;
 
 import cellsociety.models.GameOfLifeModel;
 import cellsociety.models.PercolationModel;
+import cellsociety.models.RockPaperSciModel;
 import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
 import cellsociety.models.WaTorModel;
 import cellsociety.views.GameOfLifeView;
 import cellsociety.views.PercolationView;
+import cellsociety.views.RPSView;
 import cellsociety.views.SegregationView;
 import cellsociety.views.SimulationView;
 import cellsociety.views.SpreadingFireView;
@@ -95,6 +97,8 @@ public class Main extends Application {
       case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info));}
 
       case "WaTor" -> {return new WaTorView(new WaTorModel(info));}
+
+      case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info));}
 
       default -> throw new XMLException("not a simulation type", type);
     }

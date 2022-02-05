@@ -39,6 +39,8 @@ public abstract class Cell {
 
   public void setState(int state) {myState = state;}
 
+  public int getCurrentState() {return ID;}
+
   public abstract int getNextState();
 
   public int getMyState() {return myState;}
