@@ -10,12 +10,13 @@ public class PercolationModel extends SimulationModel {
 
   boolean initStateIsSet = false;
 
-  public PercolationModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public PercolationModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
   }
 
   @Override
   protected void createGrid() {
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {

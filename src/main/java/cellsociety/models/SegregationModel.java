@@ -13,12 +13,13 @@ public class SegregationModel extends SimulationModel{
   private int numUnhappy1;
   private int numUnhappy2;
 
-  public SegregationModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public SegregationModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
   }
 
   @Override
   protected void createGrid() {
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {

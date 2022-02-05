@@ -20,8 +20,13 @@ import cellsociety.xml.XMLParser;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 //import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
@@ -34,6 +39,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 
 
 /**
@@ -53,50 +59,96 @@ public class Main extends Application {
   public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_EXTENSION);
   public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
   private static final int GAME_SIZE = 900;
-  private static final int FRAMES_PER_SECOND = 60;
-  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private double framesPerSecond;
+  private double secondDelay;
+  public static double RATE_CHANGE = 0.1;
+  private SimulationView view;
+  private double rate = 1.0;
+  private Stage myStage;
 
+  public static final String LANGUAGE = "English";
 
   /**
    * Initialize what will be displayed.
    */
   @Override
   public void start(Stage stage) {
-
+    myStage = stage;
     File dataFile = FILE_CHOOSER.showOpenDialog(stage);
     try {
       String name = dataFile.getName();
 
       Map<String, String> info = new XMLParser().getInformation(dataFile);
 
-      SimulationView view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
+      view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
+      framesPerSecond = view.framesPerSec();
+      secondDelay = 1.0 / framesPerSecond;
 
       stage.setTitle(TITLE);
+      Scene scene = view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
       // add our user interface components to Frame and show it
-      stage.setScene(view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height));
+      stage.setScene(scene);
       stage.setHeight(740);
       stage.setWidth(810);
       stage.show();
+      Timeline animation = new Timeline();
+      playAnimation(animation, view);
 
+      scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
+      Button newConfigButton = view.getNewConfigButton();
+      newConfigButton.setOnAction(e -> doNewConfig());
+      Button saveConfigButton = view.getSaveConfigButton();
+      newConfigButton.setOnAction(e -> doSaveConfig());
 
-      // start somewhere, less typing for debugging
     } catch (XMLException e) {
-      // handle error of unexpected file formatgetSi
+      // handle error of unexpected file format
       showMessage(AlertType.ERROR, e.getMessage());
     }
-    //dataFile = FILE_CHOOSER.showOpenDialog(stage);
   }
+
+  private void doNewConfig() {
+    start(myStage);
+  }
+
+  private void doSaveConfig() {
+
+  }
+
+  private void handleKeyInput(KeyCode code, Timeline animation) {
+    switch (code) {
+      case LEFT -> {
+        if (rate > 0.2) {
+          rate -= RATE_CHANGE;
+          animation.setRate(rate);
+        }
+      }
+      case RIGHT -> {
+        rate += RATE_CHANGE;
+        animation.setRate(rate);
+      }
+    }
+    System.out.println(rate);
+  }
+
+  private void playAnimation(Timeline animation, SimulationView view) {
+    animation.setCycleCount(Timeline.INDEFINITE);
+    framesPerSecond = view.framesPerSec();
+    animation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
+    animation.play();
+  }
+
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
-      case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info));}
+      case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info, LANGUAGE));}
 
-      case "Percolation" -> {return new PercolationView(new PercolationModel(info));}
+      case "Percolation" -> {return new PercolationView(new PercolationModel(info, LANGUAGE));}
 
-      case "Segregation" -> {return new SegregationView(new SegregationModel(info));}
+      case "Segregation" -> {return new SegregationView(new SegregationModel(info, LANGUAGE));}
 
-      case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info));}
+      case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info, LANGUAGE));}
 
-      case "WaTor" -> {return new WaTorView(new WaTorModel(info));}
+      case "WaTor" -> {return new WaTorView(new WaTorModel(info, LANGUAGE));}
 
       case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info));}
 

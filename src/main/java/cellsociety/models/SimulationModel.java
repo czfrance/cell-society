@@ -4,10 +4,11 @@ import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public abstract class SimulationModel {
 
-  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "satisfied");
+  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "speed", "satisfied", "probCatch");
 
   public static final int SIMULATION_TYPE = 0;
   public static final int TITLE = 1;
@@ -16,7 +17,7 @@ public abstract class SimulationModel {
   public static final int WIDTH_FIELD = 4;
   public static final int HEIGHT_FIELD = 5;
   public static final int CONFIG = 6;
-  public static final int SATISFIED_FIELD = 7;
+  //public static final int SATISFIED_FIELD = 7;
 
   protected Map<String, String> simInfo;
   protected String simType;
@@ -24,26 +25,37 @@ public abstract class SimulationModel {
   public static final String HEIGHT_INFO = "height";
   public static final String WIDTH_INFO = "width";
   public static final String SATISFIED_INFO = "satisfied";
+  public static final String PROBCATCH_INFO = "probCatch";
+  public static final String SPEED = "speed";
 
   protected Grid myGrid;
 
   public final int WIDTH;
   public final int HEIGHT;
   public final double SATISFIED;
+  public final double PROBCATCH;
 
   private int iteration;
-  private int simulationSpeed;
+  private double simulationSpeed;
 
 
-  public SimulationModel(Map<String, String> dataValues) {
+
+  private ResourceBundle myResources;
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+
+
+  public SimulationModel(Map<String, String> dataValues, String language) {
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
-    if (simInfo.get(SATISFIED_INFO) != "") SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
+    if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
+    if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
+    else PROBCATCH = 0;
+    simulationSpeed = Double.parseDouble(simInfo.get(SPEED));
 
     myGrid = new Grid(WIDTH, HEIGHT);
-
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
 
     createGrid();
@@ -80,18 +92,6 @@ public abstract class SimulationModel {
   public int[] getGridSize() {
     return new int[]{Integer.parseInt(simInfo.get("width")),
         Integer.parseInt(simInfo.get("height"))};
-  }
-
-  /**
-   * Prints the current grid
-   */
-  public void printGrid() {
-    for (List l : myGrid) {
-      for (Object i : l) {
-        System.out.print(i);
-      }
-      System.out.println();
-    }
   }
 
   /**
@@ -144,16 +144,16 @@ public abstract class SimulationModel {
    *
    * @return the speed at which the simulation is operating at
    */
-  public int getSpeed() {
+  public double getSpeed() {
     return simulationSpeed;
   }
 
   /**
-   * Setter method
+   * Sets the speed (generations per second) of the simulation
    *
    * @param newSpeed, the new speed the simulation should operate at
    */
-  public void setSpeed(int newSpeed) {
+  public void setSpeed(double newSpeed) {
     simulationSpeed = newSpeed;
   }
 
@@ -170,6 +170,10 @@ public abstract class SimulationModel {
         c.initNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
+  }
+
+  public ResourceBundle getMyResources() {
+    return myResources;
   }
 }
 

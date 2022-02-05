@@ -15,8 +15,8 @@ public class WaTorModel extends SimulationModel {
   private static final int FISH = 1;
   private static final int SHARK = 2;
 
-  public WaTorModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public WaTorModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
     simType = "WaTor";
     tempGrid = new WaTorCell[HEIGHT][WIDTH];
 
@@ -24,7 +24,7 @@ public class WaTorModel extends SimulationModel {
 
   @Override
   protected void createGrid() {
-
+    myGrid.addRow();
     int rowNum = 0;
     int colNum = 0;
     for (int i = 0; i < simInfo.get(DATA_FIELDS.get(6)).toCharArray().length; i++) {

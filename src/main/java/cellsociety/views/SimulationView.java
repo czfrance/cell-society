@@ -1,9 +1,12 @@
 package cellsociety.views;
 
+import cellsociety.Main;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -13,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -22,6 +27,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public abstract class SimulationView {
@@ -32,30 +39,36 @@ public abstract class SimulationView {
   protected List<List<ViewCell>> grid = new ArrayList<>();
   protected double cellSize;
 
-  private Button GameOfLife;
-  private Button Percolation;
+  private Button newConfigButton;
+  private Button saveConfig;
   private Button Segregation;
   private Button SpreadingFire;
   private Button WaTor;
 
   private HBox homeBox;
-
+  private final double simulationSpeed; //generations per second
+  private boolean play = true;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public static final String STYLESHEET = "default.css";
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
+    simulationSpeed = model.getSpeed();
+  }
+
+  public double framesPerSec() {
+    return simulationSpeed;
   }
 
   public Scene makeScene(int width, int height) {
 
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
 
-    FlowPane topPane = new FlowPane();
+    //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
-    root.setRight(topPane);
+    //root.setRight(topPane);
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
@@ -68,8 +81,6 @@ public abstract class SimulationView {
     double rightWidth = 0; //root.getRight().getBoundsInParent().getMaxX()-root.getRight().getBoundsInParent().getMinX();
     double gridWidth = width - leftWidth - rightWidth;
 
-    System.out.println(width + " " + gridWidth + " " + height + " " + gridHeight);
-
     cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
     makeGrid();
     Node tmp = addGridToNode();
@@ -78,15 +89,17 @@ public abstract class SimulationView {
 
     Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
-
-//    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
-//    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
-    scene.getStylesheets().add("/default.css");
-//    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
-
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
+
+  public void step() {
+    if (play) {
+      model.updateGrid();
+      updateGrid();
+    }
+  }
+
   private Node addGridToNode() {
     VBox temp = new VBox();
     temp.setAlignment(Pos.CENTER);
@@ -103,17 +116,18 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    GameOfLife = makeButton("Game of Life", event -> GoL());
-    Percolation = makeButton("Percolation", event -> Percolation());
-    Segregation = makeButton("Segregation", event -> Segregation());
-    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-    WaTor = makeButton("WaTor", event -> Wator());
+    newConfigButton = makeButton("LoadNew", event -> doNewConfig());
+    saveConfig = makeButton("Percolation", event -> doSaveConfig());
+//    Percolation = makeButton("Percolation", event -> Percolation());
+    //Segregation = makeButton("Segregation", event -> Segregation());
+//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
+//    WaTor = makeButton("WaTor", event -> Wator());
 
-    result.getChildren().add(GameOfLife);
-    result.getChildren().add(Percolation);
-    result.getChildren().add(Segregation);
-    result.getChildren().add(SpreadingFire);
-    result.getChildren().add(WaTor);
+    result.getChildren().add(newConfigButton);
+//    result.getChildren().add(Percolation);
+//    result.getChildren().add(Segregation);
+//    result.getChildren().add(SpreadingFire);
+//    result.getChildren().add(WaTor);
 
     return result;
   }
@@ -124,19 +138,21 @@ public abstract class SimulationView {
     t.setFont(Font.font ("Courier New", 25));
 
     Dialog<String> dialog = new Dialog<String>();
+
+
     dialog.setTitle(getName()+" Rules");
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
-    Text txt = new Text("Click the button to show the dialog");
-    Font font = Font.font("Courier New", FontWeight.BOLD, FontPosture.REGULAR, 12);
-    txt.setFont(font);
-    Button button = new Button("Info");
-    button.setOnAction(e -> {
-      dialog.showAndWait();
-    });
 
-    homebox.getChildren().addAll(t, button);
+//    Button button = new Button("Info");
+//    button.setOnAction(e -> {
+//      dialog.showAndWait();
+//    });
+
+    Button infoButton = makeButton("Info", e -> dialog.showAndWait());
+
+    homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
     homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
             + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -149,20 +165,40 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  Button makeButton(String label, EventHandler<ActionEvent> handler) {
+  private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
-    result.setText(label);
+    final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
+    String label = model.getMyResources().getString(property);
+
+    if (label.matches(IMAGEFILE_SUFFIXES)) {
+      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
+    }
+    else {
+      result.setText(label);
+    }
+
+
     result.setOnAction(handler);
     return result;
   }
+
   private Node controlAnimation() {
     HBox mediaBar = new HBox();
     mediaBar.setAlignment(Pos.CENTER);
 
-    final Button playButton  = new Button(">");
-    final Button pauseButton  = new Button("||");
-    mediaBar.getChildren().addAll(playButton, pauseButton);
+    final Button togglePlayButton = makeButton(">||", e -> doTogglePlayButton());
+    final Button stepButton = makeButton(">>|", e -> doStepButton());
+    mediaBar.getChildren().addAll(togglePlayButton, stepButton);
+    mediaBar.setSpacing(10);
     return mediaBar;
+  }
+
+  public Button getNewConfigButton() {
+    return newConfigButton;
+  }
+
+  public Button getSaveConfigButton() {
+    return saveConfig;
   }
 
   protected abstract void makeGrid();
@@ -170,10 +206,12 @@ public abstract class SimulationView {
   protected abstract void updateGrid();
 
 
-  private void Segregation() {
+  private void doNewConfig() {
+
   }
 
-  private void Percolation() {
+  private void doSaveConfig() {
+
   }
 
   private void SoF() {
@@ -182,8 +220,18 @@ public abstract class SimulationView {
   private void Wator() {
   }
 
-  void GoL() {
+  private void GoL() {
   }
+
+  private void doTogglePlayButton() {
+    play = !play;
+  }
+
+  private void doStepButton() {
+    model.updateGrid();
+    updateGrid();
+  }
+
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case ENTER -> {
