@@ -51,8 +51,8 @@ public class Grid implements Iterable<List<Cell>> {
   }
 
   public void updateGrid(List<List<Integer>> newGrid) {
-    for (int i = 0; i < WIDTH; i++) {
-      for (int k = 0; k < HEIGHT; k++) {
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int k = 0; k < WIDTH; k++) {
         myGrid.get(i).get(k).setState(newGrid.get(i).get(k));
       }
     }
