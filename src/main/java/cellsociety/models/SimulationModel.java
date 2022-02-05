@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class SimulationModel {
 
-  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "satisfied", "probCatch");
+  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "speed", "satisfied", "probCatch");
 
   public static final int SIMULATION_TYPE = 0;
   public static final int TITLE = 1;
@@ -16,7 +16,7 @@ public abstract class SimulationModel {
   public static final int WIDTH_FIELD = 4;
   public static final int HEIGHT_FIELD = 5;
   public static final int CONFIG = 6;
-  public static final int SATISFIED_FIELD = 7;
+  //public static final int SATISFIED_FIELD = 7;
 
   protected Map<String, String> simInfo;
   protected String simType;
@@ -25,6 +25,7 @@ public abstract class SimulationModel {
   public static final String WIDTH_INFO = "width";
   public static final String SATISFIED_INFO = "satisfied";
   public static final String PROBCATCH_INFO = "probCatch";
+  public static final String SPEED = "speed";
 
   protected Grid myGrid;
 
@@ -34,7 +35,7 @@ public abstract class SimulationModel {
   public final double PROBCATCH;
 
   private int iteration;
-  private int simulationSpeed;
+  private double simulationSpeed;
 
 
   public SimulationModel(Map<String, String> dataValues) {
@@ -45,6 +46,7 @@ public abstract class SimulationModel {
     else SATISFIED = 0;
     if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
     else PROBCATCH = 0;
+    simulationSpeed = Double.parseDouble(simInfo.get(SPEED));
 
     myGrid = new Grid(WIDTH, HEIGHT);
     // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
@@ -133,16 +135,16 @@ public abstract class SimulationModel {
    *
    * @return the speed at which the simulation is operating at
    */
-  public int getSpeed() {
+  public double getSpeed() {
     return simulationSpeed;
   }
 
   /**
-   * Setter method
+   * Sets the speed (generations per second) of the simulation
    *
    * @param newSpeed, the new speed the simulation should operate at
    */
-  public void setSpeed(int newSpeed) {
+  public void setSpeed(double newSpeed) {
     simulationSpeed = newSpeed;
   }
 

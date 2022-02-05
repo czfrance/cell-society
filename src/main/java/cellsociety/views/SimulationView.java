@@ -39,23 +39,29 @@ public abstract class SimulationView {
   private Button WaTor;
 
   private HBox homeBox;
-
+  private double simulationSpeed; //generations per second
+  private boolean play = true;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public static final String STYLESHEET = "default.css";
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
+    simulationSpeed = model.getSpeed();
+  }
+
+  public double framesPerSec() {
+    return simulationSpeed;
   }
 
   public Scene makeScene(int width, int height) {
 
     cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
 
-    FlowPane topPane = new FlowPane();
+    //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
-    root.setRight(topPane);
+    //root.setRight(topPane);
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
@@ -67,8 +73,6 @@ public abstract class SimulationView {
     double leftWidth = root.getLeft().getBoundsInParent().getMaxX()-root.getLeft().getBoundsInParent().getMinX();
     double rightWidth = 0; //root.getRight().getBoundsInParent().getMaxX()-root.getRight().getBoundsInParent().getMinX();
     double gridWidth = width - leftWidth - rightWidth;
-
-    System.out.println(width + " " + gridWidth + " " + height + " " + gridHeight);
 
     cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
     makeGrid();
@@ -87,6 +91,14 @@ public abstract class SimulationView {
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
+
+  public void step() {
+    if (play) {
+      model.updateGrid();
+      updateGrid();
+    }
+  }
+
   private Node addGridToNode() {
     VBox temp = new VBox();
     temp.setAlignment(Pos.CENTER);
@@ -128,9 +140,9 @@ public abstract class SimulationView {
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
-    Text txt = new Text("Click the button to show the dialog");
-    Font font = Font.font("Courier New", FontWeight.BOLD, FontPosture.REGULAR, 12);
-    txt.setFont(font);
+//    Text txt = new Text("Click the button to show the dialog");
+//    Font font = Font.font("Courier New", FontWeight.BOLD, FontPosture.REGULAR, 12);
+//    txt.setFont(font);
     Button button = new Button("Info");
     button.setOnAction(e -> {
       dialog.showAndWait();

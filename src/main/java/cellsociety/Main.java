@@ -18,6 +18,8 @@ import cellsociety.xml.XMLParser;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.Map;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -32,6 +34,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 
 
 /**
@@ -51,8 +54,8 @@ public class Main extends Application {
   public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_EXTENSION);
   public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
   private static final int GAME_SIZE = 900;
-  private static final int FRAMES_PER_SECOND = 60;
-  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private double framesPerSecond;
+  private double secondDelay;// = 1.0 / FRAMES_PER_SECOND;
 
 
   /**
@@ -68,6 +71,10 @@ public class Main extends Application {
       Map<String, String> info = new XMLParser().getInformation(dataFile);
 
       SimulationView view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
+      framesPerSecond = view.framesPerSec();
+      secondDelay = 1.0 / framesPerSecond;
+
+      System.out.println(framesPerSecond + " " + secondDelay);
 
       stage.setTitle(TITLE);
       // add our user interface components to Frame and show it
@@ -75,7 +82,8 @@ public class Main extends Application {
       stage.setHeight(740);
       stage.setWidth(810);
       stage.show();
-
+      Timeline animation = new Timeline();
+      playAnimation(animation, view);
 
       // start somewhere, less typing for debugging
     } catch (XMLException e) {
@@ -84,6 +92,14 @@ public class Main extends Application {
     }
     //dataFile = FILE_CHOOSER.showOpenDialog(stage);
   }
+
+  private void playAnimation(Timeline animation, SimulationView view) {
+    animation.setCycleCount(Timeline.INDEFINITE);
+    animation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
+    animation.play();
+  }
+
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
       case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info));}
