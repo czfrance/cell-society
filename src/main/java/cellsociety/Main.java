@@ -65,7 +65,6 @@ public class Main extends Application {
   private SimulationView view;
   private double rate = 1.0;
   private Stage myStage;
-
   public static final String LANGUAGE = "English";
 
   /**
@@ -150,7 +149,7 @@ public class Main extends Application {
 
       case "WaTor" -> {return new WaTorView(new WaTorModel(info, LANGUAGE));}
 
-      case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info));}
+      case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info, LANGUAGE));}
 
       default -> throw new XMLException("not a simulation type", type);
     }

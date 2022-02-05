@@ -35,6 +35,7 @@ public abstract class Cell {
 
     myState = initState;
     ID = initState;
+    myNeighbors = new ArrayList<>();
   }
 
   public void setState(int state) {myState = state;}
@@ -45,130 +46,44 @@ public abstract class Cell {
 
   public int getMyState() {return myState;}
 
-  /**
-   * This method is unique in the fact that it identifies if the cell is not only an
-   * edge piece, but identifies which edge it is on
-
-   * @param width of the simulation
-   * @param height of the simulation
-   * @return  1 = Left Edge
-   *          2 = Right Edge
-   *          3 = Top Edge
-   *          4 = Bottom Edge
-   */
-  public int isEdge(int width, int height) {
-    if (COLUMN == 0) return LEFT_EDGE;
-    if (COLUMN == width-1) return RIGHT_EDGE;
-    if (ROW == 0) return TOP_EDGE;
-    if (ROW == height-1) return BOTTOM_EDGE;
-    return -1;
-  }
-
-  /**
-   * This method is unique in the fact that it identifies if the cell is not only a
-   * corner piece, but identifies which corner it is on
-   *
-   * @param width of the simulation
-   * @param height of the simulation
-   * @return  1 = TOP LEFT
-   *          2 = BOTTOM LEFT
-   *          3 = TOP RIGHT
-   *          4 = BOTTOM RIGHT
-   */
-  public int isCorner(int width, int height) {
-    if (COLUMN == 0 && ROW == 0) return TOP_LEFT;
-    if (COLUMN == 0 && ROW == height-1) return BOTTOM_LEFT;
-    if (COLUMN == width-1 && ROW == 0) return TOP_RIGHT;
-    if (COLUMN == width-1 && ROW == height-1) return BOTTOM_RIGHT;
-    return -1;
-  }
-
-  public void initNeighbors(int width, int height, Grid grid) {
-    int corner = isCorner(width, height);
-    int edge = isEdge(width, height);
-    if (corner != -1) {
-      myNeighbors = cornerNeighbors(corner, grid);
-    } else if (edge != -1) {
-      myNeighbors = edgeNeighbors(edge, grid);
-    } else {
-      myNeighbors = centerNeighbors(grid);
-    }
-  }
-
-  private List<Cell> edgeNeighbors(int code, Grid grid) {
-    switch (code) {
-      case TOP_EDGE:
-        return findEdgeNeighbors(0, 2, -1, 2, grid);
-      case BOTTOM_EDGE:
-        return findEdgeNeighbors(-1, 1, -1, 2, grid);
-      case RIGHT_EDGE:
-        return findEdgeNeighbors(-1, 2, -1, 1, grid);
-      case LEFT_EDGE:
-        return findEdgeNeighbors(-1, 2, 0, 2, grid);
-      default:
-        System.out.println("NOT AN EDGE");
-        return null;
-    }
-  }
-
-  private List<Cell> findEdgeNeighbors(int outerStart, int outerEnd, int innerStart, int innerEnd, Grid grid) {
-    List<Cell> neighbors = new ArrayList<>();
-    int currOut = outerStart;
-    int currIn;
-    for (;currOut < outerEnd; currOut++) {
-      currIn = innerStart;
-      for (;currIn < innerEnd; currIn++) {
-        if (currOut!=0 || currIn!=0) {
-          neighbors.add(grid.getRow(ROW + currOut).get(COLUMN + currIn));
-        }
-      }
-    }
-    return neighbors;
-  }
-
-  private List<Cell> cornerNeighbors(int code, Grid grid) {
-    List<Cell> neighbors = new ArrayList<>();
-
-    switch (code) {
-      case TOP_LEFT -> {
-        neighbors.add(grid.getRow(ROW + 1).get(COLUMN + 1));
-        neighbors.add(grid.getRow(ROW).get(COLUMN + 1));
-        neighbors.add(grid.getRow(ROW + 1).get(COLUMN));
-      }
-      case TOP_RIGHT -> {
-        neighbors.add(grid.getRow(ROW + 1).get(COLUMN));
-        neighbors.add(grid.getRow(ROW + 1).get(COLUMN - 1));
-        neighbors.add(grid.getRow(ROW).get(COLUMN - 1));
-      }
-      case BOTTOM_LEFT -> {
-        neighbors.add(grid.getRow(ROW - 1).get(COLUMN + 1));
-        neighbors.add(grid.getRow(ROW - 1).get(COLUMN));
-        neighbors.add(grid.getRow(ROW).get(COLUMN + 1));
-      }
-      case BOTTOM_RIGHT -> {
-        neighbors.add(grid.getRow(ROW - 1).get(COLUMN - 1));
-        neighbors.add(grid.getRow(ROW).get(COLUMN - 1));
-        neighbors.add(grid.getRow(ROW - 1).get(COLUMN));
-      }
-      default -> System.out.println("NOT A CORNER");
-    }
-    return neighbors;
-  }
-
-  private List<Cell> centerNeighbors(Grid grid) {
-    List<Cell> neighbors = new ArrayList<>();
+  public void initFiniteNeighbors(int width, int height, Grid grid) {
     for (int i = -1; i < 2; i++) {
-      for (int j = -1; j < 2; j++) {
-        if (i!=0 || j!=0) {
-          neighbors.add(grid.getRow(ROW + i).get(COLUMN + j));
+      for (int k = -1; k < 2; k++) {
+        if (inBounds(COLUMN + k, ROW + i, width, height) && (i !=0 || k !=0)) {
+          myNeighbors.add(grid.getRow(ROW + i).get(COLUMN + k));
         }
       }
     }
-    return neighbors;
   }
+
+  public void initWrapNeighbors(int width, int height, Grid grid) {
+    myNeighbors = new ArrayList<>();
+    for (int i = -1; i < 2; i++) {
+      for (int k = -1; k < 2; k++) {
+        if ((i !=0 || k !=0)) {
+          int x = flip(COLUMN + k, width);
+          int y = flip(ROW + i, height);
+          myNeighbors.add(grid.getRow(y).get(x));
+        }
+      }
+    }
+  }
+
+  public boolean inBounds(int x, int y, int width, int height) {
+    return (x >= 0 && x < width) && (y >= 0 && y < height);
+  }
+  public int flip(int x, int boundary) {
+    if (x >= boundary) return 0;
+    else if (x < 0) return boundary - 1;
+    return x;
+  }
+
+
+
 
   @Override
-  public String toString() {return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);}
+  public String toString() {
+    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);}
 
   public boolean isAlive() {return myState == 1;}
 

@@ -9,8 +9,8 @@ public class RockPaperSciModel extends SimulationModel {
   private final int PAPER = 1;
   private final int SCISSORS = 2;
 
-  public RockPaperSciModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public RockPaperSciModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
     simType = "RockPaperSci";
   }
 

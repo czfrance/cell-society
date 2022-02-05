@@ -36,6 +36,5 @@ public class LifeCell extends Cell {
   public void update() {
     myState = nextState;
   }
-  public void death() {}
 
 }

@@ -41,11 +41,11 @@ public abstract class SimulationModel {
 
 
   private ResourceBundle myResources;
-  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
-
+  public static final String DEFAULT_RESOURCE_PACKAGE = "src/main/resources/";
+  public static final String EXTENSION = ".properties";
 
   public SimulationModel(Map<String, String> dataValues, String language) {
-    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
+    //myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language + EXTENSION);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
@@ -66,6 +66,7 @@ public abstract class SimulationModel {
     List<List<Integer>> newStates = getCellNextStates();
     myGrid.initNeighbors();
     myGrid.updateGrid(newStates);
+    System.out.println(myGrid);
   }
 
   protected List<List<Integer>> getCellNextStates() {
@@ -167,7 +168,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(WIDTH, HEIGHT, myGrid);
+        c.initWrapNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
   }

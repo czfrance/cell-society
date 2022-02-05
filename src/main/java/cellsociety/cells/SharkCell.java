@@ -41,7 +41,7 @@ public class SharkCell extends Cell {
 
   @Override
   public void update(int width, int height, Grid grid) {
-    initNeighbors(width, height, grid);
+    initFiniteNeighbors(width, height, grid);
 
     List<Cell> fishList = searchForFish();
 
