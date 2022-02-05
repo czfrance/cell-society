@@ -1,7 +1,5 @@
 package cellsociety.cells;
 
-import java.util.Random;
-
 public class BurningCell extends Cell{
 
   public static final int TREE = 0;
@@ -17,7 +15,7 @@ public class BurningCell extends Cell{
 
   @Override
   public int getNextState() {
-    switch (myState) {
+    switch (currentState) {
       case TREE-> {return treeNextState();}
       default -> {return DEAD;}
     }
@@ -25,7 +23,7 @@ public class BurningCell extends Cell{
 
   private boolean inDanger() {
     for (Cell c : myNeighbors) {
-      if (c.getMyState() == BURNING) {
+      if (c.getMyCurrentState() == BURNING) {
         return true;
       }
     }

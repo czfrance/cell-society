@@ -38,8 +38,6 @@ public abstract class SimulationModel {
   private int iteration;
   private double simulationSpeed;
 
-
-
   private ResourceBundle myResources;
   public static final String DEFAULT_RESOURCE_PACKAGE = "src/main/resources/";
   public static final String EXTENSION = ".properties";
@@ -49,8 +47,10 @@ public abstract class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
+
     if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
+
     if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
     else PROBCATCH = 0;
     simulationSpeed = Double.parseDouble(simInfo.get(SPEED));
@@ -95,6 +95,21 @@ public abstract class SimulationModel {
         Integer.parseInt(simInfo.get("height"))};
   }
 
+  public void handleInput() {
+    //need to implement within extended classes
+  }
+
+  private void initGrid() {
+    for (List<Cell> l : myGrid) {
+      for (Cell c : l) {
+        c.initWrapNeighbors(WIDTH, HEIGHT, myGrid);
+      }
+    }
+  }
+
+  public ResourceBundle getMyResources() {
+    return myResources;
+  }
   /**
    * @see Object#toString()
    */
@@ -161,20 +176,6 @@ public abstract class SimulationModel {
   /**
    * Handles user input such as mouseclicks and button presses
    */
-  public void HandleKeyInput() {
-    //need to implement within extended classes
-  }
 
-  private void initGrid() {
-    for (List<Cell> l : myGrid) {
-      for (Cell c : l) {
-        c.initWrapNeighbors(WIDTH, HEIGHT, myGrid);
-      }
-    }
-  }
-
-  public ResourceBundle getMyResources() {
-    return myResources;
-  }
 }
 

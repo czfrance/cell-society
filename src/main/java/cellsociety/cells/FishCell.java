@@ -7,7 +7,7 @@ import cellsociety.models.Grid;
 
 public class FishCell extends Cell {
 
-  private final int INITIAL_REPROTIMER;
+  private final int INITIAL_REPRODUCTION_TIMER;
   private int reproductionTimer;
 
   private final int NUTRITION_VALUE;
@@ -16,27 +16,27 @@ public class FishCell extends Cell {
   private boolean isReproducing = false;
 
   public FishCell (FishCell cell) {
-    super(cell.getColumn(), cell.getRow(), cell.getID());
+    super(cell.getColumn(), cell.getRow(), cell.getCurrentState());
     reproductionTimer = cell.reproductionTimer;
     isDead = cell.isDead;
     isReproducing = cell.isReproducing;
 
-    INITIAL_REPROTIMER = cell.INITIAL_REPROTIMER;
+    INITIAL_REPRODUCTION_TIMER = cell.INITIAL_REPRODUCTION_TIMER;
     NUTRITION_VALUE = cell.NUTRITION_VALUE;
 
-    ID = FISH;
-    myState = FISH;
+    currentState = WaTorCell.FISH;
+    currentState = WaTorCell.FISH;
   }
 
   public FishCell(int x, int y, int initState, int reproductionTimer, int nutritionValue) {
     super(x, y, initState);
 
-    INITIAL_REPROTIMER = reproductionTimer;
+    INITIAL_REPRODUCTION_TIMER = reproductionTimer;
     this.reproductionTimer = reproductionTimer;
     NUTRITION_VALUE = nutritionValue;
 
-    ID = FISH;
-    myState = FISH;
+    currentState = WaTorCell.FISH;
+    currentState = WaTorCell.FISH;
   }
 
   public void update(int width, int height, Grid grid) {
@@ -61,7 +61,7 @@ public class FishCell extends Cell {
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getID() == EMPTY && !c.isBlocked()) {
+      if (c.getCurrentState() == WaTorCell.EMPTY && !c.isBlocked()) {
         potentialMove.add(c);
       }
     }
@@ -84,7 +84,7 @@ public class FishCell extends Cell {
     return 0;
   }
   public void resetReproductionTimer() {
-    reproductionTimer = INITIAL_REPROTIMER;
+    reproductionTimer = INITIAL_REPRODUCTION_TIMER;
     isReproducing = false;
   }
 

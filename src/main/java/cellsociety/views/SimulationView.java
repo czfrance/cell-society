@@ -214,15 +214,6 @@ public abstract class SimulationView {
 
   }
 
-  private void SoF() {
-  }
-
-  private void Wator() {
-  }
-
-  private void GoL() {
-  }
-
   private void doTogglePlayButton() {
     play = !play;
   }

@@ -1,14 +1,10 @@
 package cellsociety.views;
 
 import cellsociety.cells.Cell;
-import cellsociety.cells.PercolatingCell;
 import cellsociety.models.SimulationModel;
-import cellsociety.view_cells.BlockedPercolationViewCell;
-import cellsociety.view_cells.PercolatingViewCell;
 import cellsociety.view_cells.SchellingGroupViewCell;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.text.Text;
 
 public class SegregationView extends SimulationView{
 
@@ -32,7 +28,7 @@ public class SegregationView extends SimulationView{
     for (int row = 0; row < cellGrid.size(); row++) {
       grid.add(new ArrayList<>());
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = cellGrid.get(row).get(cell).getMyState();
+        int state = cellGrid.get(row).get(cell).getMyCurrentState();
         switch (state) {
           case 0, 1, 2 -> {
             grid.get(row).add(new SchellingGroupViewCell(cell, row, cellSize, state));
@@ -48,7 +44,7 @@ public class SegregationView extends SimulationView{
     List<List<Cell>> cellGrid = model.getGrid().getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = cellGrid.get(row).get(cell).getMyState();
+        int state = cellGrid.get(row).get(cell).getMyCurrentState();
         switch (state) {
           case 0, 1, 2-> {grid.get(row).get(cell).updateState(state);}
           default -> {}
