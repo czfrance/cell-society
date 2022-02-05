@@ -74,8 +74,6 @@ public class Main extends Application {
       framesPerSecond = view.framesPerSec();
       secondDelay = 1.0 / framesPerSecond;
 
-      System.out.println(framesPerSecond + " " + secondDelay);
-
       stage.setTitle(TITLE);
       // add our user interface components to Frame and show it
       stage.setScene(view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height));
