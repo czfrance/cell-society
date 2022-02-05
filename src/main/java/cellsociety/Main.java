@@ -23,6 +23,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 //import javafx.stage.Stage;
@@ -57,17 +58,18 @@ public class Main extends Application {
   public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
   private static final int GAME_SIZE = 900;
   private double framesPerSecond;
-  private double secondDelay;// = 1.0 / FRAMES_PER_SECOND;
+  private double secondDelay;
   public static double RATE_CHANGE = 0.1;
   private SimulationView view;
   private double rate = 1.0;
+  private Stage myStage;
 
   /**
    * Initialize what will be displayed.
    */
   @Override
   public void start(Stage stage) {
-
+    myStage = stage;
     File dataFile = FILE_CHOOSER.showOpenDialog(stage);
     try {
       String name = dataFile.getName();
@@ -85,18 +87,27 @@ public class Main extends Application {
       stage.setHeight(740);
       stage.setWidth(810);
       stage.show();
-      //TimeUnit.SECONDS.sleep(2);
-      //play();
-      //view.loop();
       Timeline animation = new Timeline();
       playAnimation(animation, view);
 
       scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
+      Button newConfigButton = view.getNewConfigButton();
+      newConfigButton.setOnAction(e -> doNewConfig());
+      Button saveConfigButton = view.getSaveConfigButton();
+      newConfigButton.setOnAction(e -> doSaveConfig());
 
     } catch (XMLException e) {
       // handle error of unexpected file format
       showMessage(AlertType.ERROR, e.getMessage());
     }
+  }
+
+  private void doNewConfig() {
+    start(myStage);
+  }
+
+  private void doSaveConfig() {
+
   }
 
   private void handleKeyInput(KeyCode code, Timeline animation) {
