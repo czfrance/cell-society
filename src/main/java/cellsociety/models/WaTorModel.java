@@ -15,8 +15,8 @@ public class WaTorModel extends SimulationModel {
   private static final int FISH = 1;
   private static final int SHARK = 2;
 
-  public WaTorModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public WaTorModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
     simType = "WaTor";
     tempGrid = new WaTorCell[HEIGHT][WIDTH];
 

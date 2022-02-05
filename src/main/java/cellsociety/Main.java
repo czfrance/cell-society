@@ -64,6 +64,8 @@ public class Main extends Application {
   private double rate = 1.0;
   private Stage myStage;
 
+  public static final String LANGUAGE = "English";
+
   /**
    * Initialize what will be displayed.
    */
@@ -136,15 +138,15 @@ public class Main extends Application {
 
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
-      case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info));}
+      case "GameOfLife" -> {return new GameOfLifeView(new GameOfLifeModel(info, LANGUAGE));}
 
-      case "Percolation" -> {return new PercolationView(new PercolationModel(info));}
+      case "Percolation" -> {return new PercolationView(new PercolationModel(info, LANGUAGE));}
 
-      case "Segregation" -> {return new SegregationView(new SegregationModel(info));}
+      case "Segregation" -> {return new SegregationView(new SegregationModel(info, LANGUAGE));}
 
-      case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info));}
+      case "SpreadingFire" -> {return new SpreadingFireView(new SpreadingFireModel(info, LANGUAGE));}
 
-      case "WaTor" -> {return new WaTorView(new WaTorModel(info));}
+      case "WaTor" -> {return new WaTorView(new WaTorModel(info, LANGUAGE));}
 
       default -> throw new XMLException("not a simulation type", type);
     }

@@ -4,6 +4,7 @@ import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public abstract class SimulationModel {
 
@@ -38,7 +39,13 @@ public abstract class SimulationModel {
   private double simulationSpeed;
 
 
-  public SimulationModel(Map<String, String> dataValues) {
+
+  private ResourceBundle myResources;
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+
+
+  public SimulationModel(Map<String, String> dataValues, String language) {
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
@@ -161,6 +168,10 @@ public abstract class SimulationModel {
         c.initNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
+  }
+
+  public ResourceBundle getMyResources() {
+    return myResources;
   }
 }
 

@@ -5,6 +5,7 @@ import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -24,6 +27,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public abstract class SimulationView {
@@ -44,7 +49,7 @@ public abstract class SimulationView {
   private final double simulationSpeed; //generations per second
   private boolean play = true;
 
-  public static final String DEFAULT_RESOURCE_PACKAGE = "src/main/resources/";
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public static final String STYLESHEET = "default.css";
 
   public SimulationView(SimulationModel simModel) {
@@ -84,14 +89,6 @@ public abstract class SimulationView {
 
     Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
-
-//    String FILE_NAME = "src/main/resources/LevelOneConfig.txt";
-//    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
-    //scene.getStylesheets().add("/default.css");
-    //scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
-    //System.out.println(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
-    //scene.getStylesheets().add(getClass().getResource(DEFAULT_RESOURCE_PACKAGE + STYLESHEET).toExternalForm());
-
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
@@ -119,7 +116,7 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    newConfigButton = makeButton("Load New", event -> doNewConfig());
+    newConfigButton = makeButton("LoadNew", event -> doNewConfig());
     saveConfig = makeButton("Percolation", event -> doSaveConfig());
 //    Percolation = makeButton("Percolation", event -> Percolation());
     //Segregation = makeButton("Segregation", event -> Segregation());
@@ -141,16 +138,21 @@ public abstract class SimulationView {
     t.setFont(Font.font ("Courier New", 25));
 
     Dialog<String> dialog = new Dialog<String>();
+
+
     dialog.setTitle(getName()+" Rules");
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
-    Button button = new Button("Info");
-    button.setOnAction(e -> {
-      dialog.showAndWait();
-    });
 
-    homebox.getChildren().addAll(t, button);
+//    Button button = new Button("Info");
+//    button.setOnAction(e -> {
+//      dialog.showAndWait();
+//    });
+
+    Button infoButton = makeButton("Info", e -> dialog.showAndWait());
+
+    homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
     homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
             + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -163,9 +165,19 @@ public abstract class SimulationView {
   protected abstract String getName();
 
 
-  private Button makeButton(String label, EventHandler<ActionEvent> handler) {
+  private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
-    result.setText(label);
+    final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
+    String label = model.getMyResources().getString(property);
+
+    if (label.matches(IMAGEFILE_SUFFIXES)) {
+      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
+    }
+    else {
+      result.setText(label);
+    }
+
+
     result.setOnAction(handler);
     return result;
   }
