@@ -1,7 +1,6 @@
 package cellsociety.models;
 
 import cellsociety.cells.LifeCell;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
