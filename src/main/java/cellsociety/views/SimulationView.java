@@ -1,9 +1,11 @@
 package cellsociety.views;
 
+import cellsociety.Main;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -39,7 +41,7 @@ public abstract class SimulationView {
   private Button WaTor;
 
   private HBox homeBox;
-  private double simulationSpeed; //generations per second
+  private final double simulationSpeed; //generations per second
   private boolean play = true;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
@@ -169,9 +171,8 @@ public abstract class SimulationView {
     HBox mediaBar = new HBox();
     mediaBar.setAlignment(Pos.CENTER);
 
-    final Button togglePlayButton = makeButton(">||", e -> doTogglePlayButton()); //new Button(">||");
-    //final Button pauseButton  = new Button("||");
-    final Button stepButton = makeButton(">>|", e -> doStepButton()); //new Button(">>|");
+    final Button togglePlayButton = makeButton(">||", e -> doTogglePlayButton());
+    final Button stepButton = makeButton(">>|", e -> doStepButton());
     mediaBar.getChildren().addAll(togglePlayButton, stepButton);
     mediaBar.setSpacing(10);
     return mediaBar;

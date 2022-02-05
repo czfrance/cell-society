@@ -18,10 +18,12 @@ import cellsociety.xml.XMLParser;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 //import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
@@ -56,7 +58,9 @@ public class Main extends Application {
   private static final int GAME_SIZE = 900;
   private double framesPerSecond;
   private double secondDelay;// = 1.0 / FRAMES_PER_SECOND;
-
+  public static double RATE_CHANGE = 0.1;
+  private SimulationView view;
+  private double rate = 1.0;
 
   /**
    * Initialize what will be displayed.
@@ -70,29 +74,50 @@ public class Main extends Application {
 
       Map<String, String> info = new XMLParser().getInformation(dataFile);
 
-      SimulationView view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
+      view = selectView(info.get(SimulationModel.DATA_FIELDS.get(SimulationModel.SIMULATION_TYPE)), info);
       framesPerSecond = view.framesPerSec();
       secondDelay = 1.0 / framesPerSecond;
 
       stage.setTitle(TITLE);
+      Scene scene = view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
       // add our user interface components to Frame and show it
-      stage.setScene(view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height));
+      stage.setScene(scene);
       stage.setHeight(740);
       stage.setWidth(810);
       stage.show();
+      //TimeUnit.SECONDS.sleep(2);
+      //play();
+      //view.loop();
       Timeline animation = new Timeline();
       playAnimation(animation, view);
 
-      // start somewhere, less typing for debugging
+      scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
+
     } catch (XMLException e) {
-      // handle error of unexpected file formatgetSi
+      // handle error of unexpected file format
       showMessage(AlertType.ERROR, e.getMessage());
     }
-    //dataFile = FILE_CHOOSER.showOpenDialog(stage);
+  }
+
+  private void handleKeyInput(KeyCode code, Timeline animation) {
+    switch (code) {
+      case LEFT -> {
+        if (rate > 0.2) {
+          rate -= RATE_CHANGE;
+          animation.setRate(rate);
+        }
+      }
+      case RIGHT -> {
+        rate += RATE_CHANGE;
+        animation.setRate(rate);
+      }
+    }
+    System.out.println(rate);
   }
 
   private void playAnimation(Timeline animation, SimulationView view) {
     animation.setCycleCount(Timeline.INDEFINITE);
+    framesPerSecond = view.framesPerSec();
     animation.getKeyFrames()
         .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
     animation.play();
