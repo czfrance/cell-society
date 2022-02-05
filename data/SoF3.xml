@@ -13,5 +13,6 @@
     00000.
     00000
   </config>
+  <speed>1.0</speed>
   <probCatch>1</probCatch>
 </data>
