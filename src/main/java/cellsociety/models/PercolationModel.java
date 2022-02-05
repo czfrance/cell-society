@@ -10,8 +10,8 @@ public class PercolationModel extends SimulationModel {
 
   boolean initStateIsSet = false;
 
-  public PercolationModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public PercolationModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
   }
 
   @Override
