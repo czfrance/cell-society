@@ -2,19 +2,22 @@ package cellsociety.views;
 
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Optional;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -23,10 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
-
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
 
 public abstract class SimulationView {
 
@@ -45,7 +45,7 @@ public abstract class SimulationView {
   private boolean play = true;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
-  public String stylesheet= "light.css";
+  public String stylesheet = "light.css";
 
   private Slider slider;
   private Dialog newTitle;
@@ -73,14 +73,19 @@ public abstract class SimulationView {
     root.setBottom(controlAnimation());
     addTitle();
 
-    double topHeight = root.getTop().getBoundsInParent().getMaxY()-root.getTop().getBoundsInParent().getMinY();
-    double botHeight = root.getBottom().getBoundsInParent().getMaxY()-root.getBottom().getBoundsInParent().getMinY();
+    double topHeight =
+        root.getTop().getBoundsInParent().getMaxY() - root.getTop().getBoundsInParent().getMinY();
+    double botHeight =
+        root.getBottom().getBoundsInParent().getMaxY() - root.getBottom().getBoundsInParent()
+            .getMinY();
     double gridHeight = height - topHeight - botHeight;
-    double leftWidth = root.getLeft().getBoundsInParent().getMaxX()-root.getLeft().getBoundsInParent().getMinX();
+    double leftWidth =
+        root.getLeft().getBoundsInParent().getMaxX() - root.getLeft().getBoundsInParent().getMinX();
     double rightWidth = 0; //root.getRight().getBoundsInParent().getMaxX()-root.getRight().getBoundsInParent().getMinX();
     double gridWidth = width - leftWidth - rightWidth;
 
-    cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
+    cellSize = Math.min((gridWidth / model.getGridSize()[0]),
+        (gridHeight / model.getGridSize()[1]));
     makeGrid();
 //    HBox sims = new HBox();
     Node tmp = addGridToNode();
@@ -95,7 +100,8 @@ public abstract class SimulationView {
     newAuthor = createInputDialog("Simulation author:");
     newDescription = createInputDialog("Simulation description:");
 
-    scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
+    scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(),
+        root.getBoundsInParent().getHeight() + 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -165,11 +171,11 @@ public abstract class SimulationView {
   protected void addTitle() {
     HBox homebox = new HBox(10);
     Text t = new Text(getName());
-    t.setFont(Font.font ("Courier New", 25));
+    t.setFont(Font.font("Courier New", 25));
 
     Dialog<String> dialog = new Dialog<String>();
 
-    dialog.setTitle(getName()+" Rules");
+    dialog.setTitle(getName() + " Rules");
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
@@ -179,28 +185,29 @@ public abstract class SimulationView {
     homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
     homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-            + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
     homebox.setAlignment(Pos.CENTER);
     root.setTop(homebox);
   }
 
   protected abstract String getRules();
+
   protected abstract String getName();
 
 
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
-    final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
+    final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)",
+        String.join("|", ImageIO.getReaderFileSuffixes()));
     String label = model.getMyResources().getString(property);
 
     if (label.matches(IMAGEFILE_SUFFIXES)) {
-      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
-    }
-    else {
+      result.setGraphic(new ImageView(
+          new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
+    } else {
       result.setText(label);
     }
-
 
     result.setOnAction(handler);
     return result;
@@ -241,8 +248,7 @@ public abstract class SimulationView {
     if (stylesheet.equals("light.css")) {
       stylesheet = "dark.css";
 
-    }
-    else {
+    } else {
       stylesheet = "light.css";
     }
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
@@ -271,3 +277,4 @@ public abstract class SimulationView {
       }
     }
   }
+}

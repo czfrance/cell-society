@@ -44,7 +44,6 @@ public class FishCell extends Cell {
   }
 
   private void move(int width, int height, Grid grid) {
-    initFiniteNeighbors(width, height, grid);
     List<Cell> potentialMove = getPotentialMove();
 
     if (potentialMove.size() != 0) {
