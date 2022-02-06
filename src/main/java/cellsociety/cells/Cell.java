@@ -11,6 +11,7 @@ public abstract class Cell {
   public static final int FINITE = 0;
   public static final int TOROIDAL = 1;
   public static final int TRIANGULAR_TOROIDAL = 2;
+  public static final int HEXAGON = 3;
 
   protected int currentState;
 
@@ -49,6 +50,7 @@ public abstract class Cell {
       case FINITE -> {finiteNeighbors(width, height, grid);}
       case TOROIDAL -> {toroidalNeighbors(width, height, grid);}
       case TRIANGULAR_TOROIDAL -> {triangleNeighbors(width, height, grid);}
+      case HEXAGON -> {initHexagonNeighbors(width, height, grid);}
       default -> toroidalNeighbors(width, height, grid);
     }
 
@@ -65,7 +67,6 @@ public abstract class Cell {
   }
 
   private void toroidalNeighbors(int width, int height, Grid grid) {
-    myNeighbors = new ArrayList<>();
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
         if (i !=0 || k !=0) {
@@ -78,7 +79,6 @@ public abstract class Cell {
   }
 
   private void triangleNeighbors(int width, int height, Grid grid) {
-    int additional = 0;
 
     for (int i = -1; i < 2; i++) {
       int[] vals = getVals(i);
@@ -96,26 +96,16 @@ public abstract class Cell {
   }
   private int[] getVals(int i) {
     int[] ret = new int[2];
-    if (isFacingDown()) {
-      if (i == -1 || i == 0) {
-        ret[0] = -2;
-        ret[1] = 3;
-      }
-      if (i == 1) {
-        ret[0] = -1;
-        ret[1] = 2;
-      }
 
-    }
-    else {
-      if (i == 1 || i == 0) {
-        ret[0] = -2;
-        ret[1] = 3;
-      }
-      if (i == -1) {
-        ret[0] = -1;
-        ret[1] = 2;
-      }
+    if (isFacingDown() && (i == -1 || i == 0)) {
+      ret[0] = -2;
+      ret[1] = 3;
+    } else if (isFacingUp() && (i == 1 || i == 0)){
+      ret[0] = -2;
+      ret[1] = 3;
+    } else {
+      ret[0] = -1;
+      ret[1] = 2;
     }
 
     return ret;
@@ -124,8 +114,19 @@ public abstract class Cell {
 
   private boolean isFacingUp() {return orientation == ODD;}
 
-  private void initHexagonNeighbors() {
-
+  private void initHexagonNeighbors(int width, int height, Grid grid) {
+    for (int i = -1; i < 2; i++) {
+      int guard;
+      if (i == 0) guard = 2;
+      else guard = 1;
+      for (int k = -1; k < guard; k++) {
+        if (i !=0 || k !=0) {
+          int x = flip(COLUMN + k, width);
+          int y = flip(ROW + i, height);
+          myNeighbors.add(grid.getRow(y).get(x));
+        }
+      }
+    }
   }
 
   public boolean inBounds(int x, int y, int width, int height) {
