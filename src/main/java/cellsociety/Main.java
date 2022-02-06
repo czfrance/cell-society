@@ -32,7 +32,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-
 /**
  * Feel free to completely change this code or delete it entirely.
  *
