@@ -40,7 +40,7 @@ public abstract class SimulationModel {
 
   private ResourceBundle myResources;
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
-//  public static final String EXTENSION = ".properties";
+  //public static final String EXTENSION = ".properties";
 
   public SimulationModel(Map<String, String> dataValues, String language) {
 
@@ -63,6 +63,10 @@ public abstract class SimulationModel {
 
     createGrid();
     initGrid();
+  }
+
+  public Map<String, String> getSimInfo() {
+    return simInfo;
   }
 
   public void updateGrid() {

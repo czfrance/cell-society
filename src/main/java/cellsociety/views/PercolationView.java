@@ -21,7 +21,7 @@ public class PercolationView extends SimulationView {
 
   @Override
   protected String getName() {
-    return "Percolation";
+    return model.getMyResources().getString("Percolation");
   }
 
   @Override

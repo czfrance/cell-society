@@ -18,9 +18,11 @@ import cellsociety.views.SpreadingFireView;
 import cellsociety.views.WaTorView;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
+import cellsociety.xml.XMLSaver;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.Map;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,6 +33,9 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  * Feel free to completely change this code or delete it entirely.
@@ -56,6 +61,7 @@ public class Main extends Application {
   private double rate = 1.0;
   private Stage myStage;
   public static final String LANGUAGE = "English";
+  XMLSaver saver = new XMLSaver();
 
   /**
    * Initialize what will be displayed.
@@ -83,13 +89,13 @@ public class Main extends Application {
       stage.setWidth(810);
       stage.show();
       Timeline animation = new Timeline();
-//      playAnimation(animation, view);
+      playAnimation(animation, view);
 
       scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
       Button newConfigButton = view.getNewConfigButton();
       newConfigButton.setOnAction(e -> doNewConfig());
       Button saveConfigButton = view.getSaveConfigButton();
-      newConfigButton.setOnAction(e -> doSaveConfig());
+      saveConfigButton.setOnAction(e -> doSaveConfig());
 
     } catch (XMLException e) {
       // handle error of unexpected file format
@@ -102,7 +108,13 @@ public class Main extends Application {
   }
 
   private void doSaveConfig() {
-
+    try {
+      saver.save(view.getModel().getSimInfo(), view.getModel().DATA_FIELDS, view.getModel().getGrid(), view.getSaveInfo());
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+    } catch (TransformerException e) {
+      e.printStackTrace();
+    }
   }
 
   private void handleKeyInput(KeyCode code, Timeline animation) {
@@ -121,17 +133,15 @@ public class Main extends Application {
     System.out.println(rate);
   }
 
-//  private void playAnimation(Timeline animation, SimulationView view) {
-//    animation.setCycleCount(Timeline.INDEFINITE);
-//    framesPerSecond = view.framesPerSec();
-//    animation.getKeyFrames()
-//        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
-//    animation.play();
-//
-//
-//
-//    animation.rateProperty().bind(slider.valueProperty());
-//  }
+  private void playAnimation(Timeline animation, SimulationView view) {
+    animation.setCycleCount(Timeline.INDEFINITE);
+    framesPerSecond = view.framesPerSec();
+    animation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
+    animation.play();
+
+    animation.rateProperty().bind(view.getSlider().valueProperty());
+  }
 
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
