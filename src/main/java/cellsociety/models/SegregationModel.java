@@ -13,8 +13,8 @@ public class SegregationModel extends SimulationModel{
   private int numUnhappy1;
   private int numUnhappy2;
 
-  public SegregationModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public SegregationModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
   }
 
   @Override

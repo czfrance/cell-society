@@ -1,7 +1,6 @@
 package cellsociety.models;
 
 import cellsociety.cells.LifeCell;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class GameOfLifeModel extends SimulationModel {
@@ -9,8 +8,8 @@ public class GameOfLifeModel extends SimulationModel {
   private static final int DEAD = 0;
   private static final int ALIVE = 1;
 
-  public GameOfLifeModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public GameOfLifeModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
     simType = "GameOfLife";
   }
 

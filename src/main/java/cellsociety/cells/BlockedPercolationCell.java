@@ -8,6 +8,11 @@ public class BlockedPercolationCell extends Cell {
   }
 
   @Override
+  public int getCurrentState() {
+    return 0;
+  }
+
+  @Override
   public int getNextState() {
     return myState;
   }

@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class SpreadingFireModel extends SimulationModel {
 
-  public SpreadingFireModel(Map<String, String> dataValues) {
-    super(dataValues);
+  public SpreadingFireModel(Map<String, String> dataValues, String language) {
+    super(dataValues, language);
   }
 
   @Override

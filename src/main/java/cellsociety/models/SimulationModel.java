@@ -4,6 +4,7 @@ import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public abstract class SimulationModel {
 
@@ -38,7 +39,13 @@ public abstract class SimulationModel {
   private double simulationSpeed;
 
 
-  public SimulationModel(Map<String, String> dataValues) {
+
+  private ResourceBundle myResources;
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+//  public static final String EXTENSION = ".properties";
+
+  public SimulationModel(Map<String, String> dataValues, String language) {
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
@@ -57,18 +64,21 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
+    myGrid.initNeighbors();
     myGrid.updateGrid(newStates);
+    System.out.println(myGrid);
   }
 
   protected List<List<Integer>> getCellNextStates() {
     List<List<Integer>> newStates = new ArrayList<>();
-    newStates.add(new ArrayList<>());
 
     for (int row = 0; row < myGrid.size(); row++) {
-      for (Cell c : myGrid.getRow(row)) {
-        newStates.get(row).add(c.getNextState());
-      }
       newStates.add(new ArrayList<>());
+      for (Cell c : myGrid.getRow(row)) {
+        int k  = c.getNextState();
+        newStates.get(row).add(k);
+      }
+
     }
 
     return newStates;
@@ -158,9 +168,13 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(WIDTH, HEIGHT, myGrid);
+        c.initWrapNeighbors(WIDTH, HEIGHT, myGrid);
       }
     }
+  }
+
+  public ResourceBundle getMyResources() {
+    return myResources;
   }
 }
 
