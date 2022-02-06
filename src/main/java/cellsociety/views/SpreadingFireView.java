@@ -3,6 +3,9 @@ package cellsociety.views;
 import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BurningViewCell;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 
 public class SpreadingFireView extends SimulationView{
@@ -17,8 +20,12 @@ public class SpreadingFireView extends SimulationView{
 
 
   @Override
-  protected String getRules() {
-    return "Rules: ";
+  protected WebView getRules() {
+    WebView webView = new WebView();
+    WebEngine webEngine = webView.getEngine();
+    webEngine.load( getClass().getResource("/SimulationRules.html").toString() );
+    webView.setPrefSize(300, 400);
+    return webView;
   }
 
   @Override

@@ -12,12 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -26,6 +21,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
+
 import javax.imageio.ImageIO;
 
 public abstract class SimulationView {
@@ -173,14 +170,16 @@ public abstract class SimulationView {
     Text t = new Text(getName());
     t.setFont(Font.font("Courier New", 25));
 
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
     Dialog<String> dialog = new Dialog<String>();
 
-    dialog.setTitle(getName() + " Rules");
-    ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-    dialog.setContentText(getRules());
+    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
+    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
+
+    alert.getDialogPane().setContent(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
 
-    Button infoButton = makeButton("Info", e -> dialog.showAndWait());
+    Button infoButton = makeButton("Info", e -> alert.showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
@@ -191,7 +190,7 @@ public abstract class SimulationView {
     root.setTop(homebox);
   }
 
-  protected abstract String getRules();
+  protected abstract WebView getRules();
 
   protected abstract String getName();
 
