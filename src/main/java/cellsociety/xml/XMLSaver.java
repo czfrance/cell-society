@@ -30,6 +30,12 @@ public class XMLSaver {
     doc.appendChild(root);
     root.setAttribute("simulation", dataValues.get("simulationType"));
 
+    setTagData(dataValues, dataFields, grid, saveInfo, root, doc);
+
+    writeToDocument(doc, saveInfo.get("filename").get().toString());
+  }
+
+  private void setTagData(Map<String, String> dataValues, List<String> dataFields, Grid grid, Map<String, Optional> saveInfo, Element root, Document doc) {
     for (String field : dataFields) {
       Element tag = doc.createElement(field);
       if (field.equals("config")) {
@@ -47,8 +53,6 @@ public class XMLSaver {
       }
       root.appendChild(tag);
     }
-
-    writeToDocument(doc, saveInfo.get("filename").get().toString());
   }
 
   private void writeToDocument(Document doc, String title) {
