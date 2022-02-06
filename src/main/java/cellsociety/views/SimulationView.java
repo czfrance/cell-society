@@ -95,7 +95,7 @@ public abstract class SimulationView {
     newAuthor = createInputDialog("Simulation author:");
     newDescription = createInputDialog("Simulation description:");
 
-    scene = new Scene(root, width - buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() - 100);
+    scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -261,8 +261,6 @@ public abstract class SimulationView {
     return slider;
   }
 
-
-
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case ENTER -> {
@@ -273,4 +271,3 @@ public abstract class SimulationView {
       }
     }
   }
-}

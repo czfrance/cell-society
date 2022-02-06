@@ -21,9 +21,7 @@ import cellsociety.xml.XMLParser;
 import cellsociety.xml.XMLSaver;
 import java.awt.Dimension;
 import java.io.File;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -38,7 +36,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 
 /**
  * Feel free to completely change this code or delete it entirely.
@@ -142,8 +139,6 @@ public class Main extends Application {
     animation.getKeyFrames()
         .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
     animation.play();
-
-
 
     animation.rateProperty().bind(view.getSlider().valueProperty());
   }

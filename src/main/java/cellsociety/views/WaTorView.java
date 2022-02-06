@@ -22,7 +22,7 @@ public class WaTorView extends SimulationView{
 
   @Override
   protected String getName() {
-    return "WaTor";
+    return model.getMyResources().getString("WaTor");
   }
 
   @Override

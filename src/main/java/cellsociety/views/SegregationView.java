@@ -19,7 +19,7 @@ public class SegregationView extends SimulationView{
 
   @Override
   protected String getName() {
-    return "Segregation";
+    return model.getMyResources().getString("Segregation");
   }
 
   @Override
