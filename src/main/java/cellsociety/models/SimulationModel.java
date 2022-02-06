@@ -41,11 +41,11 @@ public abstract class SimulationModel {
 
 
   private ResourceBundle myResources;
-  public static final String DEFAULT_RESOURCE_PACKAGE = "src/main/resources/";
-  public static final String EXTENSION = ".properties";
+  public static final String DEFAULT_RESOURCE_PACKAGE = "/";
+//  public static final String EXTENSION = ".properties";
 
   public SimulationModel(Map<String, String> dataValues, String language) {
-    //myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language + EXTENSION);
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));

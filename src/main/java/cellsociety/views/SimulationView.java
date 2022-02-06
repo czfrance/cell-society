@@ -12,10 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -33,6 +30,7 @@ import java.util.ArrayList;
 
 public abstract class SimulationView {
 
+  public Scene scene;
   protected BorderPane root = new BorderPane();
   protected SimulationModel model;
   //TODO NEED TO CHANGE THIS TO A ABSTRACTION OF SOME SORT AND FIX ALL THE ISSUES THAT ARISE
@@ -41,16 +39,15 @@ public abstract class SimulationView {
 
   private Button newConfigButton;
   private Button saveConfig;
-  private Button Segregation;
-  private Button SpreadingFire;
-  private Button WaTor;
+
 
   private HBox homeBox;
   private final double simulationSpeed; //generations per second
   private boolean play = true;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
-  public static final String STYLESHEET = "default.css";
+  public String stylesheet= "light.css";
+
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
@@ -83,12 +80,18 @@ public abstract class SimulationView {
 
     cellSize = Math.min((gridWidth / model.getGridSize()[0]), (gridHeight / model.getGridSize()[1]));
     makeGrid();
+//    HBox sims = new HBox();
     Node tmp = addGridToNode();
-    tmp.setLayoutX(200);
+//    tmp.setLayoutX(200);
+//    Node tmp2 = addGridToNode();
+//    tmp2.setLayoutX(400);
+//    sims.getChildren().addAll(tmp, tmp2);
+
     root.setCenter(tmp);
 
-    Scene scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
+    scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
+    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
   }
@@ -118,16 +121,9 @@ public abstract class SimulationView {
     VBox result = new VBox();
     newConfigButton = makeButton("LoadNew", event -> doNewConfig());
     saveConfig = makeButton("Percolation", event -> doSaveConfig());
-//    Percolation = makeButton("Percolation", event -> Percolation());
-    //Segregation = makeButton("Segregation", event -> Segregation());
-//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-//    WaTor = makeButton("WaTor", event -> Wator());
 
     result.getChildren().add(newConfigButton);
-//    result.getChildren().add(Percolation);
-//    result.getChildren().add(Segregation);
-//    result.getChildren().add(SpreadingFire);
-//    result.getChildren().add(WaTor);
+
 
     return result;
   }
@@ -144,11 +140,6 @@ public abstract class SimulationView {
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
     dialog.setContentText(getRules());
     dialog.getDialogPane().getButtonTypes().add(type);
-
-//    Button button = new Button("Info");
-//    button.setOnAction(e -> {
-//      dialog.showAndWait();
-//    });
 
     Button infoButton = makeButton("Info", e -> dialog.showAndWait());
 
@@ -168,14 +159,14 @@ public abstract class SimulationView {
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
-    //String label = model.getMyResources().getString(property);
+    String label = model.getMyResources().getString(property);
 
-//    if (label.matches(IMAGEFILE_SUFFIXES)) {
-//      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
-//    }
-//    else {
-//      result.setText(label);
-//    }
+    if (label.matches(IMAGEFILE_SUFFIXES)) {
+      result.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_PACKAGE + label))));
+    }
+    else {
+      result.setText(label);
+    }
 
 
     result.setOnAction(handler);
@@ -188,7 +179,15 @@ public abstract class SimulationView {
 
     final Button togglePlayButton = makeButton(">||", e -> doTogglePlayButton());
     final Button stepButton = makeButton(">>|", e -> doStepButton());
-    mediaBar.getChildren().addAll(togglePlayButton, stepButton);
+    final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
+
+    Slider slider = new Slider(0, 1, 0.5);
+    slider.setShowTickMarks(true);
+    slider.setShowTickLabels(true);
+    slider.setMajorTickUnit(0.25f);
+    slider.setBlockIncrement(0.1f);
+
+    mediaBar.getChildren().addAll(toggleTheme, togglePlayButton, stepButton, slider);
     mediaBar.setSpacing(10);
     return mediaBar;
   }
@@ -214,13 +213,16 @@ public abstract class SimulationView {
 
   }
 
-  private void SoF() {
-  }
 
-  private void Wator() {
-  }
+  private void doChangeTheme() {
+    if (stylesheet.equals("light.css")) {
+      stylesheet = "dark.css";
 
-  private void GoL() {
+    }
+    else {
+      stylesheet = "light.css";
+    }
+    scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
   }
 
   private void doTogglePlayButton() {

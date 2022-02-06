@@ -7,13 +7,7 @@ import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
 import cellsociety.models.WaTorModel;
-import cellsociety.views.GameOfLifeView;
-import cellsociety.views.PercolationView;
-import cellsociety.views.RPSView;
-import cellsociety.views.SegregationView;
-import cellsociety.views.SimulationView;
-import cellsociety.views.SpreadingFireView;
-import cellsociety.views.WaTorView;
+import cellsociety.views.*;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
 //import javafx.application.Application;
@@ -74,6 +68,8 @@ public class Main extends Application {
   public void start(Stage stage) {
     myStage = stage;
     File dataFile = FILE_CHOOSER.showOpenDialog(stage);
+//    Splash splash = new Splash();
+
     try {
       String name = dataFile.getName();
 
@@ -87,7 +83,7 @@ public class Main extends Application {
       Scene scene = view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
       // add our user interface components to Frame and show it
       stage.setScene(scene);
-      stage.setHeight(740);
+      stage.setHeight(760);
       stage.setWidth(810);
       stage.show();
       Timeline animation = new Timeline();
