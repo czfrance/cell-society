@@ -14,7 +14,7 @@
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: gray;
 }
 
 .combo-box-base {
@@ -24,7 +24,7 @@
     -fx-background-radius: 20;
 }
 .combo-box-base:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: blue;
 }
 
 .label {

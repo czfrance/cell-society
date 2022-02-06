@@ -1,12 +1,11 @@
 package cellsociety.views;
 
-import cellsociety.Main;
-import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -17,13 +16,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
@@ -48,6 +45,12 @@ public abstract class SimulationView {
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public String stylesheet= "light.css";
 
+  private Timeline animation;
+
+  private double framesPerSecond;
+  private double secondDelay;
+
+  private Slider slider;
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
@@ -89,6 +92,9 @@ public abstract class SimulationView {
 
     root.setCenter(tmp);
 
+    Timeline animation = new Timeline();
+    playAnimation(animation);
+
     scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
@@ -124,7 +130,6 @@ public abstract class SimulationView {
 
     result.getChildren().add(newConfigButton);
 
-
     return result;
   }
 
@@ -134,7 +139,6 @@ public abstract class SimulationView {
     t.setFont(Font.font ("Courier New", 25));
 
     Dialog<String> dialog = new Dialog<String>();
-
 
     dialog.setTitle(getName()+" Rules");
     ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
@@ -181,7 +185,7 @@ public abstract class SimulationView {
     final Button stepButton = makeButton(">>|", e -> doStepButton());
     final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
 
-    Slider slider = new Slider(0, 1, 0.5);
+    slider = new Slider(1, 5, 0.5);
     slider.setShowTickMarks(true);
     slider.setShowTickLabels(true);
     slider.setMajorTickUnit(0.25f);
@@ -243,5 +247,19 @@ public abstract class SimulationView {
       default -> {
       }
     }
+  }
+
+  private void playAnimation(Timeline animation) {
+
+    animation.setCycleCount(Timeline.INDEFINITE);
+    framesPerSecond = framesPerSec();
+    secondDelay = 1.0 / framesPerSecond;
+    animation.getKeyFrames()
+            .add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
+    animation.play();
+
+
+
+    animation.rateProperty().bind(slider.valueProperty());
   }
 }
