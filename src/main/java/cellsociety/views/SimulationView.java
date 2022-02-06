@@ -2,8 +2,11 @@ package cellsociety.views;
 
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
+import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -35,8 +38,7 @@ public abstract class SimulationView {
   protected double cellSize;
 
   private Button newConfigButton;
-  private Button saveConfig;
-
+  private Button saveConfigButton;
 
   private HBox homeBox;
   private final double simulationSpeed; //generations per second
@@ -45,12 +47,11 @@ public abstract class SimulationView {
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public String stylesheet= "light.css";
 
-  private Timeline animation;
-
-  private double framesPerSecond;
-  private double secondDelay;
-
   private Slider slider;
+  private Dialog newTitle;
+  private Dialog newAuthor;
+  private Dialog newDescription;
+  private Dialog newFilename;
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
@@ -62,8 +63,6 @@ public abstract class SimulationView {
   }
 
   public Scene makeScene(int width, int height) {
-
-    cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
 
     //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
@@ -91,12 +90,20 @@ public abstract class SimulationView {
 //    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
+    newFilename = createInputDialog("File Name:");
+    newTitle = createInputDialog("Simulation title:");
+    newAuthor = createInputDialog("Simulation author:");
+    newDescription = createInputDialog("Simulation description:");
 
     scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
+  }
+
+  public SimulationModel getModel() {
+    return model;
   }
 
   public void step() {
@@ -120,12 +127,37 @@ public abstract class SimulationView {
     return temp;
   }
 
+  private Dialog createInputDialog(String headerText) {
+    TextInputDialog desc = new TextInputDialog();
+    desc.setHeaderText(headerText);
+    return desc;
+  }
+
+  public Map<String, Optional> getSaveInfo() {
+    Map<String, Optional> saveInfo = new HashMap<>();
+    saveInfo.put("filename", newFilename.showAndWait());
+    saveInfo.put("title", newTitle.showAndWait());
+    saveInfo.put("author", newAuthor.showAndWait());
+    saveInfo.put("description", newDescription.showAndWait());
+    return saveInfo;
+  }
+
   private Node makePanel() {
     VBox result = new VBox();
-    newConfigButton = makeButton("LoadNew", event -> doNewConfig());
-    saveConfig = makeButton("Percolation", event -> doSaveConfig());
+    newConfigButton = new Button("Load New");
+    saveConfigButton = new Button("Save Configuration");
+    //newConfigButton = makeButton("Load New", event -> doNewConfig());
+    //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
+//    Percolation = makeButton("Percolation", event -> Percolation());
+    //Segregation = makeButton("Segregation", event -> Segregation());
+//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
+//    WaTor = makeButton("WaTor", event -> Wator());
 
     result.getChildren().add(newConfigButton);
+    result.getChildren().add(saveConfigButton);
+//    result.getChildren().add(Segregation);
+//    result.getChildren().add(SpreadingFire);
+//    result.getChildren().add(WaTor);
 
     return result;
   }
@@ -198,22 +230,12 @@ public abstract class SimulationView {
   }
 
   public Button getSaveConfigButton() {
-    return saveConfig;
+    return saveConfigButton;
   }
 
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
-
-
-  private void doNewConfig() {
-
-  }
-
-  private void doSaveConfig() {
-
-  }
-
 
   private void doChangeTheme() {
     if (stylesheet.equals("light.css")) {
@@ -235,6 +257,10 @@ public abstract class SimulationView {
     updateGrid();
   }
 
+  public Slider getSlider() {
+    return slider;
+  }
+
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case ENTER -> {
@@ -245,9 +271,3 @@ public abstract class SimulationView {
       }
     }
   }
-
-  public Slider getSlider() {
-    return slider;
-  }
-
-}

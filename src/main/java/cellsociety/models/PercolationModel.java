@@ -25,9 +25,9 @@ public class PercolationModel extends SimulationModel {
       //0 = blocked, 1 = empty, 2 = filled
       switch (c) {
         case '.' -> {myGrid.addRow(); rowNum++; colNum = 0;}
-        case '0' -> {myGrid.getRow(rowNum).add(new BlockedPercolationCell(colNum, rowNum, 0)); colNum++;}
-        case '1' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 0)); colNum++;}
-        case '2' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 1)); colNum++;}
+        case '0' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 0)); colNum++;}
+        case '1' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 1)); colNum++;}
+        case '2' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 2)); colNum++;}
         //case '2', '3', '4', '5', '6', '7', '8', '9' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
         default -> {}
       }
