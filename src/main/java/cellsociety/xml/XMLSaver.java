@@ -48,19 +48,12 @@ public class XMLSaver {
       root.appendChild(tag);
     }
 
-    // write dom document to a file
-    try (FileOutputStream output =
-        new FileOutputStream("data/b.xml")) {
-      writeXml(doc, output);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
+    writeToDocument(doc, saveInfo.get("filename").get().toString());
   }
 
   private void writeToDocument(Document doc, String title) {
     try (FileOutputStream output =
-        new FileOutputStream("data/b.xml")) {
+        new FileOutputStream("data/" + title + ".xml")) {
       writeXml(doc, output);
     } catch (IOException | TransformerException e) {
       e.printStackTrace();

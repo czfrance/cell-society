@@ -51,6 +51,7 @@ public abstract class SimulationView {
   private Dialog newTitle;
   private Dialog newAuthor;
   private Dialog newDescription;
+  private Dialog newFilename;
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
@@ -89,9 +90,10 @@ public abstract class SimulationView {
 //    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
-    newTitle = saveConfigTitle();
-    newAuthor = saveConfigAuthor();
-    newDescription = saveConfigDescription();
+    newFilename = createInputDialog("File Name:");
+    newTitle = createInputDialog("Simulation title:");
+    newAuthor = createInputDialog("Simulation author:");
+    newDescription = createInputDialog("Simulation description:");
 
     scene = new Scene(root, width - buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() - 100);
 
@@ -125,24 +127,15 @@ public abstract class SimulationView {
     return temp;
   }
 
-  private Dialog saveConfigTitle() {
-    TextInputDialog title = new TextInputDialog();
-    title.setHeaderText("Simulation Title:");
-    return title;
-  }
-  private Dialog saveConfigAuthor() {
-    TextInputDialog author = new TextInputDialog();
-    author.setHeaderText("Simulation Author:");
-    return author;
-  }
-  private Dialog saveConfigDescription() {
+  private Dialog createInputDialog(String headerText) {
     TextInputDialog desc = new TextInputDialog();
-    desc.setHeaderText("Simulation Description:");
+    desc.setHeaderText(headerText);
     return desc;
   }
 
   public Map<String, Optional> getSaveInfo() {
     Map<String, Optional> saveInfo = new HashMap<>();
+    saveInfo.put("filename", newFilename.showAndWait());
     saveInfo.put("title", newTitle.showAndWait());
     saveInfo.put("author", newAuthor.showAndWait());
     saveInfo.put("description", newDescription.showAndWait());
