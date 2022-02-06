@@ -13,20 +13,20 @@ public class SchellingGroupCell extends Cell {
   public int getNextState() {
     double totalNeighbors = 0;
     double totalSameGroupNeighbors = 0;
-    if (this.myState == 0) {
-      return myState;
+    if (this.currentState == 0) {
+      return currentState;
     }
 
     for (Cell c : myNeighbors) {
-      if (c.getMyState() != 0) {
+      if (c.getMyCurrentState() != 0) {
         totalNeighbors++;
-        if (c.getMyState() == this.myState) {
+        if (c.getMyCurrentState() == this.currentState) {
           totalSameGroupNeighbors++;
         }
       }
     }
-    if (totalNeighbors == 0) return myState;
-    if (totalSameGroupNeighbors/totalNeighbors < satisfied) return myState*-1;
-    return myState;
+    if (totalNeighbors == 0) return currentState;
+    if (totalSameGroupNeighbors/totalNeighbors < satisfied) return currentState *-1;
+    return currentState;
   }
 }

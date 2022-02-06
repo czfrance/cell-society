@@ -18,7 +18,7 @@ public class WaTorViewCell extends ViewCell {
             2, Color.BLUE
         )
     );
-    setFill(states.get(cell.getState()));
+    setFill(states.get(cell.getCurrentState()));
   }
 
   @Override

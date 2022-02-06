@@ -3,7 +3,6 @@ package cellsociety.models;
 import cellsociety.cells.Cell;
 import cellsociety.cells.WaTorCell;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +48,7 @@ public class WaTorModel extends SimulationModel {
   }
   private Cell cellUpdater(Cell cell) {
     cell.update(WIDTH, HEIGHT, myGrid);
-    if (cell.getState() == EMPTY) return cell;
+    if (cell.getCurrentState() == EMPTY) return cell;
     int x = cell.getRow();
     int y = cell.getColumn();
     //TODO: BE CAREFUL ABOUT INFINITE LOOPS HERE IF A BLOCK HAS NO WHERE TO GO
@@ -77,14 +76,14 @@ public class WaTorModel extends SimulationModel {
 
         //Step 1: place cell's into new random location
         cell = cellUpdater(cell);
-        if (cell.getState() != EMPTY) {
+        if (cell.getCurrentState() != EMPTY) {
           tempGrid[cell.getRow()][cell.getColumn()] = cell;
           cell.block();
         }
 
         //Step 2: Reproduce
         if (cell.getCurrentObject().isReproducing()) {
-          tempGrid[row][col] = new WaTorCell(col, row, cell.getCurrentObject().getID(), 5, 5, 5);
+          tempGrid[row][col] = new WaTorCell(col, row, cell.getCurrentObject().getCurrentState(), 5, 5, 5);
           cell.getCurrentObject().resetReproductionTimer();
         }
       }
@@ -121,7 +120,7 @@ public class WaTorModel extends SimulationModel {
     for (Cell[] list : tempGrid) {
       for (Cell c : list) {
         if (c == null) System.out.print("0");
-        else System.out.print(c.getState());
+        else System.out.print(c.getCurrentState());
       }
       System.out.println();
     }

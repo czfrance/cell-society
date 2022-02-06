@@ -1,5 +1,6 @@
 package cellsociety;
 
+import cellsociety.models.FallingSandModel;
 import cellsociety.models.GameOfLifeModel;
 import cellsociety.models.PercolationModel;
 import cellsociety.models.RockPaperSciModel;
@@ -7,34 +8,29 @@ import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
 import cellsociety.models.WaTorModel;
-import cellsociety.views.*;
+import cellsociety.views.FallingSandView;
+import cellsociety.views.GameOfLifeView;
+import cellsociety.views.PercolationView;
+import cellsociety.views.RPSView;
+import cellsociety.views.SegregationView;
+import cellsociety.views.SimulationView;
+import cellsociety.views.SpreadingFireView;
+import cellsociety.views.WaTorView;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
-//import javafx.application.Application;
 import java.awt.Dimension;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-//import javafx.stage.Stage;
-import javafx.scene.shape.Circle;
-
 import java.io.File;
+import java.util.Map;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
 
 /**
@@ -152,6 +148,8 @@ public class Main extends Application {
       case "WaTor" -> {return new WaTorView(new WaTorModel(info, LANGUAGE));}
 
       case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info, LANGUAGE));}
+
+      case "Falling Sand" -> {return new FallingSandView(new FallingSandModel(info, LANGUAGE));}
 
       default -> throw new XMLException("not a simulation type", type);
     }

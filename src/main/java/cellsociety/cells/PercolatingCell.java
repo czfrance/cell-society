@@ -11,13 +11,13 @@ public class PercolatingCell extends Cell {
   }
 
   public void makeFilled() {
-    myState = FILLED;
+    currentState = FILLED;
   }
 
   @Override
   public int getNextState() {
     for (Cell c : myNeighbors) {
-      if (flowsInFrom(c) || myState == FILLED) {
+      if (flowsInFrom(c) || currentState == FILLED) {
         return FILLED;
       }
     }
@@ -27,6 +27,6 @@ public class PercolatingCell extends Cell {
   public void death() {}
 
   private boolean flowsInFrom(Cell c) {
-    return (c instanceof PercolatingCell) && (c.getMyState() == FILLED) && (c.ROW <= this.ROW);
+    return (c instanceof PercolatingCell) && (c.getMyCurrentState() == FILLED) && (c.ROW <= this.ROW);
   }
 }

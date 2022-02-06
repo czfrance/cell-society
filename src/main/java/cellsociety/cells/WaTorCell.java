@@ -22,13 +22,13 @@ public class WaTorCell extends Cell{
   private boolean tempBlock;
 
   public WaTorCell(WaTorCell cell) {
-    super(cell.getColumn(), cell.getRow(), cell.getState());
+    super(cell.getColumn(), cell.getRow(), cell.getCurrentState());
     column = cell.getColumn();
     row = cell.getRow();
     shark = new SharkCell(cell.getShark());
     fish = new  FishCell(cell.getFish());
     empty = new EmptyWaTorCell(column, row, EMPTY);
-    currentState = cell.getState();
+    currentState = cell.getCurrentState();
   }
 
   public WaTorCell(int x, int y, int initState){
@@ -68,7 +68,7 @@ public class WaTorCell extends Cell{
     return 0;
   }
   @Override
-  public int getState() {
+  public int getCurrentState() {
     return currentState;
   }
 
