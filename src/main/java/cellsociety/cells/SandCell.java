@@ -33,26 +33,22 @@ public class SandCell extends Cell{
     if (currentState == AIR || isBelowAir()) return AIR;
     return SAND;
   }
+
   private int nextAir() {
     if (isAboveSand()) return SAND;
     return AIR;
   }
-  private int nextSand() {
 
+  private int nextSand() {
     if (getRow() == floor - 1 || isBelowSand()) return SAND;
     return AIR;
   }
 
   private boolean isBelowSand() {return myNeighbors.get(BOTTOM_NEIGHBOR).getCurrentState() == SAND;}
-  private boolean isAboveSand() {
-    return myNeighbors.get(TOP_NEIGHBOR).getCurrentState() == SAND;
-  }
 
-  private boolean isBelowAir() {
-    return myNeighbors.get(BOTTOM_NEIGHBOR).getCurrentState() == AIR;
-  }
+  private boolean isAboveSand() {return myNeighbors.get(TOP_NEIGHBOR).getCurrentState() == SAND;}
 
-  public String toString() {
-    return "" + currentState + " ";
-  }
+  private boolean isBelowAir() {return myNeighbors.get(BOTTOM_NEIGHBOR).getCurrentState() == AIR;}
+
+  public String toString() {return "" + currentState + " ";}
 }

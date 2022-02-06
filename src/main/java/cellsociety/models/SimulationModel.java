@@ -43,6 +43,7 @@ public abstract class SimulationModel {
   public static final String EXTENSION = ".properties";
 
   public SimulationModel(Map<String, String> dataValues, String language) {
+
     //myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language + EXTENSION);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
@@ -120,10 +121,8 @@ public abstract class SimulationModel {
         String.format("  %s = '%s',", DATA_FIELDS.get(TITLE), simInfo.get(DATA_FIELDS.get(TITLE))),
         String.format("  %s = '%s',", DATA_FIELDS.get(AUTHOR), simInfo.get(DATA_FIELDS.get(AUTHOR))),
         String.format("  %s = '%s',", DATA_FIELDS.get(DESCRIPTION), simInfo.get(DATA_FIELDS.get(DESCRIPTION))),
-        String.format("  %s = '%d',", DATA_FIELDS.get(WIDTH_FIELD),
-            Integer.parseInt(simInfo.get(DATA_FIELDS.get(WIDTH_FIELD)))),
-        String.format("  %s = '%d',", DATA_FIELDS.get(HEIGHT_FIELD),
-            Integer.parseInt(simInfo.get(DATA_FIELDS.get(HEIGHT_FIELD)))),
+        String.format("  %s = '%d',", DATA_FIELDS.get(WIDTH_FIELD), Integer.parseInt(simInfo.get(DATA_FIELDS.get(WIDTH_FIELD)))),
+        String.format("  %s = '%d',", DATA_FIELDS.get(HEIGHT_FIELD), Integer.parseInt(simInfo.get(DATA_FIELDS.get(HEIGHT_FIELD)))),
         String.format("  %s = '%s',", DATA_FIELDS.get(CONFIG), simInfo.get(DATA_FIELDS.get(CONFIG))),
         "]");
   }
