@@ -24,7 +24,7 @@ public class GameOfLifeView extends SimulationView {
 
   @Override
   protected String getName() {
-    return "Game of Life";
+    return model.getMyResources().getString("GoL");
   }
 
   @Override

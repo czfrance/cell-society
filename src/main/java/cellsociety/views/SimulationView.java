@@ -92,9 +92,6 @@ public abstract class SimulationView {
 
     root.setCenter(tmp);
 
-    Timeline animation = new Timeline();
-    playAnimation(animation);
-
     scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
@@ -249,17 +246,8 @@ public abstract class SimulationView {
     }
   }
 
-  private void playAnimation(Timeline animation) {
-
-    animation.setCycleCount(Timeline.INDEFINITE);
-    framesPerSecond = framesPerSec();
-    secondDelay = 1.0 / framesPerSecond;
-    animation.getKeyFrames()
-            .add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
-    animation.play();
-
-
-
-    animation.rateProperty().bind(slider.valueProperty());
+  public Slider getSlider() {
+    return slider;
   }
+
 }

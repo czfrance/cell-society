@@ -23,7 +23,8 @@ public class SpreadingFireView extends SimulationView{
 
   @Override
   protected String getName() {
-    return "Spreading of Fire";
+
+    return model.getMyResources().getString("SoF");
   }
 
   @Override

@@ -21,6 +21,8 @@ import cellsociety.xml.XMLParser;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.Map;
+
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,6 +33,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 /**
@@ -84,7 +87,7 @@ public class Main extends Application {
       stage.setWidth(810);
       stage.show();
       Timeline animation = new Timeline();
-//      playAnimation(animation, view);
+      playAnimation(animation, view);
 
       scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
       Button newConfigButton = view.getNewConfigButton();
@@ -122,17 +125,15 @@ public class Main extends Application {
     System.out.println(rate);
   }
 
-//  private void playAnimation(Timeline animation, SimulationView view) {
-//    animation.setCycleCount(Timeline.INDEFINITE);
-//    framesPerSecond = view.framesPerSec();
-//    animation.getKeyFrames()
-//        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
-//    animation.play();
-//
-//
-//
-//    animation.rateProperty().bind(slider.valueProperty());
-//  }
+  private void playAnimation(Timeline animation, SimulationView view) {
+    animation.setCycleCount(Timeline.INDEFINITE);
+    framesPerSecond = view.framesPerSec();
+    animation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
+    animation.play();
+
+    animation.rateProperty().bind(view.getSlider().valueProperty());
+  }
 
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
