@@ -94,7 +94,7 @@ public class Main extends Application {
       Button newConfigButton = view.getNewConfigButton();
       newConfigButton.setOnAction(e -> doNewConfig());
       Button saveConfigButton = view.getSaveConfigButton();
-      newConfigButton.setOnAction(e -> doSaveConfig());
+      saveConfigButton.setOnAction(e -> doSaveConfig());
 
     } catch (XMLException e) {
       // handle error of unexpected file format
@@ -103,11 +103,12 @@ public class Main extends Application {
   }
 
   private void doNewConfig() {
+    System.out.println("new");
     start(myStage);
   }
 
   private void doSaveConfig() {
-
+    System.out.println("save");
   }
 
   private void handleKeyInput(KeyCode code, Timeline animation) {

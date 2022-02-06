@@ -35,7 +35,7 @@ public abstract class SimulationView {
   protected double cellSize;
 
   private Button newConfigButton;
-  private Button saveConfig;
+  private Button saveConfigButton;
   private Button Segregation;
   private Button SpreadingFire;
   private Button WaTor;
@@ -89,7 +89,7 @@ public abstract class SimulationView {
 //    List lst = ReadFileIntoList.readFileInList(FILE_NAME);
     //scene.getStylesheets().add("/default.css");
     //scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
-    //System.out.println(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+    System.out.println(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
     //scene.getStylesheets().add(getClass().getResource(DEFAULT_RESOURCE_PACKAGE + STYLESHEET).toExternalForm());
 
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -119,15 +119,17 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    newConfigButton = makeButton("Load New", event -> doNewConfig());
-    saveConfig = makeButton("Percolation", event -> doSaveConfig());
+    newConfigButton = new Button("Load New");
+    saveConfigButton = new Button("Save Configuration");
+    //newConfigButton = makeButton("Load New", event -> doNewConfig());
+    //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
 //    Percolation = makeButton("Percolation", event -> Percolation());
     //Segregation = makeButton("Segregation", event -> Segregation());
 //    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
 //    WaTor = makeButton("WaTor", event -> Wator());
 
     result.getChildren().add(newConfigButton);
-//    result.getChildren().add(Percolation);
+    result.getChildren().add(saveConfigButton);
 //    result.getChildren().add(Segregation);
 //    result.getChildren().add(SpreadingFire);
 //    result.getChildren().add(WaTor);
@@ -186,21 +188,12 @@ public abstract class SimulationView {
   }
 
   public Button getSaveConfigButton() {
-    return saveConfig;
+    return saveConfigButton;
   }
 
   protected abstract void makeGrid();
 
   protected abstract void updateGrid();
-
-
-  private void doNewConfig() {
-
-  }
-
-  private void doSaveConfig() {
-
-  }
 
   private void SoF() {
   }
