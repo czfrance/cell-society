@@ -3,6 +3,9 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.SchellingGroupViewCell;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +16,12 @@ public class SegregationView extends SimulationView{
   }
 
   @Override
-  protected String getRules() {
-    return "Rules: ";
+  protected WebView getRules() {
+    WebView webView = new WebView();
+    WebEngine webEngine = webView.getEngine();
+    webEngine.load( getClass().getResource("/SegregationRules.html").toString() );
+    webView.setPrefSize(300, 400);
+    return webView;
   }
 
   @Override

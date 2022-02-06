@@ -6,7 +6,7 @@ public class SandCell extends Cell{
   public static final int SAND = 1;
   public static final int METAL = 2;
 
-  public static final int BOTTOM_NEIGHBOR = 6;
+  public static final int BOTTOM_NEIGHBOR = 5;
   public static final int TOP_NEIGHBOR = 1;
 
   private int floor;

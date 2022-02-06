@@ -109,7 +109,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initWrapNeighbors(WIDTH, HEIGHT, myGrid);
+        c.initNeighbors(3, WIDTH, HEIGHT, myGrid);
       }
     }
   }

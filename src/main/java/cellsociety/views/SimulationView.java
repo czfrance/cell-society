@@ -2,13 +2,11 @@ package cellsociety.views;
 
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Optional;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,10 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.scene.web.WebView;
 
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
 
 public abstract class SimulationView {
 
@@ -173,14 +170,17 @@ public abstract class SimulationView {
     Text t = new Text(getName());
     t.setFont(Font.font("Courier New", 25));
 
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
     Dialog<String> dialog = new Dialog<String>();
 
-    dialog.setTitle(getName() + " Rules");
-    ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-    dialog.setContentText(getRules());
+    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
+    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
+
+    alert.getDialogPane().setContent(getRules());
+
     dialog.getDialogPane().getButtonTypes().add(type);
 
-    Button infoButton = makeButton("Info", e -> dialog.showAndWait());
+    Button infoButton = makeButton("Info", e -> alert.showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
@@ -191,7 +191,7 @@ public abstract class SimulationView {
     root.setTop(homebox);
   }
 
-  protected abstract String getRules();
+  protected abstract WebView getRules();
 
   protected abstract String getName();
 
