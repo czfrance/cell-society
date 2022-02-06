@@ -92,10 +92,10 @@ public abstract class SimulationView {
 //    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
-    newFilename = createInputDialog("File Name:");
-    newTitle = createInputDialog("Simulation title:");
-    newAuthor = createInputDialog("Simulation author:");
-    newDescription = createInputDialog("Simulation description:");
+    newFilename = createInputDialog(model.getMyResources().getString("FileName"));
+    newTitle = createInputDialog(model.getMyResources().getString("SimTitle"));
+    newAuthor = createInputDialog(model.getMyResources().getString("SimAuthor"));
+    newDescription = createInputDialog(model.getMyResources().getString("SimDesc"));
 
     scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(),
         root.getBoundsInParent().getHeight() + 100);
@@ -147,20 +147,13 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    newConfigButton = new Button("Load New");
-    saveConfigButton = new Button("Save Configuration");
+    newConfigButton = new Button(model.getMyResources().getString("LoadNew"));
+    saveConfigButton = new Button(model.getMyResources().getString("SaveConfig"));
     //newConfigButton = makeButton("Load New", event -> doNewConfig());
     //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
-//    Percolation = makeButton("Percolation", event -> Percolation());
-    //Segregation = makeButton("Segregation", event -> Segregation());
-//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-//    WaTor = makeButton("WaTor", event -> Wator());
 
-    result.getChildren().add(newConfigButton);
-    result.getChildren().add(saveConfigButton);
-//    result.getChildren().add(Segregation);
-//    result.getChildren().add(SpreadingFire);
-//    result.getChildren().add(WaTor);
+    result.getChildren().addAll(newConfigButton, saveConfigButton);
+    result.setSpacing(10);
 
     return result;
   }
@@ -171,14 +164,15 @@ public abstract class SimulationView {
     t.setFont(Font.font("Courier New", 25));
 
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    Dialog<String> dialog = new Dialog<String>();
+//    Dialog<String> dialog = new Dialog<String>();
 
-    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
-    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
+//    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
+//    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
 
+    alert.setTitle("Rules");
+//    alert.setHeaderText("Header");
     alert.getDialogPane().setContent(getRules());
-
-    dialog.getDialogPane().getButtonTypes().add(type);
+//    dialog.getDialogPane().getButtonTypes().add(type);
 
     Button infoButton = makeButton("Info", e -> alert.showAndWait());
 
