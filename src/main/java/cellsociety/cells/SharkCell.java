@@ -17,13 +17,13 @@ public class SharkCell extends Cell {
   private boolean isReproducing;
 
   public SharkCell(SharkCell cell) {
-    super(cell.getColumn(), cell.getRow(), cell.getID());
+    super(cell.getColumn(), cell.getRow(), cell.getCurrentState());
 
     myHealth = cell.myHealth;
-    ID = SHARK;
+    currentState = WaTorCell.SHARK;
     INITAL_REPROTIMER = cell.INITAL_REPROTIMER;
     INITIAL_HEALTH = cell.INITIAL_HEALTH;
-    myState = SHARK;
+    myState =  WaTorCell.SHARK;
     isDead = cell.isDead();
 
   }
@@ -31,10 +31,10 @@ public class SharkCell extends Cell {
 
     super(x, y, initState);
     myHealth = health;
-    ID = SHARK;
+    currentState =  WaTorCell.SHARK;
     INITAL_REPROTIMER = reproductionTimer;
     INITIAL_HEALTH = health;
-    myState = SHARK;
+    myState =  WaTorCell.SHARK;
     isDead = false;
     this.reproductionTimer = reproductionTimer;
   }
@@ -77,8 +77,8 @@ public class SharkCell extends Cell {
   private List<Cell> searchForFish() {
     List<Cell> fishList = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      int k = c.getState();
-      if (k == FISH && !c.isBlocked()) fishList.add(c);
+      int k = c.getCurrentState();
+      if (k == WaTorCell.FISH && !c.isBlocked()) fishList.add(c);
     }
     return fishList;
   }
@@ -86,7 +86,7 @@ public class SharkCell extends Cell {
   private List<Cell> getPotentialMove() {
     List<Cell> potentialMove = new ArrayList<>();
     for (Cell c : myNeighbors) {
-      if (c.getState() == EMPTY && !c.isBlocked()) potentialMove.add(c);
+      if (c.getCurrentState() == WaTorCell.EMPTY && !c.isBlocked()) potentialMove.add(c);
     }
     return potentialMove;
   }

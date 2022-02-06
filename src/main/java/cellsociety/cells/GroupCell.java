@@ -8,7 +8,7 @@ public class GroupCell extends Cell {
 
   @Override
   public int getNextState() {
-    return myState;
+    return currentState;
   }
 
   public void death() {}

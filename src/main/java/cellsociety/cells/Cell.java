@@ -5,46 +5,31 @@ import java.util.List;
 import cellsociety.models.Grid;
 
 public abstract class Cell {
-  protected int ID;
+  protected int currentState;
 
   protected int COLUMN;
   protected int ROW;
 
-  public static final int TOP_LEFT = 1;
-  public static final int TOP_RIGHT = 2;
-  public static final int BOTTOM_LEFT = 3;
-  public static final int BOTTOM_RIGHT = 4;
-
-  public static final int LEFT_EDGE = 1;
-  public static final int RIGHT_EDGE = 2;
-  public static final int TOP_EDGE = 3;
-  public static final int BOTTOM_EDGE = 4;
-
-  protected int myState;
   protected int nextState;
-
-  public static final int EMPTY = 0;
-  public static final int FISH = 1;
-  public static final int SHARK = 2;
 
   protected List<Cell> myNeighbors;
 
-  public Cell(int x, int y, int initState) {
-    COLUMN = x;
-    ROW = y;
+  public Cell(int column, int row, int initState) {
+    COLUMN = column;
+    ROW = row;
 
-    myState = initState;
-    ID = initState;
+    currentState = initState;
     myNeighbors = new ArrayList<>();
   }
 
-  public void setState(int state) {myState = state;}
+  public void setState(int state) {
+    currentState = state;}
 
-  public int getCurrentState() {return ID;}
+  public int getCurrentState() {return currentState;}
 
   public abstract int getNextState();
 
-  public int getMyState() {return myState;}
+  public int getMyCurrentState() {return currentState;}
 
   public void initFiniteNeighbors(int width, int height, Grid grid) {
     for (int i = -1; i < 2; i++) {
@@ -78,34 +63,18 @@ public abstract class Cell {
     return x;
   }
 
-
-
-
   @Override
   public String toString() {
-    return String.format("State %s, Neighbors %d, numNeighborsAlive %d, row: %d, column: %d", myState, myNeighbors == null ? 0 : myNeighbors.size(), myNeighbors == null ? 0 : numAlive(), ROW, COLUMN);}
-
-  public boolean isAlive() {return myState == 1;}
-
-  public int numAlive() {
-    int counter = 0;
-    for (Cell c : myNeighbors) {
-      if (c.isAlive()) counter++;
-    }
-    return counter;
-  }
+    return String.format("State %s, Neighbors %d, row: %d, column: %d",
+           currentState, myNeighbors == null ? 0 : myNeighbors.size(), ROW, COLUMN);}
 
   public void update() {}
 
   public void update(int width, int height, Grid grid) {}
 
-  public int getID() {return ID;}
-
   public int getRow() {return ROW;}
 
   public int getColumn() {return COLUMN;}
-
-  public int getState() {return myState;}
 
   protected int getNutrition() {return -1;}
 

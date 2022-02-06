@@ -26,15 +26,15 @@ public class LifeCell extends Cell {
     int numAlive = 0;
     for (Cell myNeighbor : myNeighbors) {
       LifeCell cell = (LifeCell) myNeighbor;
-      if (cell.isAlive()) numAlive++;
+      if (cell.getCurrentState() == ALIVE) numAlive++;
     }
     return numAlive;
   }
 
-  public boolean isAlive() {return myState == 1;}
+  public boolean isAlive() {return currentState == 1;}
 
   public void update() {
-    myState = nextState;
+    currentState = nextState;
   }
 
 }

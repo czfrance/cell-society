@@ -2,14 +2,15 @@ package cellsociety.views;
 
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
-import cellsociety.view_cells.SchellingGroupViewCell;
+import cellsociety.view_cells.SandViewCell;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SegregationView extends SimulationView{
+public class FallingSandView extends SimulationView {
 
-  public SegregationView(SimulationModel simModel) {
+  public FallingSandView(SimulationModel simModel) {
     super(simModel);
+
   }
 
   @Override
@@ -19,7 +20,7 @@ public class SegregationView extends SimulationView{
 
   @Override
   protected String getName() {
-    return "Segregation";
+    return "Falling Sand";
   }
 
   @Override
@@ -30,9 +31,7 @@ public class SegregationView extends SimulationView{
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         int state = cellGrid.get(row).get(cell).getMyCurrentState();
         switch (state) {
-          case 0, 1, 2 -> {
-            grid.get(row).add(new SchellingGroupViewCell(cell, row, cellSize, state));
-          }
+          case 0, 1, 2 -> {grid.get(row).add(new SandViewCell(cell, row, cellSize, state));}
           default -> {}
         }
       }
@@ -46,7 +45,7 @@ public class SegregationView extends SimulationView{
       for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
         int state = cellGrid.get(row).get(cell).getMyCurrentState();
         switch (state) {
-          case 0, 1, 2-> {grid.get(row).get(cell).updateState(state);}
+          case 0, 1, 2 -> {grid.get(row).get(cell).updateState(state);}
           default -> {}
         }
       }
