@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data simulation="GameOfLife">
+    <simulationType>GameOfLife</simulationType>
+    <title>TITEL</title>
+    <author>AUTHOR</author>
+    <description>SECP</description>
+    <width>5</width>
+    <height>5</height>
+    <config>10001.
+00000.
+00000.
+00000.
+10001.
+.
+</config>
+    <speed>1.0</speed>
+</data>

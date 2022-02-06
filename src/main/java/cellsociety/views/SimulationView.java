@@ -2,8 +2,11 @@ package cellsociety.views;
 
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
+import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -36,9 +39,6 @@ public abstract class SimulationView {
 
   private Button newConfigButton;
   private Button saveConfigButton;
-  private Button Segregation;
-  private Button SpreadingFire;
-  private Button WaTor;
 
   private HBox homeBox;
   private final double simulationSpeed; //generations per second
@@ -47,12 +47,10 @@ public abstract class SimulationView {
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
   public String stylesheet= "light.css";
 
-  private Timeline animation;
-
-  private double framesPerSecond;
-  private double secondDelay;
-
   private Slider slider;
+  private Dialog newTitle;
+  private Dialog newAuthor;
+  private Dialog newDescription;
 
   public SimulationView(SimulationModel simModel) {
     model = simModel;
@@ -64,8 +62,6 @@ public abstract class SimulationView {
   }
 
   public Scene makeScene(int width, int height) {
-
-    cellSize = Math.min((width / model.getGridSize()[0]), (height / model.getGridSize()[1]));
 
     //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
@@ -93,15 +89,19 @@ public abstract class SimulationView {
 //    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
+    newTitle = saveConfigTitle();
+    newAuthor = saveConfigAuthor();
+    newDescription = saveConfigDescription();
 
-    Timeline animation = new Timeline();
-    playAnimation(animation);
-
-    scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() + 100);
+    scene = new Scene(root, width - buttonPanel.getBoundsInParent().getWidth(), root.getBoundsInParent().getHeight() - 100);
 
     scene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + stylesheet);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return scene;
+  }
+
+  public SimulationModel getModel() {
+    return model;
   }
 
   public void step() {
@@ -123,6 +123,30 @@ public abstract class SimulationView {
       temp.getChildren().add(temp2);
     }
     return temp;
+  }
+
+  private Dialog saveConfigTitle() {
+    TextInputDialog title = new TextInputDialog();
+    title.setHeaderText("Simulation Title:");
+    return title;
+  }
+  private Dialog saveConfigAuthor() {
+    TextInputDialog author = new TextInputDialog();
+    author.setHeaderText("Simulation Author:");
+    return author;
+  }
+  private Dialog saveConfigDescription() {
+    TextInputDialog desc = new TextInputDialog();
+    desc.setHeaderText("Simulation Description:");
+    return desc;
+  }
+
+  public Map<String, Optional> getSaveInfo() {
+    Map<String, Optional> saveInfo = new HashMap<>();
+    saveInfo.put("title", newTitle.showAndWait());
+    saveInfo.put("author", newAuthor.showAndWait());
+    saveInfo.put("description", newDescription.showAndWait());
+    return saveInfo;
   }
 
   private Node makePanel() {
@@ -240,6 +264,12 @@ public abstract class SimulationView {
     updateGrid();
   }
 
+  public Slider getSlider() {
+    return slider;
+  }
+
+
+
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case ENTER -> {
@@ -249,19 +279,5 @@ public abstract class SimulationView {
       default -> {
       }
     }
-  }
-
-  private void playAnimation(Timeline animation) {
-
-    animation.setCycleCount(Timeline.INDEFINITE);
-    framesPerSecond = framesPerSec();
-    secondDelay = 1.0 / framesPerSecond;
-    animation.getKeyFrames()
-            .add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
-    animation.play();
-
-
-
-    animation.rateProperty().bind(slider.valueProperty());
   }
 }
