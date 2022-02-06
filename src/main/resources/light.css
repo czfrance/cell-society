@@ -6,8 +6,8 @@
 }
 
 .button {
-    -fx-text-fill: white;
-    -fx-background-color: slategray;
+    -fx-text-fill: black;
+    -fx-background-color: null;
     -fx-border-radius: 20;
     -fx-background-radius: 20;
     -fx-padding: 8;
