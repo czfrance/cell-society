@@ -6,15 +6,15 @@
 }
 
 .button {
-    -fx-text-fill: white;
-    -fx-background-color: slategray;
+    -fx-text-fill: black;
+    -fx-background-color: null;
     -fx-border-radius: 20;
     -fx-background-radius: 20;
     -fx-padding: 8;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: gray;
 }
 
 .combo-box-base {
@@ -24,7 +24,7 @@
     -fx-background-radius: 20;
 }
 .combo-box-base:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: blue;
 }
 
 .label {

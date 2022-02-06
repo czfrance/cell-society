@@ -1,5 +1,6 @@
 package cellsociety;
 
+import cellsociety.models.FallingSandModel;
 import cellsociety.models.GameOfLifeModel;
 import cellsociety.models.PercolationModel;
 import cellsociety.models.RockPaperSciModel;
@@ -7,11 +8,10 @@ import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
 import cellsociety.models.WaTorModel;
-import cellsociety.models.FallingSandModel;
+import cellsociety.views.FallingSandView;
 import cellsociety.views.GameOfLifeView;
 import cellsociety.views.PercolationView;
 import cellsociety.views.RPSView;
-import cellsociety.views.FallingSandView;
 import cellsociety.views.SegregationView;
 import cellsociety.views.SimulationView;
 import cellsociety.views.SpreadingFireView;
@@ -21,7 +21,6 @@ import cellsociety.xml.XMLParser;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.Map;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -32,7 +31,6 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 /**
@@ -67,6 +65,8 @@ public class Main extends Application {
   public void start(Stage stage) {
     myStage = stage;
     File dataFile = FILE_CHOOSER.showOpenDialog(stage);
+//    Splash splash = new Splash();
+
     try {
       String name = dataFile.getName();
 
@@ -80,11 +80,11 @@ public class Main extends Application {
       Scene scene = view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
       // add our user interface components to Frame and show it
       stage.setScene(scene);
-      stage.setHeight(740);
+      stage.setHeight(760);
       stage.setWidth(810);
       stage.show();
       Timeline animation = new Timeline();
-      playAnimation(animation, view);
+//      playAnimation(animation, view);
 
       scene.setOnKeyReleased(e -> handleKeyInput(e.getCode(), animation));
       Button newConfigButton = view.getNewConfigButton();
@@ -122,13 +122,17 @@ public class Main extends Application {
     System.out.println(rate);
   }
 
-  private void playAnimation(Timeline animation, SimulationView view) {
-    animation.setCycleCount(Timeline.INDEFINITE);
-    framesPerSecond = view.framesPerSec();
-    animation.getKeyFrames()
-        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
-    animation.play();
-  }
+//  private void playAnimation(Timeline animation, SimulationView view) {
+//    animation.setCycleCount(Timeline.INDEFINITE);
+//    framesPerSecond = view.framesPerSec();
+//    animation.getKeyFrames()
+//        .add(new KeyFrame(Duration.seconds(secondDelay), e -> view.step()));
+//    animation.play();
+//
+//
+//
+//    animation.rateProperty().bind(slider.valueProperty());
+//  }
 
   private SimulationView selectView(String type, Map<String, String> info) {
     switch (type) {
