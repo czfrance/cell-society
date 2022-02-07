@@ -19,7 +19,8 @@ Hours Spent: 100
 
 ### Primary Roles
 The following are our result roles
-###Cynthia France:
+
+#### Cynthia France:
   * General things
     * Set up the back-end and the front-end logic, connecting the two together
       * Cell super class
@@ -50,7 +51,8 @@ The following are our result roles
     * Making sure the correct simulation is played, values are read correctly
     * Most of the initial XML configurations from basic
   * Refactoring & abstractions
-###Jose Santillan
+
+#### Jose Santillan
   * Backend
     * Simulations: Falling Sand, Game of Life, Rock Paper Scissors, 
       * Note: for WaTor, Jose started the simulation & Cynthia finished it
@@ -65,7 +67,8 @@ The following are our result roles
     * Some GameOfLife XML files
     * all Sand and RPS XML files
   * Refactoring & abstractions
-###Diane Kim
+
+#### Diane Kim
   * Frontend/UI
     * Look & Feel, general window layout
     * Info/About/Rules button & dialog
