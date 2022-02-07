@@ -24,8 +24,6 @@ public abstract class Cell {
 
   protected int orientation;
 
-
-
   public Cell(int column, int row, int initState) {
     COLUMN = column;
     ROW = row;
@@ -77,6 +75,13 @@ public abstract class Cell {
       }
     }
   }
+
+  public int flip(int x, int boundary) {
+    if (x >= boundary) return 0;
+    else if (x < 0) return boundary - 1;
+    return x;
+  }
+
 
   private void triangleNeighbors(int width, int height, Grid grid) {
 
@@ -131,11 +136,6 @@ public abstract class Cell {
 
   public boolean inBounds(int x, int y, int width, int height) {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
-  }
-  public int flip(int x, int boundary) {
-    if (x >= boundary) return 0;
-    else if (x < 0) return boundary - 1;
-    return x;
   }
 
   @Override
