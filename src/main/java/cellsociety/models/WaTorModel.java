@@ -47,7 +47,7 @@ public class WaTorModel extends SimulationModel {
     myGrid = newGrid();
   }
   private Cell cellUpdater(Cell cell) {
-    cell.update(WIDTH, HEIGHT, myGrid);
+    cell.update(WIDTH, HEIGHT, myGrid.getGrid());
     if (cell.getCurrentState() == EMPTY) return cell;
     int x = cell.getRow();
     int y = cell.getColumn();
@@ -56,7 +56,7 @@ public class WaTorModel extends SimulationModel {
     while (tempGrid[x][y] != null) {
       cell = cell.reupdate();
 
-      if (counter != 10) cell.update(WIDTH, HEIGHT, myGrid);
+      if (counter != 10) cell.update(WIDTH, HEIGHT, myGrid.getGrid());
 
       x = cell.getRow();
       y = cell.getColumn();

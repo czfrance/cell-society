@@ -1,6 +1,7 @@
 package cellsociety.cells;
 
 import cellsociety.models.Grid;
+import java.util.List;
 
 public class WaTorCell extends Cell{
 
@@ -49,7 +50,7 @@ public class WaTorCell extends Cell{
   }
 
   @Override
-  public void update(int width, int height, Grid grid) {
+  public void update(int width, int height, List<List<Cell>> grid) {
     if (currentState == EMPTY) return;
     previousState = new WaTorCell(this);
     getCurrentObject().update(width, height, grid);

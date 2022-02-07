@@ -1,6 +1,7 @@
 package cellsociety.views;
 
 import cellsociety.models.SimulationModel;
+import javafx.scene.control.Alert;
 
 public class ForagingAntsView extends SimulationView {
 
@@ -9,12 +10,22 @@ public class ForagingAntsView extends SimulationView {
   }
 
   @Override
-  protected String getRules() {
+  protected Alert getRules() {
+    return null;
+  }
+
+  @Override
+  protected String getHeader() {
     return null;
   }
 
   @Override
   protected String getName() {
+    return null;
+  }
+
+  @Override
+  protected String getHtml() {
     return null;
   }
 

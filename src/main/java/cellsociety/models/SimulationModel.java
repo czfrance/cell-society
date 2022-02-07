@@ -10,6 +10,8 @@ public abstract class SimulationModel {
 
   public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "speed", "satisfied", "probCatch");
 
+  public static final int NEIGHBOR_SYSTEM = 0;
+
   public static final int SIMULATION_TYPE = 0;
   public static final int TITLE = 1;
   public static final int AUTHOR = 2;
@@ -71,7 +73,7 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-    myGrid.initNeighbors();
+    myGrid.initNeighbors(SimulationModel.NEIGHBOR_SYSTEM, WIDTH, HEIGHT, myGrid.getGrid());
     myGrid.updateGrid(newStates);
     System.out.println(myGrid);
   }
@@ -102,14 +104,10 @@ public abstract class SimulationModel {
         Integer.parseInt(simInfo.get("height"))};
   }
 
-  public void handleInput() {
-    //need to implement within extended classes
-  }
-
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(1, WIDTH, HEIGHT, myGrid);
+        c.initNeighbors(NEIGHBOR_SYSTEM, WIDTH, HEIGHT, myGrid.getGrid());
       }
     }
   }

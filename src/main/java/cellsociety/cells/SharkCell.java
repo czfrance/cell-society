@@ -40,7 +40,7 @@ public class SharkCell extends Cell {
   }
 
   @Override
-  public void update(int width, int height, Grid grid) {
+  public void update(int width, int height, List<List<Cell>> grid) {
 
     List<Cell> fishList = searchForFish();
 

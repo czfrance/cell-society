@@ -7,6 +7,7 @@ import cellsociety.models.RockPaperSciModel;
 import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
+import cellsociety.models.SugarModel;
 import cellsociety.models.WaTorModel;
 import cellsociety.views.FallingSandView;
 import cellsociety.views.GameOfLifeView;
@@ -15,6 +16,7 @@ import cellsociety.views.RPSView;
 import cellsociety.views.SegregationView;
 import cellsociety.views.SimulationView;
 import cellsociety.views.SpreadingFireView;
+import cellsociety.views.SugarView;
 import cellsociety.views.WaTorView;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
@@ -86,7 +88,7 @@ public class Main extends Application {
       // add our user interface components to Frame and show it
       stage.setScene(scene);
       stage.setHeight(760);
-      stage.setWidth(810);
+      stage.setWidth(1200);
       stage.show();
       Timeline animation = new Timeline();
       playAnimation(animation, view);
@@ -158,6 +160,8 @@ public class Main extends Application {
       case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info, LANGUAGE));}
 
       case "Falling Sand" -> {return new FallingSandView(new FallingSandModel(info, LANGUAGE));}
+
+      case "Sugarscape" -> {return new SugarView(new SugarModel(info, LANGUAGE));}
 
       default -> throw new XMLException("not a simulation type", type);
     }
