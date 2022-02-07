@@ -32,7 +32,7 @@ public class FallingSandView extends SimulationView {
 
   @Override
   protected String getName() {
-    return "Falling Sand";
+    return model.getMyResources().getString("Sand");
   }
 
   @Override
