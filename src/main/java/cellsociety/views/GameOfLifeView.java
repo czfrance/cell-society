@@ -3,6 +3,7 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.LifeViewCell;
+import javafx.scene.control.Alert;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -14,19 +15,33 @@ public class GameOfLifeView extends SimulationView {
   public GameOfLifeView(SimulationModel simModel) {
     super(simModel);
   }
-
-  @Override
-  protected WebView getRules() {
-    WebView webView = new WebView();
-    WebEngine webEngine = webView.getEngine();
-    webEngine.load( getClass().getResource("/GoLRules.html").toString() );
-    webView.setPrefSize(300, 400);
-    return webView;
-  }
+//
+//  @Override
+//  protected Alert getRules() {
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//    alert.setTitle("Rules");
+//    alert.setHeaderText("Header");
+//    WebView webView = new WebView();
+//    WebEngine webEngine = webView.getEngine();
+//    webEngine.load( getClass().getResource("/GoLRules.html").toString() );
+//    webView.setPrefSize(500, 400);
+//    alert.getDialogPane().setContent(webView);
+//    return alert;
+//  }
 
   @Override
   protected String getName() {
     return model.getMyResources().getString("GoL");
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("GoLRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/GoLRules.html";
   }
 
   @Override

@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import javax.imageio.ImageIO;
@@ -163,18 +164,18 @@ public abstract class SimulationView {
     Text t = new Text(getName());
     t.setFont(Font.font("Courier New", 25));
 
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//    Dialog<String> dialog = new Dialog<String>();
-
-//    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
-//    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
-
-    alert.setTitle("Rules");
-//    alert.setHeaderText("Header");
-    alert.getDialogPane().setContent(getRules());
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+////    Dialog<String> dialog = new Dialog<String>();
+//
+////    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
+////    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
+//
+//    alert.setTitle("Rules");
+////    alert.setHeaderText("Header");
+//    alert.getDialogPane().setContent(getRules());
 //    dialog.getDialogPane().getButtonTypes().add(type);
 
-    Button infoButton = makeButton("Info", e -> alert.showAndWait());
+    Button infoButton = makeButton("Info", e -> getRules().showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
@@ -185,9 +186,24 @@ public abstract class SimulationView {
     root.setTop(homebox);
   }
 
-  protected abstract WebView getRules();
+  protected Alert getRules() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle(getName());
+    alert.setHeaderText(getHeader());
+    WebView webView = new WebView();
+    WebEngine webEngine = webView.getEngine();
+    webEngine.load( getClass().getResource(getHtml()).toString());
+    webView.setPrefSize(500, 400);
+    alert.getDialogPane().setContent(webView);
+    return alert;
+  }
+
+
+  protected abstract String getHeader();
 
   protected abstract String getName();
+
+  protected abstract String getHtml();
 
 
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
@@ -216,10 +232,10 @@ public abstract class SimulationView {
     final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
 
     slider = new Slider(1, 5, 0.5);
-    slider.setShowTickMarks(true);
-    slider.setShowTickLabels(true);
-    slider.setMajorTickUnit(0.25f);
-    slider.setBlockIncrement(0.1f);
+//    slider.setShowTickMarks(true);
+//    slider.setShowTickLabels(true);
+//    slider.setMajorTickUnit(0.25f);
+//    slider.setBlockIncrement(0.1f);
 
     mediaBar.getChildren().addAll(toggleTheme, togglePlayButton, stepButton, slider);
     mediaBar.setSpacing(10);
