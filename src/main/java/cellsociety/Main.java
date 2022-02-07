@@ -1,25 +1,12 @@
 package cellsociety;
 
-import cellsociety.models.FallingSandModel;
-import cellsociety.models.GameOfLifeModel;
-import cellsociety.models.PercolationModel;
-import cellsociety.models.RockPaperSciModel;
-import cellsociety.models.SegregationModel;
-import cellsociety.models.SimulationModel;
-import cellsociety.models.SpreadingFireModel;
-import cellsociety.models.WaTorModel;
-import cellsociety.views.FallingSandView;
-import cellsociety.views.GameOfLifeView;
-import cellsociety.views.PercolationView;
-import cellsociety.views.RPSView;
-import cellsociety.views.SegregationView;
-import cellsociety.views.SimulationView;
-import cellsociety.views.SpreadingFireView;
-import cellsociety.views.WaTorView;
+import cellsociety.models.*;
+import cellsociety.views.*;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
 import cellsociety.xml.XMLSaver;
-import java.awt.Dimension;
+
+import java.awt.*;
 import java.io.File;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -60,7 +47,7 @@ public class Main extends Application {
   private SimulationView view;
   private double rate = 1.0;
   private Stage myStage;
-  public static final String LANGUAGE = "English";
+  public static String LANGUAGE = "English";
   XMLSaver saver = new XMLSaver();
 
   /**
@@ -101,6 +88,10 @@ public class Main extends Application {
       // handle error of unexpected file format
       showMessage(AlertType.ERROR, e.getMessage());
     }
+  }
+
+  private void languageButton(String lang) {
+    LANGUAGE = lang;
   }
 
   private void doNewConfig() {
@@ -176,4 +167,6 @@ public class Main extends Application {
     result.getExtensionFilters().setAll(new ExtensionFilter("Text Files", extensionAccepted));
     return result;
   }
+
+
 }

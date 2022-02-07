@@ -8,20 +8,14 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Feel free to completely change this code or delete it entirely.
+ *
+ * @author Cynthia France, Diane Kim
+ */
 public class RPSView extends SimulationView{
 
   public RPSView(SimulationModel simModel) {super(simModel);}
-
-//  @Override
-//  protected WebView getRules() {
-//    WebView webView = new WebView();
-//    webView.getEngine().loadContent("<html>Pay attention, there are Pay attention, there are" +
-//            "Pay attention, there are" +
-//            "Pay attention, there are" +
-//            "<b>HTML</b> tags, here.</html>");
-//    webView.setPrefSize(300, 400);
-//    return webView;
-//  }
 
   @Override
   protected String getName() {

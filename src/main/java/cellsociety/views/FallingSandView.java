@@ -10,25 +10,17 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Feel free to completely change this code or delete it entirely.
+ *
+ * @author Cynthia France, Diane Kim
+ */
 public class FallingSandView extends SimulationView {
 
   public FallingSandView(SimulationModel simModel) {
     super(simModel);
 
   }
-
-//  @Override
-//  protected Alert getRules() {
-//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//    alert.setTitle("Rules");
-//    alert.setHeaderText("Header");
-//    WebView webView = new WebView();
-//    WebEngine webEngine = webView.getEngine();
-//    webEngine.load( getClass().getResource("/SandRules.html").toString() );
-//    webView.setPrefSize(500, 400);
-//    alert.getDialogPane().setContent(webView);
-//    return alert;
-//  }
 
   @Override
   protected String getName() {

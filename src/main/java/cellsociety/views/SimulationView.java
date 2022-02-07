@@ -19,13 +19,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import javax.imageio.ImageIO;
 
+/**
+ * This class serves as the abstract class for the simulation views
+ *
+ * @author Diane Kim, Cynthia France
+ */
 public abstract class SimulationView {
 
   public Scene scene;
@@ -85,12 +89,7 @@ public abstract class SimulationView {
     cellSize = Math.min((gridWidth / model.getGridSize()[0]),
         (gridHeight / model.getGridSize()[1]));
     makeGrid();
-//    HBox sims = new HBox();
     Node tmp = addGridToNode();
-//    tmp.setLayoutX(200);
-//    Node tmp2 = addGridToNode();
-//    tmp2.setLayoutX(400);
-//    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
     newFilename = createInputDialog(model.getMyResources().getString("FileName"));
@@ -150,8 +149,6 @@ public abstract class SimulationView {
     VBox result = new VBox();
     newConfigButton = new Button(model.getMyResources().getString("LoadNew"));
     saveConfigButton = new Button(model.getMyResources().getString("SaveConfig"));
-    //newConfigButton = makeButton("Load New", event -> doNewConfig());
-    //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
 
     result.getChildren().addAll(newConfigButton, saveConfigButton);
     result.setSpacing(10);
@@ -162,26 +159,12 @@ public abstract class SimulationView {
   protected void addTitle() {
     HBox homebox = new HBox(10);
     Text t = new Text(getName());
-    t.setFont(Font.font("Courier New", 25));
-
-//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-////    Dialog<String> dialog = new Dialog<String>();
-//
-////    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
-////    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
-//
-//    alert.setTitle("Rules");
-////    alert.setHeaderText("Header");
-//    alert.getDialogPane().setContent(getRules());
-//    dialog.getDialogPane().getButtonTypes().add(type);
+//    t.setFont(Font.font("Courier New", 25));
 
     Button infoButton = makeButton("Info", e -> getRules().showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
-    // will move this to css file
-    homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
+    homebox.getStyleClass().add("hbox");
     homebox.setAlignment(Pos.CENTER);
     root.setTop(homebox);
   }
@@ -232,10 +215,6 @@ public abstract class SimulationView {
     final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
 
     slider = new Slider(1, 5, 0.5);
-//    slider.setShowTickMarks(true);
-//    slider.setShowTickLabels(true);
-//    slider.setMajorTickUnit(0.25f);
-//    slider.setBlockIncrement(0.1f);
 
     mediaBar.getChildren().addAll(toggleTheme, togglePlayButton, stepButton, slider);
     mediaBar.setSpacing(10);
