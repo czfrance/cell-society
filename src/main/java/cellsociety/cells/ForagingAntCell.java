@@ -38,7 +38,7 @@ public class ForagingAntCell extends Cell {
     int maxCol = coords[0];
     int maxRow = coords[1];
 
-    if (COLUMN == foodCol && ROW == foodRow) {
+    if (column == foodCol && row == foodRow) {
 
     }
     return -1;

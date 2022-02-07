@@ -55,14 +55,14 @@ public class Grid implements Iterable<List<Cell>> {
       }
     }
   }
-  public void initNeighbors(int neighborSystem, int WIDTH, int HEIGHT,
-      List<List<Cell>> grid) {
+  public void initNeighbors(int neighborSystem, int WIDTH, int HEIGHT) {
     for (List<Cell> list : myGrid) {
       for (Cell cell : list) {
-        cell.initNeighbors(SimulationModel.NEIGHBOR_SYSTEM, this.WIDTH, this.HEIGHT, getGrid());
+        cell.initNeighbors(SimulationModel.NEIGHBORTYPE, this.WIDTH, this.HEIGHT, getGrid());
       }
     }
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

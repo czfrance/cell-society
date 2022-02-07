@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 public class WaTorViewCell extends ViewCell {
 
 
-  public WaTorViewCell(int x, int y, double size, int initState, WaTorCell cell) {
+  public WaTorViewCell(int x, int y, double size, int initState) {
     super(x, y, size, initState);
 
     states = new HashMap<>(
@@ -18,12 +18,6 @@ public class WaTorViewCell extends ViewCell {
             2, Color.BLUE
         )
     );
-    setFill(states.get(cell.getCurrentState()));
-  }
-
-  @Override
-  public void updateState(int newState) {
-    myState = newState;
-    setFill(states.get(myState));
+    setFill(states.get(initState));
   }
 }

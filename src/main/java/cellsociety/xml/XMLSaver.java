@@ -68,7 +68,7 @@ public class XMLSaver {
     String gridConfig = "";
     for (int i = 0; i < grid.size(); i++) {
       for (int j = 0; j < grid.getRow(i).size(); j++) {
-        int state = grid.getRow(i).get(j).getCurrentState();
+        int state = grid.getRow(i).get(j).getMyCurrentState();
         gridConfig += Integer.toString(state);
       }
       gridConfig += ".\n";

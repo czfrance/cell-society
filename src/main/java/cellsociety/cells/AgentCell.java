@@ -45,8 +45,8 @@ public class AgentCell extends Cell {
 
     if (potentialMoves.size() != 0) {
       Cell selected = potentialMoves.get(DICE.nextInt(potentialMoves.size()));
-      COLUMN = selected.getColumn();
-      ROW = selected.getRow();
+      column = selected.getColumn();
+      row = selected.getRow();
     }
   }
   public int takeSugar(int sugarSupply) {

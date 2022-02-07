@@ -25,4 +25,5 @@
     000001000001000.
   </config>
   <speed>1.0</speed>
+  <neighborType>toroidal</neighborType>
 </data>

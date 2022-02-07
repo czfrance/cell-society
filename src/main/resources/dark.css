@@ -4,6 +4,14 @@
     -fx-base: black;
     -fx-background: gray;
 }
+.hbox {
+    -fx-padding: 10;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: gray;
+}
 
 .button {
     -fx-text-fill: white;
@@ -17,24 +25,3 @@
     -fx-background-color: #3a3a3a;
 }
 
-.combo-box-base {
-    -fx-text-base-color: turquoise;
-    -fx-background-color: violet;
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
-}
-.combo-box-base:hover {
-    -fx-background-color: #3a3a3a;
-}
-
-.label {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: steelblue;
-    -fx-opacity: 0.6;
-}
-
-.text-field {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Semibold";
-}

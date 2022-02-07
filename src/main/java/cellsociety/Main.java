@@ -62,7 +62,7 @@ public class Main extends Application {
   private SimulationView view;
   private double rate = 1.0;
   private Stage myStage;
-  public static final String LANGUAGE = "English";
+  public static String LANGUAGE = "English";
   XMLSaver saver = new XMLSaver();
 
   /**
@@ -103,6 +103,10 @@ public class Main extends Application {
       // handle error of unexpected file format
       showMessage(AlertType.ERROR, e.getMessage());
     }
+  }
+
+  private void languageButton(String lang) {
+    LANGUAGE = lang;
   }
 
   private void doNewConfig() {
@@ -180,4 +184,6 @@ public class Main extends Application {
     result.getExtensionFilters().setAll(new ExtensionFilter("Text Files", extensionAccepted));
     return result;
   }
+
+
 }
