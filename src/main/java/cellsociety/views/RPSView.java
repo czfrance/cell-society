@@ -25,7 +25,7 @@ public class RPSView extends SimulationView{
 
   @Override
   protected String getName() {
-    return null;
+    return model.getMyResources().getString("RPS");
   }
 
   @Override
