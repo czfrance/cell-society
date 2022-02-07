@@ -15,8 +15,8 @@ public abstract class Cell {
 
   protected int currentState;
 
-  protected int COLUMN;
-  protected int ROW;
+  protected int column;
+  protected int row;
 
   protected int nextState;
 
@@ -24,21 +24,17 @@ public abstract class Cell {
 
   protected int orientation;
 
-
-
-  public Cell(int column, int row, int initState) {
-    COLUMN = column;
-    ROW = row;
+  public Cell(int col, int row, int initState) {
+    column = col;
+    this.row = row;
 
     currentState = initState;
     myNeighbors = new ArrayList<>();
-    orientation = (column + row) % 2;
+    orientation = (col + row) % 2;
   }
 
   public void setState(int state) {
     currentState = state;}
-
-  public int getCurrentState() {return currentState;}
 
   public abstract int getNextState();
 
@@ -59,8 +55,8 @@ public abstract class Cell {
   private void finiteNeighbors(int width, int height, Grid grid) {
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
-        if (inBounds(COLUMN + k, ROW + i, width, height) && (i !=0 || k !=0)) {
-          myNeighbors.add(grid.getRow(ROW + i).get(COLUMN + k));
+        if (inBounds(column + k, row + i, width, height) && (i !=0 || k !=0)) {
+          myNeighbors.add(grid.getRow(row + i).get(column + k));
         }
       }
     }
@@ -70,8 +66,8 @@ public abstract class Cell {
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
         if (i !=0 || k !=0) {
-          int x = flip(COLUMN + k, width);
-          int y = flip(ROW + i, height);
+          int x = flip(column + k, width);
+          int y = flip(row + i, height);
           myNeighbors.add(grid.getRow(y).get(x));
         }
       }
@@ -87,8 +83,8 @@ public abstract class Cell {
 
       for (; k < b; k++) {
         if (i !=0 || k !=0) {
-          int x = flip(COLUMN + k, width);
-          int y = flip(ROW + i, height);
+          int x = flip(column + k, width);
+          int y = flip(row + i, height);
           myNeighbors.add(grid.getRow(y).get(x));
         }
       }
@@ -121,8 +117,8 @@ public abstract class Cell {
       else guard = 1;
       for (int k = -1; k < guard; k++) {
         if (i !=0 || k !=0) {
-          int x = flip(COLUMN + k, width);
-          int y = flip(ROW + i, height);
+          int x = flip(column + k, width);
+          int y = flip(row + i, height);
           myNeighbors.add(grid.getRow(y).get(x));
         }
       }
@@ -141,36 +137,31 @@ public abstract class Cell {
   @Override
   public String toString() {
     return String.format("State %s, Neighbors %d, row: %d, column: %d",
-           currentState, myNeighbors == null ? 0 : myNeighbors.size(), ROW, COLUMN);}
-
-  public void update() {}
-
-  public void update(int width, int height, Grid grid) {}
-
-  public int getRow() {return ROW;}
-
-  public int getColumn() {return COLUMN;}
-
-  protected int getNutrition() {return -1;}
-
-  public Cell reupdate() { return null;}
+           currentState, myNeighbors == null ? 0 : myNeighbors.size(), row, column);}
 
   public boolean isReproducing() {return false;}
 
-  public Cell getCurrentObject() {return null;}
+  public Cell getCurrentObject() {return this;}
 
-  public boolean isDead() {return false;}
+  public int getCol() {
+    return column;
+  }
 
+  public int getRow() {
+    return row;
+  }
 
-  //
-  public void block() {}
-  public void unblock() {}
-  public boolean isBlocked() {return false;}
-  public void resetReproductionTimer() {}
-  public void setFish(FishCell f){}
-  public void setShark(SharkCell s){}
-  public FishCell getFish() {return null;}
-  public SharkCell getShark(){return null;}
-  public void setEmpty() {}
-  public void setNew(int state, int repoTimer, int nutVal) {}
+  protected void death() {return;}
+
+  public List<Cell> getEmptyAdjacentCells() {return new ArrayList<>();}
+
+  public int getHealth() {
+    return 0;
+  }
+
+  public int getTurnsAlive() {
+    System.out.println("?");
+    return 0;
+  }
+
 }

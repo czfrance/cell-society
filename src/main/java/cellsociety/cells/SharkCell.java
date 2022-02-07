@@ -3,111 +3,91 @@ package cellsociety.cells;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
-import cellsociety.models.Grid;
 
 public class SharkCell extends Cell {
 
   private int myHealth;
-  private int myState;
-  private int reproductionTimer;
-  private final int INITIAL_HEALTH;
-  private final int INITAL_REPROTIMER;
-  private boolean isDead;
-  private Random DICE = new Random();
   private boolean isReproducing;
+  private int breedTurns;
+  private int turnsAlive;
 
-  public SharkCell(SharkCell cell) {
-    super(cell.getColumn(), cell.getRow(), cell.getCurrentState());
-
-    myHealth = cell.myHealth;
-    currentState = WaTorCell.SHARK;
-    INITAL_REPROTIMER = cell.INITAL_REPROTIMER;
-    INITIAL_HEALTH = cell.INITIAL_HEALTH;
-    myState =  WaTorCell.SHARK;
-    isDead = cell.isDead();
-
-  }
-  public SharkCell(int x, int y, int initState, int health, int reproductionTimer) {
-
+  public SharkCell(int x, int y, int initState, int sharkStarve, int sharkBreed) {
     super(x, y, initState);
-    myHealth = health;
+    myHealth = sharkStarve;
     currentState =  WaTorCell.SHARK;
-    INITAL_REPROTIMER = reproductionTimer;
-    INITIAL_HEALTH = health;
-    myState =  WaTorCell.SHARK;
-    isDead = false;
-    this.reproductionTimer = reproductionTimer;
+    turnsAlive = 0;
+    breedTurns = sharkBreed;
   }
-
-  @Override
-  public void update(int width, int height, Grid grid) {
-
-    List<Cell> fishList = searchForFish();
-
-    Cell selectedMove;
-    reproductionTimer--;
-
-    if (fishList.size() == 0) {
-      List<Cell> potentialMove = getPotentialMove();
-      if (potentialMove.size() != 0) {
-        selectedMove = potentialMove.get(DICE.nextInt(potentialMove.size()));
-        COLUMN = selectedMove.getColumn();
-        ROW = selectedMove.getRow();
-        checkForReproduction();
-      }
-
-      myHealth--;
-    } else {
-      selectedMove = fishList.get(DICE.nextInt(fishList.size()));
-      selectedMove.getFish().death();
-      myHealth += selectedMove.getFish().getNutrition();
-      COLUMN = selectedMove.getColumn();
-      ROW = selectedMove.getRow();
-      checkForReproduction();
-    }
-
-    if (myHealth == 0) {
-      death();
-    }
-
-  }
-
-
-  private List<Cell> searchForFish() {
-    List<Cell> fishList = new ArrayList<>();
-    for (Cell c : myNeighbors) {
-      int k = c.getCurrentState();
-      if (k == WaTorCell.FISH && !c.isBlocked()) fishList.add(c);
-    }
-    return fishList;
-  }
-
-  private List<Cell> getPotentialMove() {
-    List<Cell> potentialMove = new ArrayList<>();
-    for (Cell c : myNeighbors) {
-      if (c.getCurrentState() == WaTorCell.EMPTY && !c.isBlocked()) potentialMove.add(c);
-    }
-    return potentialMove;
-  }
-
-  public void death() {
-    isDead = true;
+  public SharkCell(int x, int y, int initState, int sharkStarve, int sharkBreed, int currHealth,
+      int currAlive) {
+    super(x, y, initState);
+    myHealth = currHealth;
+    currentState =  WaTorCell.SHARK;
+    turnsAlive = currAlive;
+    breedTurns = sharkBreed;
   }
 
   @Override
   public int getNextState() {
-    return myState;
+    boolean success = eatFish();
+    turnsAlive++;
+    isReproducing = checkReproduce();
+    if (success) {
+      myHealth++;
+      return currentState;
+    }
+    else {
+      myHealth--;
+      if (myHealth == 0) {
+        return 0;
+      }
+      return -1*currentState;
+    }
   }
 
-  public boolean isDead() {return isDead;}
+  private boolean checkReproduce() {
+    if (turnsAlive % breedTurns == 0) {
+      return true;
+    }
+    return false;
+  }
 
   public boolean isReproducing() {return isReproducing;}
 
-  private void checkForReproduction() {
-    isReproducing = reproductionTimer < 0;
+  private boolean eatFish() {
+    List<Cell> fishes = getFish();
+    if (fishes.size() == 0) {
+      return false;
+    }
+
+    Cell fish = selectFish(fishes);
+    fish.death();
+    return true;
   }
-  public void resetReproductionTimer() {
-    reproductionTimer = INITAL_REPROTIMER;
-    isReproducing = false;
+
+  private List<Cell> getFish() {
+    List<Cell> fish = new ArrayList<>();
+    for (Cell c : myNeighbors) {
+      if (c.getMyCurrentState() == WaTorCell.FISH) {
+        fish.add(c);
+      }
+    }
+    return fish;
+  }
+
+  private Cell selectFish(List<Cell> fishes) {
+    Random rand = new Random();
+    int fish = rand.nextInt(fishes.size());
+    return fishes.get(fish);
+  }
+
+  @Override
+  public int getTurnsAlive() {
+    return turnsAlive;
+  }
+
+  @Override
+  public int getHealth() {
+    return myHealth;
   }
 }

@@ -55,10 +55,10 @@ public class Grid implements Iterable<List<Cell>> {
       }
     }
   }
-  public void initNeighbors() {
+  public void initNeighbors(int neighborType) {
     for (List<Cell> list : myGrid) {
       for (Cell cell : list) {
-        cell.initNeighbors(3, WIDTH, HEIGHT, this);
+        cell.initNeighbors(neighborType, WIDTH, HEIGHT, this);
       }
     }
   }

@@ -54,18 +54,4 @@ public class SpreadingFireView extends SimulationView{
       }
     }
   }
-
-  @Override
-  protected void updateGrid() {
-    Grid cellGrid = model.getGrid();
-    for (int row = 0; row < cellGrid.size(); row++) {
-      for (int cell = 0; cell < cellGrid.getRow(row).size(); cell++) {
-        int state = cellGrid.getRow(row).get(cell).getMyCurrentState();
-        switch (state) {
-          case TREE, BURNING, DEAD -> {grid.get(row).get(cell).updateState(state);}
-          default -> {}
-        }
-      }
-    }
-  }
 }

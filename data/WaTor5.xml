@@ -14,4 +14,8 @@
     21212
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
+  <turnsToBreedFish>2</turnsToBreedFish>
+  <turnsToBreedShark>5</turnsToBreedShark>
+  <sharkStarve>4</sharkStarve>
 </data>

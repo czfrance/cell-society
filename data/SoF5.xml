@@ -14,5 +14,6 @@
     22222
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
   <probCatch>0</probCatch>
 </data>
