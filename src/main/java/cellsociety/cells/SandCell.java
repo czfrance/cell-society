@@ -44,11 +44,11 @@ public class SandCell extends Cell{
     return AIR;
   }
 
-  private boolean isBelowSand() {return myNeighbors.get(BOTTOM_NEIGHBOR).getCurrentState() == SAND;}
+  private boolean isBelowSand() {return myNeighbors.get(BOTTOM_NEIGHBOR).getMyCurrentState() == SAND;}
 
-  private boolean isAboveSand() {return myNeighbors.get(TOP_NEIGHBOR).getCurrentState() == SAND;}
+  private boolean isAboveSand() {return myNeighbors.get(TOP_NEIGHBOR).getMyCurrentState() == SAND;}
 
-  private boolean isBelowAir() {return myNeighbors.get(BOTTOM_NEIGHBOR).getCurrentState() == AIR;}
+  private boolean isBelowAir() {return myNeighbors.get(BOTTOM_NEIGHBOR).getMyCurrentState() == AIR;}
 
   public String toString() {return "" + currentState + " ";}
 }
