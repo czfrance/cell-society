@@ -14,5 +14,6 @@
     00000
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
   <probCatch>1</probCatch>
 </data>

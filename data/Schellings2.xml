@@ -13,5 +13,6 @@
     0022
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
   <satisfied>0.5</satisfied>
 </data>

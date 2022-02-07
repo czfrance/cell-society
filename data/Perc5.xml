@@ -26,4 +26,5 @@
     11111111111111111
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
 </data>
