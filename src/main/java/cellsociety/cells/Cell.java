@@ -192,7 +192,14 @@ public abstract class Cell {
   }
 
   public int getTurnsAlive() {
-    System.out.println("?");
     return 0;
+  }
+
+  public void setTurnsAlive(int alive) {
+    return;
+  }
+
+  public void setHealth(int myhealth) {
+    return;
   }
 }

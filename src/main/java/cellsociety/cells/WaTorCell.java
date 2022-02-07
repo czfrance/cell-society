@@ -13,6 +13,8 @@ public class WaTorCell extends Cell{
   private SharkCell shark;
   private FishCell fish;
   private EmptyWaTorCell empty;
+  private int turnsAlive = 0;
+  private int health = 0;
 
 
   public WaTorCell(int x, int y, int initState, int fishBreed, int sharkBreed, int sharkStarve) {
@@ -48,8 +50,15 @@ public class WaTorCell extends Cell{
   }
 
   public Cell getCurrentObject() {
-    if (currentState == FISH) return fish;
-    else if (currentState == SHARK) return shark;
+    if (currentState == FISH) {
+      turnsAlive = fish.getTurnsAlive();
+      return fish;
+    }
+    else if (currentState == SHARK) {
+      turnsAlive = shark.getTurnsAlive();
+      health = shark.getHealth();
+      return shark;
+    }
     else return empty;
   }
 
@@ -73,11 +82,21 @@ public class WaTorCell extends Cell{
 
   @Override
   public int getTurnsAlive() {
-    return getCurrentObject().getTurnsAlive();
+    return turnsAlive;
   }
 
   @Override
   public int getHealth() {
-    return getCurrentObject().getHealth();
+    return health;
   }
+
+//  @Override
+//  public void setTurnsAlive(int alive) {
+//    turnsAlive = alive;
+//  }
+//
+//  @Override
+//  public void setHealth(int myhealth) {
+//    health = myhealth;
+//  }
 }

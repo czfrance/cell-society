@@ -59,7 +59,6 @@ public class WaTorModel extends SimulationModel {
       }
       else {
         Random rand = new Random();
-        System.out.print("not zero");
         int index = rand.nextInt(emptyNeighbors.size());
         Cell newLoc = emptyNeighbors.get(index);
         System.out.printf("%d %d\n", newLoc.getRow(), newLoc.getColumn());
@@ -84,6 +83,7 @@ public class WaTorModel extends SimulationModel {
         if (object.isReproducing()) {
           System.out.println("yessssssssss");
           movingObjects.add(new WaTorCell(object.getColumn(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
+
         }
         object.setState(EMPTY);
       }
