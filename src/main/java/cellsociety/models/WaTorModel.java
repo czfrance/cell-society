@@ -51,18 +51,14 @@ public class WaTorModel extends SimulationModel {
       List<Cell> emptyNeighbors = c.getEmptyAdjacentCells();
       System.out.print(emptyNeighbors.size());
       if (emptyNeighbors.size() == 0) {
-        System.out.print("zero");
-        System.out.printf("%d %d\n", c.getRow(), c.getCol());
         myGrid.getRow(c.getRow()).set(c.getCol(),
             new WaTorCell(c.getCol(), c.getRow(), type, FISHTURNS, SHARKTURNS,
                 SHARKSTARVE, c.getHealth(), c.getTurnsAlive()));
       }
       else {
         Random rand = new Random();
-        System.out.print("not zero");
         int index = rand.nextInt(emptyNeighbors.size());
         Cell newLoc = emptyNeighbors.get(index);
-        System.out.printf("%d %d\n", newLoc.getRow(), newLoc.getCol());
         Cell newCell = new WaTorCell(newLoc.getCol(), newLoc.getRow(), type, FISHTURNS, SHARKTURNS,
             SHARKSTARVE, c.getHealth(), c.getTurnsAlive());
         myGrid.getRow(newLoc.getRow()).set(newLoc.getCol(), newCell);
@@ -82,14 +78,12 @@ public class WaTorModel extends SimulationModel {
       else if (nextState == -1*type) {
         movingObjects.add(object);
         if (object.isReproducing()) {
-          System.out.println("yessssssssss");
           movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
         }
         object.setState(EMPTY);
       }
       else {
         if (object.isReproducing()) {
-          System.out.println("yessssssssss");
           movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
         }
       }
