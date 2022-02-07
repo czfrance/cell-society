@@ -7,7 +7,8 @@ import cellsociety.view_cells.BurningViewCell;
 import java.util.ArrayList;
 
 /**
- * Feel free to completely change this code or delete it entirely.
+ * This class implements the view for the Spreading of Fire simulation. The makeGrid() and updateGrid() methods
+ * initialize and update the configuration of the cells specific to this simulation.
  *
  * @author Cynthia France, Diane Kim
  */
