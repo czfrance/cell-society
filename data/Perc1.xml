@@ -13,4 +13,5 @@
     0010
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
 </data>

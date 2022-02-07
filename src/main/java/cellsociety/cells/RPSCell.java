@@ -30,14 +30,14 @@ public class RPSCell extends Cell{
   public int getNum(int obj) {
     int num = 0;
     for (Cell neighbor : myNeighbors) {
-      if (neighbor.getCurrentState() == obj) num++;
+      if (neighbor.getMyCurrentState() == obj) num++;
     }
     return num;
   }
-  @Override
-  public int getCurrentState() {
-    return currentState;
-  }
+//  @Override
+//  public int getCurrentState() {
+//    return currentState;
+//}
   public void update() {
     currentState = nextState;
   }

@@ -4,11 +4,14 @@ import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 public abstract class SimulationModel {
 
-  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author", "description", "width", "height", "config", "speed", "satisfied", "probCatch");
+  public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
+      "description", "width", "height", "config", "speed", "neighborType", "satisfied", "probCatch", "turnsToBreedFish",
+      "turnsToBreedShark", "sharkStarve");
 
   public static final int SIMULATION_TYPE = 0;
   public static final int TITLE = 1;
@@ -17,6 +20,10 @@ public abstract class SimulationModel {
   public static final int WIDTH_FIELD = 4;
   public static final int HEIGHT_FIELD = 5;
   public static final int CONFIG = 6;
+  public static final int FINITE = 0;
+  public static final int TOROIDAL = 1;
+  public static final int TRIANGULAR_TOROIDAL = 2;
+  public static final int HEXAGON = 3;
   //public static final int SATISFIED_FIELD = 7;
 
   protected Map<String, String> simInfo;
@@ -24,42 +31,57 @@ public abstract class SimulationModel {
 
   public static final String HEIGHT_INFO = "height";
   public static final String WIDTH_INFO = "width";
+  public static final String NEIGHBORTYPE_INFO = "neighborType";
   public static final String SATISFIED_INFO = "satisfied";
   public static final String PROBCATCH_INFO = "probCatch";
+  public static final String FISHTURNS_INFO = "turnsToBreedFish";
+  public static final String SHARKTURNS_INFO = "turnsToBreedShark";
+  public static final String SHARKSTARVE_INFO = "sharkStarve";
   public static final String SPEED = "speed";
 
   protected Grid myGrid;
 
   public final int WIDTH;
   public final int HEIGHT;
+  public final int NEIGHBORTYPE;
   public final double SATISFIED;
   public final double PROBCATCH;
+  public final int FISHTURNS;
+  public final int SHARKTURNS;
+  public final int SHARKSTARVE;
 
   private int iteration;
   private double simulationSpeed;
 
   private ResourceBundle myResources;
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
-  //public static final String EXTENSION = ".properties";
 
   public SimulationModel(Map<String, String> dataValues, String language) {
-
-    //myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language + EXTENSION);
 
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
+    NEIGHBORTYPE = getNeighborType();
 
     if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
     else SATISFIED = 0;
 
     if (!simInfo.get(PROBCATCH_INFO).equals("")) PROBCATCH = Double.parseDouble(simInfo.get(PROBCATCH_INFO));
     else PROBCATCH = 0;
+
+    if (!simInfo.get(FISHTURNS_INFO).equals("")) FISHTURNS = Integer.parseInt(simInfo.get(FISHTURNS_INFO));
+    else FISHTURNS = 0;
+
+    if (!simInfo.get(SHARKTURNS_INFO).equals("")) SHARKTURNS = Integer.parseInt(simInfo.get(SHARKTURNS_INFO));
+    else SHARKTURNS = 0;
+
+    if (!simInfo.get(SHARKSTARVE_INFO).equals("")) SHARKSTARVE = Integer.parseInt(simInfo.get(SHARKSTARVE_INFO));
+    else SHARKSTARVE = 0;
+
     simulationSpeed = Double.parseDouble(simInfo.get(SPEED));
 
     myGrid = new Grid(WIDTH, HEIGHT);
-    // FIXME: IMPLEMENT SIMULATIONSPEED IN XML FILES AND INCORPORATE (DOES IT GO IN HERE OR MAIN?)
 
     createGrid();
     initGrid();
@@ -71,7 +93,7 @@ public abstract class SimulationModel {
 
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-    myGrid.initNeighbors();
+    myGrid.initNeighbors(NEIGHBORTYPE);
     myGrid.updateGrid(newStates);
     System.out.println(myGrid);
   }
@@ -89,6 +111,17 @@ public abstract class SimulationModel {
     }
 
     return newStates;
+  }
+
+  private int getNeighborType() {
+    String type = simInfo.get(NEIGHBORTYPE_INFO);
+    switch (type) {
+      case "finite" -> {return FINITE;}
+      case "toroidal" -> {return TOROIDAL;}
+      case "triangular toroidal" -> {return TRIANGULAR_TOROIDAL;}
+      case "hexagon" -> {return HEXAGON;}
+      default -> throw new NoSuchElementException();
+    }
   }
 
   protected abstract void createGrid();
@@ -109,7 +142,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(3, WIDTH, HEIGHT, myGrid);
+        c.initNeighbors(NEIGHBORTYPE, WIDTH, HEIGHT, myGrid);
       }
     }
   }

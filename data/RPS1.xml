@@ -14,4 +14,6 @@
     122222111020102010120202201201021.
     120012012010120120120120120120202
   </config>
+  <speed>1.0</speed>
+  <neighborType>finite</neighborType>
 </data>

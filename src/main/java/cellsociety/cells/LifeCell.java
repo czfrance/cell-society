@@ -7,7 +7,6 @@ public class LifeCell extends Cell {
 
   private int nextState;
 
-  //FOR GAME OF LIFE
   public LifeCell(int x, int y, int initState) {
     super(x, y, initState);
 
@@ -26,7 +25,7 @@ public class LifeCell extends Cell {
     int numAlive = 0;
     for (Cell myNeighbor : myNeighbors) {
       LifeCell cell = (LifeCell) myNeighbor;
-      if (cell.getCurrentState() == ALIVE) numAlive++;
+      if (cell.getMyCurrentState() == ALIVE) numAlive++;
     }
     return numAlive;
   }

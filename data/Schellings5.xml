@@ -13,5 +13,6 @@
     2121
   </config>
   <speed>1.0</speed>
+  <neighborType>finite</neighborType>
   <satisfied>0</satisfied>
 </data>
