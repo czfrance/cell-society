@@ -139,15 +139,9 @@ public abstract class Cell {
     return String.format("State %s, Neighbors %d, row: %d, column: %d",
            currentState, myNeighbors == null ? 0 : myNeighbors.size(), row, column);}
 
-  public void update(int width, int height, Grid grid) {}
-
-  //public Cell reupdate() { return null;}
-
   public boolean isReproducing() {return false;}
 
   public Cell getCurrentObject() {return this;}
-
-//  public boolean isDead() {return false;}
 
   public int getCol() {
     return column;
@@ -157,20 +151,17 @@ public abstract class Cell {
     return row;
   }
 
-
-  //
   protected void death() {return;}
+
   public List<Cell> getEmptyAdjacentCells() {return new ArrayList<>();}
-//  public void block() {}
-//  public void unblock() {}
-  public int getHealth() {return 0;}
-  public int getCurrAlive() {return 0;}
-  public boolean isBlocked() {return false;}
-  //public void resetReproductionTimer() {}
-//  public void setFish(FishCell f){}
-//  public void setShark(SharkCell s){}
-//  public FishCell getFish() {return null;}
-//  public SharkCell getShark(){return null;}
-//  public void setEmpty() {}
-//  public void setNew(int state, int repoTimer, int nutVal) {}
+
+  public int getHealth() {
+    return 0;
+  }
+
+  public int getTurnsAlive() {
+    System.out.println("?");
+    return 0;
+  }
+
 }

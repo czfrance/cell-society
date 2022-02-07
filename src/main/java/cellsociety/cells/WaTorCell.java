@@ -1,6 +1,5 @@
 package cellsociety.cells;
 
-import cellsociety.models.Grid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,72 +13,21 @@ public class WaTorCell extends Cell{
   private FishCell fish;
   private EmptyWaTorCell empty;
 
-  private WaTorCell previousState;
-
-  private boolean tempBlock;
-
 
   public WaTorCell(int x, int y, int initState, int fishBreed, int sharkBreed, int sharkStarve) {
-    //THIS ONE
     super(x, y, initState);
-    shark = new SharkCell(x, y, initState, sharkBreed, sharkStarve);
-    fish = new  FishCell(x, y, initState, fishBreed);
-    empty = new EmptyWaTorCell(x, y, initState);
-    currentState = initState;
+    shark = new SharkCell(x, y, SHARK, sharkBreed, sharkStarve);
+    fish = new  FishCell(x, y, FISH, fishBreed);
+    empty = new EmptyWaTorCell(x, y, EMPTY);
   }
 
   public WaTorCell(int x, int y, int initState, int fishBreed, int sharkBreed, int sharkStarve,
       int currHealth, int currAlive) {
-    //THIS ONE
     super(x, y, initState);
-    shark = new SharkCell(x, y, initState, sharkBreed, sharkStarve, currHealth, currAlive);
-    fish = new  FishCell(x, y, initState, fishBreed, currAlive);
-    empty = new EmptyWaTorCell(x, y, initState);
-    currentState = initState;
+    shark = new SharkCell(x, y, SHARK, sharkBreed, sharkStarve, currHealth, currAlive);
+    fish = new FishCell(x, y, FISH, fishBreed, currAlive);
+    empty = new EmptyWaTorCell(x, y, EMPTY);
   }
-
-//  public WaTorCell(WaTorCell cell) {
-//    super(cell.getColumn(), cell.getRow(), cell.getCurrentState());
-//    column = cell.getColumn();
-//    row = cell.getRow();
-//    shark = new SharkCell(cell.getShark());
-//    fish = new  FishCell(cell.getFish());
-//    empty = new EmptyWaTorCell(column, row, EMPTY);
-//    currentState = cell.getCurrentState();
-//  }
-
-//  public WaTorCell(int x, int y, int initState){
-//    super(x, y, initState);
-//  }
-
-//  public WaTorCell(int x, int y, int code, int reproductionTimer, int nutritionValue, int health) {
-//    super(x, y, code);
-//
-//    empty = new EmptyWaTorCell(x, y, code);
-//    fish = new FishCell(x, y, code, reproductionTimer, nutritionValue);
-//    shark = new SharkCell(x, y, code, health, reproductionTimer);
-//
-//    currentState = code;
-//
-//    this.column = x;
-//    this.row = y;
-//  }
-
-//  @Override
-//  public void update(int width, int height, Grid grid) {
-//    if (currentState == EMPTY) return;
-//    //previousState = new WaTorCell(this);
-//    getCurrentObject().update(width, height, grid);
-//
-//    if (getCurrentObject().isDead()) currentState = EMPTY;
-//
-//    column = getCurrentObject().getColumn();
-//    row = getCurrentObject().getRow();
-//  }
-
-//  public Cell reupdate() {
-//    return previousState;
-//  }
 
   @Override
   public int getNextState() {
@@ -92,16 +40,6 @@ public class WaTorCell extends Cell{
     else return empty;
   }
 
-//  public void setShark(SharkCell c){
-//    currentState = SHARK;
-//    shark = c;
-//  }
-//
-//  public void setFish(FishCell f) {
-//    currentState = FISH;
-//    fish = f;
-//  }
-
   @Override
   public List<Cell> getEmptyAdjacentCells() {
     List<Cell> emptyCells = new ArrayList<>();
@@ -113,16 +51,6 @@ public class WaTorCell extends Cell{
     return emptyCells;
   }
 
-//  public void setEmpty(){
-//    currentState = EMPTY;
-//  }
-//
-//  public FishCell getFish() {
-//    return fish;
-//  }
-//
-//  public SharkCell getShark() {return shark;}
-
   @Override
   public String toString() {return String.format("%d ", currentState);}
 
@@ -130,10 +58,13 @@ public class WaTorCell extends Cell{
     return getCurrentObject().isReproducing();
   }
 
-//  public void block() {tempBlock = true;}
-//  public void unblock() {tempBlock = false;}
-//  public boolean isBlocked() {return tempBlock;}
-//  public void setNew(int state,int repoTimer, int nutVal) {
-//    if (state == FISH) setFish(new FishCell(getColumn(), getRow(), state, repoTimer, nutVal));
-//  }
+  @Override
+  public int getTurnsAlive() {
+    return getCurrentObject().getTurnsAlive();
+  }
+
+  @Override
+  public int getHealth() {
+    return getCurrentObject().getHealth();
+  }
 }
