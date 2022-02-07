@@ -2,6 +2,7 @@ package cellsociety.views;
 
 import cellsociety.cells.Cell;
 import cellsociety.cells.PercolatingCell;
+import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BlockedPercolationViewCell;
 import cellsociety.view_cells.PercolatingViewCell;
@@ -56,10 +57,10 @@ public class PercolationView extends SimulationView {
 
   @Override
   protected void updateGrid() {
-    List<List<Cell>> cellGrid = model.getGrid().getGrid();
+    Grid cellGrid = model.getGrid();
     for (int row = 0; row < cellGrid.size(); row++) {
-      for (int cell = 0; cell < cellGrid.get(row).size(); cell++) {
-        int state = cellGrid.get(row).get(cell).getMyCurrentState();
+      for (int cell = 0; cell < cellGrid.getRow(row).size(); cell++) {
+        int state = cellGrid.getRow(row).get(cell).getMyCurrentState();
         switch (state) {
           case 0, 1 -> {grid.get(row).get(cell).updateState(state);}
           default -> {}

@@ -1,5 +1,7 @@
 package cellsociety.views;
 
+import cellsociety.cells.Cell;
+import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
 import java.util.ArrayList;
@@ -236,7 +238,18 @@ public abstract class SimulationView {
 
   protected abstract void makeGrid();
 
-  protected abstract void updateGrid();
+  protected void updateGrid() {
+    Grid cellGrid = model.getGrid();
+    for (int row = 0; row < cellGrid.size(); row++) {
+      for (int cell = 0; cell < cellGrid.getRow(row).size(); cell++) {
+        int state = cellGrid.getRow(row).get(cell).getMyCurrentState();
+        switch (state) {
+          case 0, 1, 2 -> {grid.get(row).get(cell).updateState(state);}
+          default -> {}
+        }
+      }
+    }
+  }
 
   private void doChangeTheme() {
     if (stylesheet.equals("light.css")) {
