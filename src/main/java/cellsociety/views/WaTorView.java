@@ -6,14 +6,15 @@ import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 
 import cellsociety.view_cells.WaTorViewCell;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author: Cynthia France, Jose Santillan
+ * This class implements the view for the WaTor simulation. The makeGrid() and updateGrid() methods
+ * initialize and update the configuration of the cells specific to this simulation.
+ *
+ * @author Cynthia France, Diane Kim
  */
 public class WaTorView extends SimulationView{
 
@@ -26,17 +27,18 @@ public class WaTorView extends SimulationView{
   }
 
   @Override
-  protected WebView getRules() {
-    WebView webView = new WebView();
-    WebEngine webEngine = webView.getEngine();
-    webEngine.load( getClass().getResource("/WaTorRules.html").toString() );
-    webView.setPrefSize(300, 400);
-    return webView;
+  protected String getName() {
+    return model.getMyResources().getString("WaTor");
   }
 
   @Override
-  protected String getName() {
-    return model.getMyResources().getString("WaTor");
+  protected String getHeader() {
+    return model.getMyResources().getString("WaTorRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/WaTorRules.html";
   }
 
   @Override

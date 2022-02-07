@@ -7,6 +7,7 @@ import cellsociety.models.RockPaperSciModel;
 import cellsociety.models.SegregationModel;
 import cellsociety.models.SimulationModel;
 import cellsociety.models.SpreadingFireModel;
+import cellsociety.models.SugarModel;
 import cellsociety.models.WaTorModel;
 import cellsociety.views.FallingSandView;
 import cellsociety.views.GameOfLifeView;
@@ -15,6 +16,7 @@ import cellsociety.views.RPSView;
 import cellsociety.views.SegregationView;
 import cellsociety.views.SimulationView;
 import cellsociety.views.SpreadingFireView;
+import cellsociety.views.SugarView;
 import cellsociety.views.WaTorView;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
@@ -44,23 +46,23 @@ import javax.xml.transform.TransformerException;
  */
 public class Main extends Application {
 
-  // useful names for constant values used
   public static final String TITLE = "Cell Society";
   public static final int SIZE = 700;
 
   // kind of data files to look for
   public static final String DATA_FILE_EXTENSION = "*.xml";
-  // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
   public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_EXTENSION);
   public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
   private static final int GAME_SIZE = 900;
+  public static final int WIDTH = 900;
+  public static final int HEIGHT = 800;
   private double framesPerSecond;
   private double secondDelay;
   public static double RATE_CHANGE = 0.1;
   private SimulationView view;
   private double rate = 1.0;
   private Stage myStage;
-  public static final String LANGUAGE = "English";
+  public static String LANGUAGE = "English";
   XMLSaver saver = new XMLSaver();
 
   /**
@@ -70,10 +72,8 @@ public class Main extends Application {
   public void start(Stage stage) {
     myStage = stage;
     File dataFile = FILE_CHOOSER.showOpenDialog(stage);
-//    Splash splash = new Splash();
 
     try {
-      String name = dataFile.getName();
 
       Map<String, String> info = new XMLParser().getInformation(dataFile);
 
@@ -85,8 +85,8 @@ public class Main extends Application {
       Scene scene = view.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
       // add our user interface components to Frame and show it
       stage.setScene(scene);
-      stage.setHeight(760);
-      stage.setWidth(810);
+      stage.setHeight(HEIGHT);
+      stage.setWidth(WIDTH);
       stage.show();
       Timeline animation = new Timeline();
       playAnimation(animation, view);
@@ -159,6 +159,8 @@ public class Main extends Application {
 
       case "Falling Sand" -> {return new FallingSandView(new FallingSandModel(info, LANGUAGE));}
 
+      case "Sugarscape" -> {return new SugarView(new SugarModel(info, LANGUAGE));}
+
       default -> throw new XMLException("not a simulation type", type);
     }
   }
@@ -176,4 +178,6 @@ public class Main extends Application {
     result.getExtensionFilters().setAll(new ExtensionFilter("Text Files", extensionAccepted));
     return result;
   }
+
+
 }

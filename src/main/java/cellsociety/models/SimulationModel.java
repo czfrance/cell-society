@@ -45,7 +45,7 @@ public abstract class SimulationModel {
 
   public final int WIDTH;
   public final int HEIGHT;
-  public final int NEIGHBORTYPE;
+  public static int NEIGHBORTYPE = TOROIDAL;
   public final double SATISFIED;
   public final double PROBCATCH;
   public final int FISHTURNS;
@@ -68,6 +68,7 @@ public abstract class SimulationModel {
     simInfo = dataValues;
     WIDTH = Integer.parseInt(simInfo.get(WIDTH_INFO));
     HEIGHT = Integer.parseInt(simInfo.get(HEIGHT_INFO));
+
     NEIGHBORTYPE = getNeighborType();
 
     if (!simInfo.get(SATISFIED_INFO).equals("")) SATISFIED = Double.parseDouble(simInfo.get(SATISFIED_INFO));
@@ -106,7 +107,7 @@ public abstract class SimulationModel {
    */
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-    myGrid.initNeighbors(NEIGHBORTYPE);
+    myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE, WIDTH, HEIGHT);
     myGrid.updateGrid(newStates);
     System.out.println(myGrid);
   }
@@ -133,7 +134,7 @@ public abstract class SimulationModel {
       case "toroidal" -> {return TOROIDAL;}
       case "triangular toroidal" -> {return TRIANGULAR_TOROIDAL;}
       case "hexagon" -> {return HEXAGON;}
-      default -> throw new NoSuchElementException();
+      default -> {return TOROIDAL;}
     }
   }
 
@@ -155,7 +156,7 @@ public abstract class SimulationModel {
   private void initGrid() {
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(NEIGHBORTYPE, WIDTH, HEIGHT, myGrid);
+        c.initNeighbors(NEIGHBORTYPE, WIDTH, HEIGHT, myGrid.getGrid());
       }
     }
   }

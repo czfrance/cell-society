@@ -21,14 +21,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import javax.imageio.ImageIO;
 
 /**
- * Cynthia France, Diane Kim
+ * This class serves as the abstract class for all the simulation views.
+ *
+ * @author Diane Kim, Cynthia France
  */
 public abstract class SimulationView {
 
@@ -73,17 +75,15 @@ public abstract class SimulationView {
   }
 
   /**
+   * This method creates the scene to be returned and used in the Main class, which will be displayed on the stage.
    *
-   * @param width width of the window
-   * @param height height of the window
-   * @return the scene
+   * @param width  the width of the scene
+   * @param height  the height of the scene
    */
   public Scene makeScene(int width, int height) {
 
-    //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
-    //root.setRight(topPane);
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
@@ -103,12 +103,7 @@ public abstract class SimulationView {
     cellSize = Math.min((gridWidth / model.getGridSize()[0]),
         (gridHeight / model.getGridSize()[1]));
     makeGrid();
-//    HBox sims = new HBox();
     Node tmp = addGridToNode();
-//    tmp.setLayoutX(200);
-//    Node tmp2 = addGridToNode();
-//    tmp2.setLayoutX(400);
-//    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
     newFilename = createInputDialog(model.getMyResources().getString("FileName"));
@@ -142,18 +137,21 @@ public abstract class SimulationView {
     }
   }
 
+  /**
+   * This method adds the cells from the simulation to a JavaFX node to be used in the scene
+   */
   private Node addGridToNode() {
-    VBox temp = new VBox();
-    temp.setAlignment(Pos.CENTER);
+    VBox cols = new VBox();
+    cols.setAlignment(Pos.CENTER);
     for (List<ViewCell> row : grid) {
-      HBox temp2 = new HBox();
-      temp2.setAlignment(Pos.CENTER);
+      HBox rows = new HBox();
+      rows.setAlignment(Pos.CENTER);
       for (ViewCell cell : row) {
-        temp2.getChildren().add(cell);
+        rows.getChildren().add(cell);
       }
-      temp.getChildren().add(temp2);
+      cols.getChildren().add(rows);
     }
-    return temp;
+    return cols;
   }
 
   private Dialog createInputDialog(String headerText) {
@@ -175,12 +173,13 @@ public abstract class SimulationView {
     return saveInfo;
   }
 
+  /**
+   * This method creates and returns the JavaFX node used to display the buttons that control configuration details
+   */
   private Node makePanel() {
     VBox result = new VBox();
     newConfigButton = new Button(model.getMyResources().getString("LoadNew"));
     saveConfigButton = new Button(model.getMyResources().getString("SaveConfig"));
-    //newConfigButton = makeButton("Load New", event -> doNewConfig());
-    //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
 
     result.getChildren().addAll(newConfigButton, saveConfigButton);
     result.setSpacing(10);
@@ -188,38 +187,42 @@ public abstract class SimulationView {
     return result;
   }
 
+  /**
+   * This method adds the title of the simulation to the top of the scene
+   */
   protected void addTitle() {
     HBox homebox = new HBox(10);
     Text t = new Text(getName());
-    t.setFont(Font.font("Courier New", 25));
 
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//    Dialog<String> dialog = new Dialog<String>();
-
-//    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
-//    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
-
-    alert.setTitle("Rules");
-//    alert.setHeaderText("Header");
-    alert.getDialogPane().setContent(getRules());
-//    dialog.getDialogPane().getButtonTypes().add(type);
-
-    Button infoButton = makeButton("Info", e -> alert.showAndWait());
+    Button infoButton = makeButton("Info", e -> getRules().showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
-    // will move this to css file
-    homebox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
-        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        + "-fx-border-radius: 5;" + "-fx-border-color: gray;");
+    homebox.getStyleClass().add("hbox");
     homebox.setAlignment(Pos.CENTER);
     root.setTop(homebox);
   }
 
-  protected abstract WebView getRules();
+  /**
+   * This method returns an Alert object displaying rules based on the HTML content associated with each simulation
+   */
+  protected Alert getRules() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle(getName());
+    alert.setHeaderText(getHeader());
+    WebView webView = new WebView();
+    WebEngine webEngine = webView.getEngine();
+    webEngine.load( getClass().getResource(getHtml()).toString());
+    webView.setPrefSize(500, 400);
+    alert.getDialogPane().setContent(webView);
+    return alert;
+  }
 
-  protected abstract String getName();
-
-
+  /**
+   * This method creates buttons with the given parameters
+   *
+   * @param property  the String used to retrieve the appropriate text for the button
+   * @param handler  the event that is activated upon clicking the button
+   */
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)",
@@ -237,6 +240,10 @@ public abstract class SimulationView {
     return result;
   }
 
+  /**
+   * This method creates and returns a JavaFX node containing buttons that help control the animation, such as the
+   * play/pause button, the toggle theme button, and the slider, which controls the speed of the animation.
+   */
   private Node controlAnimation() {
     HBox mediaBar = new HBox();
     mediaBar.setAlignment(Pos.CENTER);
@@ -246,10 +253,6 @@ public abstract class SimulationView {
     final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
 
     slider = new Slider(1, 5, 0.5);
-    slider.setShowTickMarks(true);
-    slider.setShowTickLabels(true);
-    slider.setMajorTickUnit(0.25f);
-    slider.setBlockIncrement(0.1f);
 
     mediaBar.getChildren().addAll(toggleTheme, togglePlayButton, stepButton, slider);
     mediaBar.setSpacing(10);
@@ -272,7 +275,6 @@ public abstract class SimulationView {
     return saveConfigButton;
   }
 
-  protected abstract void makeGrid();
 
   protected void updateGrid() {
     Grid cellGrid = model.getGrid();
@@ -287,6 +289,9 @@ public abstract class SimulationView {
     }
   }
 
+  /**
+   * This method changes the theme of the user interface
+   */
   private void doChangeTheme() {
     if (stylesheet.equals("light.css")) {
       stylesheet = "dark.css";
@@ -320,4 +325,14 @@ public abstract class SimulationView {
       }
     }
   }
+
+  protected abstract String getHeader();
+
+  protected abstract String getName();
+
+  protected abstract String getHtml();
+
+  protected abstract void makeGrid();
+
+  protected abstract void updateGrid();
 }

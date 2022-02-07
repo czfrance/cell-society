@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Grid implements Iterable<List<Cell>> {
 
-  private List<List<Cell>> myGrid;
-  private int WIDTH;
-  private int HEIGHT;
+  protected List<List<Cell>> myGrid;
+  protected int WIDTH;
+  protected int HEIGHT;
 
   public Grid(int width, int height) {
     myGrid = new ArrayList<>();
@@ -55,13 +55,14 @@ public class Grid implements Iterable<List<Cell>> {
       }
     }
   }
-  public void initNeighbors(int neighborType) {
+  public void initNeighbors(int neighborSystem, int WIDTH, int HEIGHT) {
     for (List<Cell> list : myGrid) {
       for (Cell cell : list) {
-        cell.initNeighbors(neighborType, WIDTH, HEIGHT, this);
+        cell.initNeighbors(SimulationModel.NEIGHBORTYPE, this.WIDTH, this.HEIGHT, getGrid());
       }
     }
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

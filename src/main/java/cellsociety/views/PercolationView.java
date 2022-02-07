@@ -6,14 +6,15 @@ import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BlockedPercolationViewCell;
 import cellsociety.view_cells.PercolatingViewCell;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author: Cynthia France
+ * This class implements the view for the Percolation simulation. The makeGrid() and updateGrid() methods
+ * initialize and update the configuration of the cells specific to this simulation.
+ *
+ * @author Cynthia France, Diane Kim
  */
 public class PercolationView extends SimulationView {
 
@@ -26,19 +27,18 @@ public class PercolationView extends SimulationView {
   }
 
   @Override
-  protected WebView getRules() {
-    WebView webView = new WebView();
-
-    WebEngine webEngine = webView.getEngine();
-    webEngine.load( getClass().getResource("/PercolationRules.html").toString() );
-
-    webView.setPrefSize(300, 400);
-    return webView;
+  protected String getName() {
+    return model.getMyResources().getString("Percolation");
   }
 
   @Override
-  protected String getName() {
-    return model.getMyResources().getString("Percolation");
+  protected String getHeader() {
+    return model.getMyResources().getString("PercRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/PercolationRules.html";
   }
 
   @Override

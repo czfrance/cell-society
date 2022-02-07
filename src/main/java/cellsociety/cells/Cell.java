@@ -1,8 +1,7 @@
 package cellsociety.cells;
 
 import java.util.ArrayList;
-import java.util.List;
-import cellsociety.models.Grid;
+import java.util.List;;
 
 /**
  * author: Cynthia France
@@ -103,6 +102,7 @@ public abstract class Cell {
     myNeighbors = new ArrayList<>();
     switch (code) {
       case FINITE -> {finiteNeighbors(width, height, grid);}
+
       case TOROIDAL -> {toroidalNeighbors(width, height, grid);}
       case TRIANGULAR_TOROIDAL -> {triangleNeighbors(width, height, grid);}
       case HEXAGON -> {initHexagonNeighbors(width, height, grid);}
@@ -133,26 +133,33 @@ public abstract class Cell {
   private void finiteNeighbors(int width, int height, Grid grid) {
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
-        if (inBounds(column + k, row + i, width, height) && (i !=0 || k !=0)) {
-          myNeighbors.add(grid.getRow(row + i).get(column + k));
+        if (inBounds(column + k, row + i, width, height) && (i != 0 || k != 0)) {
+          myNeighbors.add(grid.get(row + i).get(column + k));
         }
       }
     }
   }
 
-  private void toroidalNeighbors(int width, int height, Grid grid) {
+  private void toroidalNeighbors(int width, int height, List<List<Cell>> grid) {
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
         if (i !=0 || k !=0) {
           int x = flip(column + k, width);
           int y = flip(row + i, height);
-          myNeighbors.add(grid.getRow(y).get(x));
+          myNeighbors.add(grid.get(y).get(x));
         }
       }
     }
   }
 
-  private void triangleNeighbors(int width, int height, Grid grid) {
+  public int flip(int x, int boundary) {
+    if (x >= boundary) return 0;
+    else if (x < 0) return boundary - 1;
+    return x;
+  }
+
+
+  private void triangleNeighbors(int width, int height, List<List<Cell>> grid) {
 
     for (int i = -1; i < 2; i++) {
       int[] vals = getVals(i);
@@ -163,7 +170,7 @@ public abstract class Cell {
         if (i !=0 || k !=0) {
           int x = flip(column + k, width);
           int y = flip(row + i, height);
-          myNeighbors.add(grid.getRow(y).get(x));
+          myNeighbors.add(grid.get(y).get(x));
         }
       }
     }
@@ -184,11 +191,8 @@ public abstract class Cell {
 
     return ret;
   }
-  private boolean isFacingDown() {return orientation == EVEN;}
 
-  private boolean isFacingUp() {return orientation == ODD;}
-
-  private void initHexagonNeighbors(int width, int height, Grid grid) {
+  private void initHexagonNeighbors(int width, int height, List<List<Cell>> grid) {
     for (int i = -1; i < 2; i++) {
       int guard;
       if (i == 0) guard = 2;
@@ -197,13 +201,78 @@ public abstract class Cell {
         if (i !=0 || k !=0) {
           int x = flip(column + k, width);
           int y = flip(row + i, height);
-          myNeighbors.add(grid.getRow(y).get(x));
+          myNeighbors.add(grid.get(y).get(x));
         }
       }
     }
   }
 
+  public boolean inBounds(int x, int y, int width, int height) {
+    return (x >= 0 && x < width) && (y >= 0 && y < height);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("State %s, Neighbors %d, row: %d, column: %d",
+           currentState, myNeighbors == null ? 0 : myNeighbors.size(), row, column);}
+
+  public void update() {}
+
+  public void update(int width, int height, List<List<Cell>> grid) {}
+
+  public int getRow() {return row;}
+  public boolean isReproducing() {return false;}
+
+  public Cell getCurrentObject() {return this;}
+
+  public int getColumn() {
+    return column;
+  }
+
   protected void death() {return;}
 
+  public List<Cell> getEmptyAdjacentCells() {return new ArrayList<>();}
 
+  public boolean isDead() {return false;}
+  //
+  public void block() {}
+  public void setFish(FishCell f){}
+  public List<Cell> getFish() {return null;}
+
+  public int homePheromones() {return -1;}
+  public int foodPheromones() {return -1;}
+
+  protected int takeSugar(int mySugar) {
+    return -1;
+  }
+
+  protected void update(List<Cell> myNeighbors) {
+  }
+
+  public boolean hasAgent() {
+    return false;
+  }
+
+  public void setAgent(Cell cell) {
+  }
+
+  public Cell getAgent() { return null;
+  }
+
+  public boolean isAlive() {return false;}
+  public int getHealth() {
+    return 0;
+  }
+
+  public int getTurnsAlive() {
+    return 0;
+  }
+
+  public void setTurnsAlive(int alive) {
+    return;
+  }
+
+  public void setHealth(int myhealth) {
+    return;
+  }
 }

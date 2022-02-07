@@ -1,5 +1,6 @@
 package cellsociety.cells;
 
+import cellsociety.models.Grid;
 import java.util.ArrayList;
 import java.util.List;
 

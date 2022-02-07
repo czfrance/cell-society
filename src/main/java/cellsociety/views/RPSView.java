@@ -8,24 +8,29 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class implements the view for the RPS simulation. The makeGrid() and updateGrid() methods
+ * initialize and update the configuration of the cells specific to this simulation.
+ *
+ * @author Cynthia France, Diane Kim
+ */
 public class RPSView extends SimulationView{
 
   public RPSView(SimulationModel simModel) {super(simModel);}
 
   @Override
-  protected WebView getRules() {
-    WebView webView = new WebView();
-    webView.getEngine().loadContent("<html>Pay attention, there are Pay attention, there are" +
-            "Pay attention, there are" +
-            "Pay attention, there are" +
-            "<b>HTML</b> tags, here.</html>");
-    webView.setPrefSize(300, 400);
-    return webView;
+  protected String getName() {
+    return model.getMyResources().getString("RPS");
   }
 
   @Override
-  protected String getName() {
-    return null;
+  protected String getHeader() {
+    return model.getMyResources().getString("RPSRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/RPSRules.html";
   }
 
   @Override
