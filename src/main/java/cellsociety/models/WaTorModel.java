@@ -32,7 +32,6 @@ public class WaTorModel extends SimulationModel {
         default -> {}
         }
       }
-
   }
 
   @Override
@@ -44,24 +43,28 @@ public class WaTorModel extends SimulationModel {
     move(movingFish, FISH);
   }
 
+
   private void move(List<Cell> movingObjects, int type) {
     System.out.println("size: " + movingObjects.size());
     for (Cell c : movingObjects) {
-      myGrid.initNeighbors(NEIGHBORTYPE);
+      myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE, WIDTH, HEIGHT);
       List<Cell> emptyNeighbors = c.getEmptyAdjacentCells();
       System.out.print(emptyNeighbors.size());
       if (emptyNeighbors.size() == 0) {
-        myGrid.getRow(c.getRow()).set(c.getCol(),
-            new WaTorCell(c.getCol(), c.getRow(), type, FISHTURNS, SHARKTURNS,
+        System.out.print("zero");
+        System.out.printf("%d %d\n", c.getRow(), c.getColumn());
+        myGrid.getRow(c.getRow()).set(c.getColumn(),
+            new WaTorCell(c.getColumn(), c.getRow(), type, FISHTURNS, SHARKTURNS,
                 SHARKSTARVE, c.getHealth(), c.getTurnsAlive()));
       }
       else {
         Random rand = new Random();
         int index = rand.nextInt(emptyNeighbors.size());
         Cell newLoc = emptyNeighbors.get(index);
-        Cell newCell = new WaTorCell(newLoc.getCol(), newLoc.getRow(), type, FISHTURNS, SHARKTURNS,
+        System.out.printf("%d %d\n", newLoc.getRow(), newLoc.getColumn());
+        Cell newCell = new WaTorCell(newLoc.getColumn(), newLoc.getRow(), type, FISHTURNS, SHARKTURNS,
             SHARKSTARVE, c.getHealth(), c.getTurnsAlive());
-        myGrid.getRow(newLoc.getRow()).set(newLoc.getCol(), newCell);
+        myGrid.getRow(newLoc.getRow()).set(newLoc.getColumn(), newCell);
         newCell.setState(type);
       }
     }
@@ -78,13 +81,16 @@ public class WaTorModel extends SimulationModel {
       else if (nextState == -1*type) {
         movingObjects.add(object);
         if (object.isReproducing()) {
-          movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
+          System.out.println("yessssssssss");
+          movingObjects.add(new WaTorCell(object.getColumn(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
+
         }
         object.setState(EMPTY);
       }
       else {
         if (object.isReproducing()) {
-          movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
+          System.out.println("yessssssssss");
+          movingObjects.add(new WaTorCell(object.getColumn(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
         }
       }
     }

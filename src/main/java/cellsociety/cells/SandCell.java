@@ -6,7 +6,7 @@ public class SandCell extends Cell{
   public static final int SAND = 1;
   public static final int METAL = 2;
 
-  public static final int BOTTOM_NEIGHBOR = 5;
+  public static final int BOTTOM_NEIGHBOR = 6;
   public static final int TOP_NEIGHBOR = 1;
 
   private int floor;
@@ -40,9 +40,10 @@ public class SandCell extends Cell{
   }
 
   private int nextSand() {
-    if (getRow() == floor - 1 || isBelowSand()) return SAND;
+    if (getRow() == floor - 1 || isBelowSand() || isBelowMetal()) return SAND;
     return AIR;
   }
+  private boolean isBelowMetal() {return myNeighbors.get(BOTTOM_NEIGHBOR).getMyCurrentState() == METAL;}
 
   private boolean isBelowSand() {return myNeighbors.get(BOTTOM_NEIGHBOR).getMyCurrentState() == SAND;}
 

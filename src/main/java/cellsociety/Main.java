@@ -1,12 +1,27 @@
 package cellsociety;
 
-import cellsociety.models.*;
-import cellsociety.views.*;
+import cellsociety.models.FallingSandModel;
+import cellsociety.models.GameOfLifeModel;
+import cellsociety.models.PercolationModel;
+import cellsociety.models.RockPaperSciModel;
+import cellsociety.models.SegregationModel;
+import cellsociety.models.SimulationModel;
+import cellsociety.models.SpreadingFireModel;
+import cellsociety.models.SugarModel;
+import cellsociety.models.WaTorModel;
+import cellsociety.views.FallingSandView;
+import cellsociety.views.GameOfLifeView;
+import cellsociety.views.PercolationView;
+import cellsociety.views.RPSView;
+import cellsociety.views.SegregationView;
+import cellsociety.views.SimulationView;
+import cellsociety.views.SpreadingFireView;
+import cellsociety.views.SugarView;
+import cellsociety.views.WaTorView;
 import cellsociety.xml.XMLException;
 import cellsociety.xml.XMLParser;
 import cellsociety.xml.XMLSaver;
-
-import java.awt.*;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -143,6 +158,8 @@ public class Main extends Application {
       case "Rock Paper Scissors" -> {return new RPSView(new RockPaperSciModel(info, LANGUAGE));}
 
       case "Falling Sand" -> {return new FallingSandView(new FallingSandModel(info, LANGUAGE));}
+
+      case "Sugarscape" -> {return new SugarView(new SugarModel(info, LANGUAGE));}
 
       default -> throw new XMLException("not a simulation type", type);
     }

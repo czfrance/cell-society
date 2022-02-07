@@ -1,5 +1,6 @@
 package cellsociety.cells;
 
+import cellsociety.models.Grid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,18 @@ public class WaTorCell extends Cell{
     empty = new EmptyWaTorCell(x, y, EMPTY);
   }
 
+  @Override
+  public void update(int width, int height, List<List<Cell>> grid) {
+    if (currentState == EMPTY)
+      return;
+    getCurrentObject().update(width, height, grid);
+
+    if (getCurrentObject().isDead())
+      currentState = EMPTY;
+
+    column = getCurrentObject().getColumn();
+    row = getCurrentObject().getRow();
+  }
   public WaTorCell(int x, int y, int initState, int fishBreed, int sharkBreed, int sharkStarve,
       int currHealth, int currAlive) {
     super(x, y, initState);

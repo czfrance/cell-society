@@ -27,34 +27,34 @@ public class SharkCell extends Cell {
     breedTurns = sharkBreed;
   }
 
-  @Override
-  public int getNextState() {
+  public int getNextState () {
     boolean success = eatFish();
     turnsAlive++;
     isReproducing = checkReproduce();
     if (success) {
       myHealth++;
       return currentState;
-    }
-    else {
+    } else {
       myHealth--;
       if (myHealth == 0) {
         return 0;
       }
-      return -1*currentState;
+      return -1 * currentState;
     }
   }
 
-  private boolean checkReproduce() {
+  private boolean checkReproduce () {
     if (turnsAlive % breedTurns == 0) {
       return true;
     }
     return false;
   }
 
-  public boolean isReproducing() {return isReproducing;}
+  public boolean isReproducing () {
+    return isReproducing;
+  }
 
-  private boolean eatFish() {
+  private boolean eatFish () {
     List<Cell> fishes = getFish();
     if (fishes.size() == 0) {
       return false;
@@ -65,7 +65,7 @@ public class SharkCell extends Cell {
     return true;
   }
 
-  private List<Cell> getFish() {
+  public List<Cell> getFish() {
     List<Cell> fish = new ArrayList<>();
     for (Cell c : myNeighbors) {
       if (c.getMyCurrentState() == WaTorCell.FISH) {
@@ -75,19 +75,20 @@ public class SharkCell extends Cell {
     return fish;
   }
 
-  private Cell selectFish(List<Cell> fishes) {
+  private Cell selectFish (List < Cell > fishes) {
     Random rand = new Random();
     int fish = rand.nextInt(fishes.size());
     return fishes.get(fish);
   }
 
   @Override
-  public int getTurnsAlive() {
+  public int getTurnsAlive () {
     return turnsAlive;
   }
 
   @Override
-  public int getHealth() {
+  public int getHealth () {
     return myHealth;
   }
 }
+
