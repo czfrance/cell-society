@@ -3,11 +3,14 @@ package cellsociety.views;
 import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BurningViewCell;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 
+/**
+ * Feel free to completely change this code or delete it entirely.
+ *
+ * @author Cynthia France, Diane Kim
+ */
 public class SpreadingFireView extends SimulationView{
 
   public static final int TREE = 0;
@@ -17,16 +20,6 @@ public class SpreadingFireView extends SimulationView{
   public SpreadingFireView(SimulationModel simModel) {
     super(simModel);
   }
-
-
-//  @Override
-//  protected WebView getRules() {
-//    WebView webView = new WebView();
-//    WebEngine webEngine = webView.getEngine();
-//    webEngine.load( getClass().getResource("/SimulationRules.html").toString() );
-//    webView.setPrefSize(300, 400);
-//    return webView;
-//  }
 
   @Override
   protected String getName() {

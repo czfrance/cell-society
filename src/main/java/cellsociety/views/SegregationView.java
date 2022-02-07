@@ -3,26 +3,20 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.SchellingGroupViewCell;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Feel free to completely change this code or delete it entirely.
+ *
+ * @author Cynthia France, Diane Kim
+ */
 public class SegregationView extends SimulationView{
 
   public SegregationView(SimulationModel simModel) {
     super(simModel);
   }
-
-//  @Override
-//  protected WebView getRules() {
-//    WebView webView = new WebView();
-//    WebEngine webEngine = webView.getEngine();
-//    webEngine.load( getClass().getResource("/SegregationRules.html").toString() );
-//    webView.setPrefSize(300, 400);
-//    return webView;
-//  }
 
   @Override
   protected String getName() {
