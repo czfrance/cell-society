@@ -26,7 +26,7 @@ import javafx.scene.web.WebView;
 import javax.imageio.ImageIO;
 
 /**
- * This class serves as the abstract class for the simulation views
+ * This class serves as the abstract class for all the simulation views.
  *
  * @author Diane Kim, Cynthia France
  */
@@ -64,12 +64,16 @@ public abstract class SimulationView {
     return simulationSpeed;
   }
 
+  /**
+   * This method creates the scene to be returned and used in the Main class, which will be displayed on the stage.
+   *
+   * @param width  the width of the scene
+   * @param height  the height of the scene
+   */
   public Scene makeScene(int width, int height) {
 
-    //FlowPane topPane = new FlowPane();
     Node buttonPanel = makePanel();
     root.setBottom(buttonPanel);
-    //root.setRight(topPane);
 
     root.setLeft(makePanel());
     root.setBottom(controlAnimation());
@@ -116,18 +120,21 @@ public abstract class SimulationView {
     }
   }
 
+  /**
+   * This method adds the cells from the simulation to a JavaFX node to be used in the scene
+   */
   private Node addGridToNode() {
-    VBox temp = new VBox();
-    temp.setAlignment(Pos.CENTER);
+    VBox cols = new VBox();
+    cols.setAlignment(Pos.CENTER);
     for (List<ViewCell> row : grid) {
-      HBox temp2 = new HBox();
-      temp2.setAlignment(Pos.CENTER);
+      HBox rows = new HBox();
+      rows.setAlignment(Pos.CENTER);
       for (ViewCell cell : row) {
-        temp2.getChildren().add(cell);
+        rows.getChildren().add(cell);
       }
-      temp.getChildren().add(temp2);
+      cols.getChildren().add(rows);
     }
-    return temp;
+    return cols;
   }
 
   private Dialog createInputDialog(String headerText) {
@@ -145,6 +152,9 @@ public abstract class SimulationView {
     return saveInfo;
   }
 
+  /**
+   * This method creates and returns the JavaFX node used to display the buttons that control configuration details
+   */
   private Node makePanel() {
     VBox result = new VBox();
     newConfigButton = new Button(model.getMyResources().getString("LoadNew"));
@@ -156,10 +166,12 @@ public abstract class SimulationView {
     return result;
   }
 
+  /**
+   * This method adds the title of the simulation to the top of the scene
+   */
   protected void addTitle() {
     HBox homebox = new HBox(10);
     Text t = new Text(getName());
-//    t.setFont(Font.font("Courier New", 25));
 
     Button infoButton = makeButton("Info", e -> getRules().showAndWait());
 
@@ -169,6 +181,9 @@ public abstract class SimulationView {
     root.setTop(homebox);
   }
 
+  /**
+   * This method returns an Alert object displaying rules based on the HTML content associated with each simulation
+   */
   protected Alert getRules() {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle(getName());
@@ -181,14 +196,12 @@ public abstract class SimulationView {
     return alert;
   }
 
-
-  protected abstract String getHeader();
-
-  protected abstract String getName();
-
-  protected abstract String getHtml();
-
-
+  /**
+   * This method creates buttons with the given parameters
+   *
+   * @param property  the String used to retrieve the appropriate text for the button
+   * @param handler  the event that is activated upon clicking the button
+   */
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
     Button result = new Button();
     final String IMAGEFILE_SUFFIXES = String.format(".*\\.(%s)",
@@ -206,6 +219,10 @@ public abstract class SimulationView {
     return result;
   }
 
+  /**
+   * This method creates and returns a JavaFX node containing buttons that help control the animation, such as the
+   * play/pause button, the toggle theme button, and the slider, which controls the speed of the animation.
+   */
   private Node controlAnimation() {
     HBox mediaBar = new HBox();
     mediaBar.setAlignment(Pos.CENTER);
@@ -229,10 +246,11 @@ public abstract class SimulationView {
     return saveConfigButton;
   }
 
-  protected abstract void makeGrid();
 
-  protected abstract void updateGrid();
 
+  /**
+   * This method changes the theme of the user interface
+   */
   private void doChangeTheme() {
     if (stylesheet.equals("light.css")) {
       stylesheet = "dark.css";
@@ -266,4 +284,14 @@ public abstract class SimulationView {
       }
     }
   }
+
+  protected abstract String getHeader();
+
+  protected abstract String getName();
+
+  protected abstract String getHtml();
+
+  protected abstract void makeGrid();
+
+  protected abstract void updateGrid();
 }

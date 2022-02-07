@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Feel free to completely change this code or delete it entirely.
+ * This class implements the view for the WaTor simulation. The makeGrid() and updateGrid() methods
+ * initialize and update the configuration of the cells specific to this simulation.
  *
  * @author Cynthia France, Diane Kim
  */
