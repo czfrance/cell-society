@@ -5,6 +5,7 @@ import cellsociety.cells.WaTorCell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class WaTorModel extends SimulationModel {
 
@@ -18,7 +19,6 @@ public class WaTorModel extends SimulationModel {
     super(dataValues, language);
     simType = "WaTor";
     tempGrid = new WaTorCell[HEIGHT][WIDTH];
-
   }
 
   @Override
@@ -30,101 +30,156 @@ public class WaTorModel extends SimulationModel {
       char c = simInfo.get(DATA_FIELDS.get(6)).toCharArray()[i];
       switch (c) {
         case '.' -> {myGrid.addRow();rowNum++;colNum = 0;}
-        case '0' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, EMPTY, 0, 0, 0));colNum++;}
-        case '1' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, FISH, 5, 5, 5));colNum++;}
-        case '2' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum, SHARK, 5, 5, 5));colNum++;}
+        case '0', '1', '2' -> {myGrid.getRow(rowNum).add(new WaTorCell(colNum, rowNum,
+            Character.getNumericValue(c), FISHTURNS, SHARKTURNS, SHARKSTARVE));colNum++;}
         default -> {}
         }
       }
 
   }
 
+  @Override
   public void updateGrid() {
-    unBlockAll();
+    List<Cell> movingSharks = getMovingObject(SHARK);
+    List<Cell> movingFish = getMovingObject(FISH);
 
-    makeTempGrid();
-
-    myGrid = newGrid();
+    move(movingSharks);
+    move(movingFish);
   }
-  private Cell cellUpdater(Cell cell) {
-    cell.update(WIDTH, HEIGHT, myGrid);
-    if (cell.getCurrentState() == EMPTY) return cell;
-    int x = cell.getRow();
-    int y = cell.getColumn();
-    //TODO: BE CAREFUL ABOUT INFINITE LOOPS HERE IF A BLOCK HAS NO WHERE TO GO
-    int counter = 0;
-    while (tempGrid[x][y] != null) {
-      cell = cell.reupdate();
 
-      if (counter != 10) cell.update(WIDTH, HEIGHT, myGrid);
-
-      x = cell.getRow();
-      y = cell.getColumn();
-      counter++;
+  private void move(List<Cell> movingObjects) {
+    for (Cell c : movingObjects) {
+      List<Cell> emptyNeighbors = c.getEmptyAdjacentCells();
+      if (emptyNeighbors.size() == 0) {
+        myGrid.getRow(c.getRow()).set(c.getCol(),
+            new WaTorCell(c.getCol(), c.getRow(), c.getMyCurrentState(), FISHTURNS, SHARKTURNS,
+                SHARKSTARVE, c.getHealth(), c.getCurrAlive()));
+      }
+      Random rand = new Random();
+      int index = rand.nextInt(emptyNeighbors.size());
+      Cell newLoc = emptyNeighbors.get(index);
+      myGrid.getRow(newLoc.getRow()).set(newLoc.getCol(),
+          new WaTorCell(c.getCol(), c.getRow(), c.getMyCurrentState(), FISHTURNS, SHARKTURNS,
+              SHARKSTARVE, c.getHealth(), c.getCurrAlive()));
     }
-    return cell;
   }
 
-  private void makeTempGrid() {
-
-    tempGrid = new Cell[HEIGHT][WIDTH];
-    int i = 0;
-    for (List<Cell> list : myGrid) {
-      for (Cell cell : list) {
-        int row = cell.getRow();
-        int col = cell.getColumn();
-
-        //Step 1: place cell's into new random location
-        cell = cellUpdater(cell);
-        if (cell.getCurrentState() != EMPTY) {
-          tempGrid[cell.getRow()][cell.getColumn()] = cell;
-          cell.block();
+  private List<Cell> getMovingObject(int type) {
+    List<Cell> objects = getObjects(type);
+    List<Cell> movingObjects = new ArrayList<>();
+    for (Cell object : objects) {
+      int nextState = object.getNextState();
+      if (nextState == 0) {
+        object.setState(EMPTY);
+      }
+      else if (nextState == -1*type) {
+        movingObjects.add(object);
+        if (object.isReproducing()) {
+          movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
         }
-
-        //Step 2: Reproduce
-        if (cell.getCurrentObject().isReproducing()) {
-          tempGrid[row][col] = new WaTorCell(col, row, cell.getCurrentObject().getCurrentState(), 5, 5, 5);
-          cell.getCurrentObject().resetReproductionTimer();
+        object.setState(EMPTY);
+      }
+      else {
+        if (object.isReproducing()) {
+          movingObjects.add(new WaTorCell(object.getCol(), object.getRow(), type, FISHTURNS, SHARKTURNS, SHARKSTARVE));
         }
       }
     }
+    return movingObjects;
   }
 
-  public Grid newGrid() {
-    Grid newGrid = new Grid(WIDTH, HEIGHT);
-    newGrid.getGrid().clear();
-    for (int i = 0; i < HEIGHT; i++) {
-      List<Cell> temp = new ArrayList<>();
-      for (int k = 0; k < WIDTH; k++) {
-        Cell cell = tempGrid[i][k];
-        if (cell == null) temp.add(new WaTorCell(i, k, EMPTY, 5, 5, 5));
-        else if (!cell.getCurrentObject().isDead()) temp.add(cell);
-        else temp.add(new WaTorCell(i, k, EMPTY, 5, 5, 5));
-        System.out.print(String.format("(%d, %d)", temp.get(k).getColumn(), temp.get(k).getRow()));
+  private List<Cell> getObjects(int type) {
+    List<Cell> objects = new ArrayList<>();
+    for (int row = 0; row < myGrid.size(); row++) {
+      for (int cell = 0; cell < myGrid.getRow(row).size(); cell++) {
+        Cell c = myGrid.getRow(row).get(cell);
+        if (c.getMyCurrentState() == type) {
+          objects.add(c);
+        }
       }
-      System.out.println();
-      newGrid.addRow(temp);
     }
-    return newGrid;
+    return objects;
   }
 
-  private void unBlockAll() {
-    for(List<Cell> list : myGrid) {
-      for (Cell cell : list) {
-        cell.unblock();
-      }
-    }
-  }
-
-  private void printTempGrid() {
-    for (Cell[] list : tempGrid) {
-      for (Cell c : list) {
-        if (c == null) System.out.print("0");
-        else System.out.print(c.getCurrentState());
-      }
-      System.out.println();
-    }
-  }
+//  private Cell cellUpdater(Cell cell) {
+//    cell.update(WIDTH, HEIGHT, myGrid);
+//    if (cell.getCurrentState() == EMPTY) return cell;
+//    int x = cell.getRow();
+//    int y = cell.getColumn();
+//    //TODO: BE CAREFUL ABOUT INFINITE LOOPS HERE IF A BLOCK HAS NO WHERE TO GO
+//    int counter = 0;
+//    while (tempGrid[x][y] != null) {
+//      cell = cell.reupdate();
+//
+//      if (counter != 10) cell.update(WIDTH, HEIGHT, myGrid);
+//
+//      x = cell.getRow();
+//      y = cell.getColumn();
+//      counter++;
+//    }
+//    return cell;
+//  }
+//
+//  private void makeTempGrid() {
+//
+//    tempGrid = new Cell[HEIGHT][WIDTH];
+//    int i = 0;
+//    for (List<Cell> list : myGrid) {
+//      for (Cell cell : list) {
+//        int row = cell.getRow();
+//        int col = cell.getColumn();
+//
+//        //Step 1: place cell's into new random location
+//        cell = cellUpdater(cell);
+//        if (cell.getCurrentState() != EMPTY) {
+//          tempGrid[cell.getRow()][cell.getColumn()] = cell;
+//          cell.block();
+//        }
+//
+//        //Step 2: Reproduce
+//        if (cell.getCurrentObject().isReproducing()) {
+//          tempGrid[row][col] = new WaTorCell(col, row, cell.getCurrentObject().getCurrentState(), 5, 5, 5);
+//          cell.getCurrentObject().resetReproductionTimer();
+//        }
+//      }
+//    }
+//  }
+//
+//  public Grid newGrid() {
+//    Grid newGrid = new Grid(WIDTH, HEIGHT);
+//    newGrid.getGrid().clear();
+//    for (int i = 0; i < HEIGHT; i++) {
+//      List<Cell> temp = new ArrayList<>();
+//      for (int k = 0; k < WIDTH; k++) {
+//        Cell cell = tempGrid[i][k];
+//        if (cell == null) temp.add(new WaTorCell(i, k, EMPTY, 5, 5, 5));
+//        else if (!cell.getCurrentObject().isDead()) temp.add(cell);
+//        else temp.add(new WaTorCell(i, k, EMPTY, 5, 5, 5));
+//        System.out.print(String.format("(%d, %d)", temp.get(k).getColumn(), temp.get(k).getRow()));
+//      }
+//      System.out.println();
+//      newGrid.addRow(temp);
+//    }
+//    return newGrid;
+//  }
+//
+//  private void unBlockAll() {
+//    for(List<Cell> list : myGrid) {
+//      for (Cell cell : list) {
+//        cell.unblock();
+//      }
+//    }
+//  }
+//
+//  private void printTempGrid() {
+//    for (Cell[] list : tempGrid) {
+//      for (Cell c : list) {
+//        if (c == null) System.out.print("0");
+//        else System.out.print(c.getCurrentState());
+//      }
+//      System.out.println();
+//    }
+//  }
 }
 
 /*

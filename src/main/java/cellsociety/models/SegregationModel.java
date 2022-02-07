@@ -36,9 +36,6 @@ public class SegregationModel extends SimulationModel{
     }
   }
 
-  //FIXME: get the grid of empty cells, and count of how many unhappy cells in each group
-  //  then fill them in in the new grid (randomized locations)
-
   @Override
   public void updateGrid() {
     Random rand = new Random();
@@ -62,8 +59,8 @@ public class SegregationModel extends SimulationModel{
   private List<Cell> getEmptyCells() {
     List<Cell> emptyCells = new ArrayList<>();
     List<List<Integer>> vacatedCellStates = getCellNextStates();
-    for (int row = 0; row < vacatedCellStates.size(); row++) { //<Integer> row : vacatedCellStates) {
-      for (int col = 0; col < vacatedCellStates.get(row).size(); col++) { //: row) {
+    for (int row = 0; row < vacatedCellStates.size(); row++) {
+      for (int col = 0; col < vacatedCellStates.get(row).size(); col++) {
         int state = vacatedCellStates.get(row).get(col);
         if (state == -1) {
           numUnhappy1++;
