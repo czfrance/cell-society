@@ -3,6 +3,7 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.SandViewCell;
+import javafx.scene.control.Alert;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -16,18 +17,32 @@ public class FallingSandView extends SimulationView {
 
   }
 
-  @Override
-  protected WebView getRules() {
-    WebView webView = new WebView();
-    WebEngine webEngine = webView.getEngine();
-    webEngine.load( getClass().getResource("/SandRules.html").toString() );
-    webView.setPrefSize(300, 400);
-    return webView;
-  }
+//  @Override
+//  protected Alert getRules() {
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//    alert.setTitle("Rules");
+//    alert.setHeaderText("Header");
+//    WebView webView = new WebView();
+//    WebEngine webEngine = webView.getEngine();
+//    webEngine.load( getClass().getResource("/SandRules.html").toString() );
+//    webView.setPrefSize(500, 400);
+//    alert.getDialogPane().setContent(webView);
+//    return alert;
+//  }
 
   @Override
   protected String getName() {
     return "Falling Sand";
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("SandRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/SandRules.html";
   }
 
   @Override
