@@ -3,6 +3,10 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.LifeViewCell;
+import javafx.scene.control.Alert;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,20 +15,33 @@ public class GameOfLifeView extends SimulationView {
   public GameOfLifeView(SimulationModel simModel) {
     super(simModel);
   }
-
-  @Override
-  protected String getRules() {
-    return "Rules: " +
-            "1. A location that has zero or one neighbors will be empty in the next generation. If a cell was in that location, it dies of loneliness.\n" +
-            "2. A location with two neighbors is stable—that is, if it contained a cell, it still contains a cell. If it was empty, it's still empty.\n" +
-            "3. A location with three neighbors will contain a cell in the next generation. If it was unoccupied before, a new cell is born. If it currently contains a cell, the cell remains. Good times.\n" +
-            "4. A location with four or more neighbors will be empty in the next generation. If there was a cell in that location, it dies of overcrowding.\n" +
-            "5. The births and deaths that transform one generation to the next must all take effect simultaneously. Thus, when computing a new generation, new births and deaths in that generation don’t impact other births and deaths in that generation. To keep the two generations separate, you will need to work on two versions of the  grid—one for the current generation, and a second that allows you to compute and store the next generation without changing the current one.";
-  }
+//
+//  @Override
+//  protected Alert getRules() {
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//    alert.setTitle("Rules");
+//    alert.setHeaderText("Header");
+//    WebView webView = new WebView();
+//    WebEngine webEngine = webView.getEngine();
+//    webEngine.load( getClass().getResource("/GoLRules.html").toString() );
+//    webView.setPrefSize(500, 400);
+//    alert.getDialogPane().setContent(webView);
+//    return alert;
+//  }
 
   @Override
   protected String getName() {
     return model.getMyResources().getString("GoL");
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("GoLRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/GoLRules.html";
   }
 
   @Override

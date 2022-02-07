@@ -12,12 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -26,6 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import javax.imageio.ImageIO;
 
 public abstract class SimulationView {
@@ -95,10 +93,10 @@ public abstract class SimulationView {
 //    sims.getChildren().addAll(tmp, tmp2);
 
     root.setCenter(tmp);
-    newFilename = createInputDialog("File Name:");
-    newTitle = createInputDialog("Simulation title:");
-    newAuthor = createInputDialog("Simulation author:");
-    newDescription = createInputDialog("Simulation description:");
+    newFilename = createInputDialog(model.getMyResources().getString("FileName"));
+    newTitle = createInputDialog(model.getMyResources().getString("SimTitle"));
+    newAuthor = createInputDialog(model.getMyResources().getString("SimAuthor"));
+    newDescription = createInputDialog(model.getMyResources().getString("SimDesc"));
 
     scene = new Scene(root, width + buttonPanel.getBoundsInParent().getWidth(),
         root.getBoundsInParent().getHeight() + 100);
@@ -150,20 +148,13 @@ public abstract class SimulationView {
 
   private Node makePanel() {
     VBox result = new VBox();
-    newConfigButton = new Button("Load New");
-    saveConfigButton = new Button("Save Configuration");
+    newConfigButton = new Button(model.getMyResources().getString("LoadNew"));
+    saveConfigButton = new Button(model.getMyResources().getString("SaveConfig"));
     //newConfigButton = makeButton("Load New", event -> doNewConfig());
     //saveConfigButton = makeButton("Save Configuration", event -> doSaveConfig());
-//    Percolation = makeButton("Percolation", event -> Percolation());
-    //Segregation = makeButton("Segregation", event -> Segregation());
-//    SpreadingFire = makeButton("Spreading of Fire", event -> SoF());
-//    WaTor = makeButton("WaTor", event -> Wator());
 
-    result.getChildren().add(newConfigButton);
-    result.getChildren().add(saveConfigButton);
-//    result.getChildren().add(Segregation);
-//    result.getChildren().add(SpreadingFire);
-//    result.getChildren().add(WaTor);
+    result.getChildren().addAll(newConfigButton, saveConfigButton);
+    result.setSpacing(10);
 
     return result;
   }
@@ -173,14 +164,18 @@ public abstract class SimulationView {
     Text t = new Text(getName());
     t.setFont(Font.font("Courier New", 25));
 
-    Dialog<String> dialog = new Dialog<String>();
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+////    Dialog<String> dialog = new Dialog<String>();
+//
+////    dialog.setTitle(getName() + model.getMyResources().getString("Rules"));
+////    ButtonType type = new ButtonType(model.getMyResources().getString("Ok"), ButtonBar.ButtonData.OK_DONE);
+//
+//    alert.setTitle("Rules");
+////    alert.setHeaderText("Header");
+//    alert.getDialogPane().setContent(getRules());
+//    dialog.getDialogPane().getButtonTypes().add(type);
 
-    dialog.setTitle(getName() + " Rules");
-    ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-    dialog.setContentText(getRules());
-    dialog.getDialogPane().getButtonTypes().add(type);
-
-    Button infoButton = makeButton("Info", e -> dialog.showAndWait());
+    Button infoButton = makeButton("Info", e -> getRules().showAndWait());
 
     homebox.getChildren().addAll(t, infoButton);
     // will move this to css file
@@ -191,9 +186,24 @@ public abstract class SimulationView {
     root.setTop(homebox);
   }
 
-  protected abstract String getRules();
+  protected Alert getRules() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle(getName());
+    alert.setHeaderText(getHeader());
+    WebView webView = new WebView();
+    WebEngine webEngine = webView.getEngine();
+    webEngine.load( getClass().getResource(getHtml()).toString());
+    webView.setPrefSize(500, 400);
+    alert.getDialogPane().setContent(webView);
+    return alert;
+  }
+
+
+  protected abstract String getHeader();
 
   protected abstract String getName();
+
+  protected abstract String getHtml();
 
 
   private Button makeButton(String property, EventHandler<ActionEvent> handler) {
@@ -222,10 +232,10 @@ public abstract class SimulationView {
     final Button toggleTheme = makeButton("ChangeTheme", e -> doChangeTheme());
 
     slider = new Slider(1, 5, 0.5);
-    slider.setShowTickMarks(true);
-    slider.setShowTickLabels(true);
-    slider.setMajorTickUnit(0.25f);
-    slider.setBlockIncrement(0.1f);
+//    slider.setShowTickMarks(true);
+//    slider.setShowTickLabels(true);
+//    slider.setMajorTickUnit(0.25f);
+//    slider.setBlockIncrement(0.1f);
 
     mediaBar.getChildren().addAll(toggleTheme, togglePlayButton, stepButton, slider);
     mediaBar.setSpacing(10);

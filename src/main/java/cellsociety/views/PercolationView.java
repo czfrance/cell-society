@@ -5,6 +5,10 @@ import cellsociety.cells.PercolatingCell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.BlockedPercolationViewCell;
 import cellsociety.view_cells.PercolatingViewCell;
+import javafx.scene.control.Alert;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +18,32 @@ public class PercolationView extends SimulationView {
     super(simModel);
   }
 
-  @Override
-  protected String getRules() {
-    return "Rules: ";
-  }
+//  @Override
+//  protected Alert getRules() {
+//    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//    alert.setTitle("Rules");
+//    alert.setHeaderText("Header");
+//    WebView webView = new WebView();
+//    WebEngine webEngine = webView.getEngine();
+//    webEngine.load( getClass().getResource("/PercolationRules.html").toString() );
+//    webView.setPrefSize(500, 400);
+//    alert.getDialogPane().setContent(webView);
+//    return alert;
+//  }
 
   @Override
   protected String getName() {
     return model.getMyResources().getString("Percolation");
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("PercRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/PercolationRules.html";
   }
 
   @Override

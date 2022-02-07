@@ -5,6 +5,9 @@ import cellsociety.cells.WaTorCell;
 import cellsociety.models.SimulationModel;
 
 import cellsociety.view_cells.WaTorViewCell;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +18,28 @@ public class WaTorView extends SimulationView{
     super(simModel);
   }
 
-  @Override
-  protected String getRules() {
-    return "Rules: ";
-  }
+//  @Override
+//  protected WebView getRules() {
+//    WebView webView = new WebView();
+//    WebEngine webEngine = webView.getEngine();
+//    webEngine.load( getClass().getResource("/WaTorRules.html").toString() );
+//    webView.setPrefSize(300, 400);
+//    return webView;
+//  }
 
   @Override
   protected String getName() {
     return model.getMyResources().getString("WaTor");
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("WaTorRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/WaTorRules.html";
   }
 
   @Override

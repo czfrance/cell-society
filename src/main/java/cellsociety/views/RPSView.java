@@ -3,6 +3,8 @@ package cellsociety.views;
 import cellsociety.cells.Cell;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.RPSViewCell;
+import javafx.scene.web.WebView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +12,30 @@ public class RPSView extends SimulationView{
 
   public RPSView(SimulationModel simModel) {super(simModel);}
 
-  @Override
-  protected String getRules() {
-    return null;
-  }
+//  @Override
+//  protected WebView getRules() {
+//    WebView webView = new WebView();
+//    webView.getEngine().loadContent("<html>Pay attention, there are Pay attention, there are" +
+//            "Pay attention, there are" +
+//            "Pay attention, there are" +
+//            "<b>HTML</b> tags, here.</html>");
+//    webView.setPrefSize(300, 400);
+//    return webView;
+//  }
 
   @Override
   protected String getName() {
     return null;
+  }
+
+  @Override
+  protected String getHeader() {
+    return model.getMyResources().getString("RPSRules");
+  }
+
+  @Override
+  protected String getHtml() {
+    return "/RPSRules.html";
   }
 
   @Override
