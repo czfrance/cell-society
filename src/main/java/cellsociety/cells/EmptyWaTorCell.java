@@ -11,10 +11,11 @@ public class EmptyWaTorCell extends Cell{
 
   @Override
   public int getNextState() {
-    return 0;
+    return currentState;
   }
+
   @Override
   public void update(int width, int height, Grid grid) {
-
+    return;
   }
 }
