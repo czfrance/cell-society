@@ -18,6 +18,10 @@ import java.util.List;
  */
 public class WaTorView extends SimulationView{
 
+  /**
+   *
+   * @param simModel the simulation model
+   */
   public WaTorView(SimulationModel simModel) {
     super(simModel);
   }

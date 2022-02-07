@@ -17,7 +17,20 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.OutputStream;
 
+/**
+ * author: Cynthia France
+ */
 public class XMLSaver {
+
+  /**
+   *
+   * @param dataValues values from the original simulation
+   * @param dataFields the list of xml tags
+   * @param grid simulation grid of cells
+   * @param saveInfo information user has entered via dialog boxes
+   * @throws ParserConfigurationException
+   * @throws TransformerException
+   */
   public void save (Map<String, String> dataValues, List<String> dataFields, Grid grid, Map<String, Optional> saveInfo)
       throws ParserConfigurationException, TransformerException {
 

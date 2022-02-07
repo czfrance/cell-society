@@ -1,5 +1,8 @@
 package cellsociety.cells;
 
+/**
+ * author: Cynthia France, Jose Santillan
+ */
 public class LifeCell extends Cell {
 
   public static final int DEAD = 0;

@@ -7,15 +7,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * author: Cynthia France, Jose Santillan
+ */
 public class WaTorModel extends SimulationModel {
 
   private static final int EMPTY = 0;
   private static final int FISH = 1;
   private static final int SHARK = 2;
 
+  /**
+   *
+   * @param dataValues values from the xml file
+   * @param language language to use
+   */
   public WaTorModel(Map<String, String> dataValues, String language) {
     super(dataValues, language);
     simType = "WaTor";
+  }
+
+  /**
+   * updates the grid to new states
+   */
+  @Override
+  public void updateGrid() {
+    List<Cell> movingSharks = getMovingObject(SHARK);
+    List<Cell> movingFish = getMovingObject(FISH);
+
+    move(movingSharks, SHARK);
+    move(movingFish, FISH);
   }
 
   @Override
@@ -33,16 +53,6 @@ public class WaTorModel extends SimulationModel {
         }
       }
   }
-
-  @Override
-  public void updateGrid() {
-    List<Cell> movingSharks = getMovingObject(SHARK);
-    List<Cell> movingFish = getMovingObject(FISH);
-
-    move(movingSharks, SHARK);
-    move(movingFish, FISH);
-  }
-
 
   private void move(List<Cell> movingObjects, int type) {
     System.out.println("size: " + movingObjects.size());
