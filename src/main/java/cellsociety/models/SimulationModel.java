@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
+/**
+ * author: Cynthia France
+ */
 public abstract class SimulationModel {
 
   public static final List<String> DATA_FIELDS = List.of("simulationType", "title", "author",
@@ -24,7 +27,6 @@ public abstract class SimulationModel {
   public static final int TOROIDAL = 1;
   public static final int TRIANGULAR_TOROIDAL = 2;
   public static final int HEXAGON = 3;
-  //public static final int SATISFIED_FIELD = 7;
 
   protected Map<String, String> simInfo;
   protected String simType;
@@ -50,12 +52,16 @@ public abstract class SimulationModel {
   public final int SHARKTURNS;
   public final int SHARKSTARVE;
 
-  private int iteration;
   private double simulationSpeed;
 
   private ResourceBundle myResources;
   public static final String DEFAULT_RESOURCE_PACKAGE = "/";
 
+  /**
+   *
+   * @param dataValues values from the xml file
+   * @param language language to use
+   */
   public SimulationModel(Map<String, String> dataValues, String language) {
 
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
@@ -87,10 +93,17 @@ public abstract class SimulationModel {
     initGrid();
   }
 
+  /**
+   *
+   * @return simulation information
+   */
   public Map<String, String> getSimInfo() {
     return simInfo;
   }
 
+  /**
+   * updates the grid to new states
+   */
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
     myGrid.initNeighbors(NEIGHBORTYPE);
@@ -126,6 +139,10 @@ public abstract class SimulationModel {
 
   protected abstract void createGrid();
 
+  /**
+   *
+   * @return the grid of cells
+   */
   public Grid getGrid() {
     return myGrid;
   }
@@ -133,10 +150,6 @@ public abstract class SimulationModel {
   public int[] getGridSize() {
     return new int[]{Integer.parseInt(simInfo.get("width")),
         Integer.parseInt(simInfo.get("height"))};
-  }
-
-  public void handleInput() {
-    //need to implement within extended classes
   }
 
   private void initGrid() {
@@ -150,6 +163,7 @@ public abstract class SimulationModel {
   public ResourceBundle getMyResources() {
     return myResources;
   }
+
   /**
    * @see Object#toString()
    */
@@ -182,15 +196,6 @@ public abstract class SimulationModel {
    */
   public int getWidth() {
     return WIDTH;
-  }
-
-  /**
-   * Getter method
-   *
-   * @return The current iteration the simulation is on
-   */
-  public int getIteration() {
-    return iteration;
   }
 
   /**

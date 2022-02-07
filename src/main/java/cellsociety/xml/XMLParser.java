@@ -24,13 +24,10 @@ import org.xml.sax.SAXException;
  *
  * @author Rhondu Smithwick
  * @author Robert C. Duvall
+ * @author Cynthia France
  */
 public class XMLParser {
-  // Readable error message that can be displayed by the GUI
   public static final String ERROR_MESSAGE = "XML file does not represent %s";
-  // name of root attribute that notes the type of file expecting to parse
-  //private final String TYPE_ATTRIBUTE;
-  // keep only one documentBuilder because it is expensive to make and can reset it before parsing
   private final DocumentBuilder DOCUMENT_BUILDER;
 
 
@@ -47,10 +44,7 @@ public class XMLParser {
    */
   public Map<String, String> getInformation (File dataFile) throws XMLException {
     Element root = getRootElement(dataFile);
-//    if (! isValidFile(root, Game.DATA_TYPE)) {
-//      throw new XMLException(ERROR_MESSAGE, Game.DATA_TYPE);
-//    }
-    // read data associated with the fields given by the object
+
     Map<String, String> results = new HashMap<>();
     for (String field : SimulationModel.DATA_FIELDS) {
       results.put(field, getTextValue(root, field));
@@ -70,12 +64,6 @@ public class XMLParser {
     }
   }
 
-  // returns if this is a valid XML file for the specified object type
-//  private boolean isValidFile (Element root, String type) {
-//    return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-//  }
-
-  // get value of Element's attribute
   private String getAttribute (Element e, String attributeName) {
     return e.getAttribute(attributeName);
   }
@@ -92,7 +80,6 @@ public class XMLParser {
     }
   }
 
-  // boilerplate code needed to make ANY DocumentBuilder
   private DocumentBuilder getDocumentBuilder () throws XMLException {
     try {
       return DocumentBuilderFactory.newInstance().newDocumentBuilder();

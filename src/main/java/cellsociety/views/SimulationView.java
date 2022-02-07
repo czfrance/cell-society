@@ -27,6 +27,9 @@ import javafx.scene.web.WebView;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Cynthia France, Diane Kim
+ */
 public abstract class SimulationView {
 
   public Scene scene;
@@ -52,15 +55,29 @@ public abstract class SimulationView {
   private Dialog newDescription;
   private Dialog newFilename;
 
+  /**
+   *
+   * @param simModel simulation model
+   */
   public SimulationView(SimulationModel simModel) {
     model = simModel;
     simulationSpeed = model.getSpeed();
   }
 
+  /**
+   *
+   * @return how many generation to display per second
+   */
   public double framesPerSec() {
     return simulationSpeed;
   }
 
+  /**
+   *
+   * @param width width of the window
+   * @param height height of the window
+   * @return the scene
+   */
   public Scene makeScene(int width, int height) {
 
     //FlowPane topPane = new FlowPane();
@@ -107,10 +124,17 @@ public abstract class SimulationView {
     return scene;
   }
 
+  /**
+   *
+   * @return the model
+   */
   public SimulationModel getModel() {
     return model;
   }
 
+  /**
+   * increments one generation
+   */
   public void step() {
     if (play) {
       model.updateGrid();
@@ -138,6 +162,10 @@ public abstract class SimulationView {
     return desc;
   }
 
+  /**
+   *
+   * @return the information a user has entered to save a new simulation
+   */
   public Map<String, Optional> getSaveInfo() {
     Map<String, Optional> saveInfo = new HashMap<>();
     saveInfo.put("filename", newFilename.showAndWait());
@@ -228,10 +256,18 @@ public abstract class SimulationView {
     return mediaBar;
   }
 
+  /**
+   *
+   * @return the get new configuration button
+   */
   public Button getNewConfigButton() {
     return newConfigButton;
   }
 
+  /**
+   *
+   * @return the save configuration button
+   */
   public Button getSaveConfigButton() {
     return saveConfigButton;
   }

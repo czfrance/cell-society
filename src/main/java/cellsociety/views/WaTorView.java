@@ -12,9 +12,15 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * author: Cynthia France, Jose Santillan
+ */
 public class WaTorView extends SimulationView{
 
+  /**
+   *
+   * @param simModel the simulation model
+   */
   public WaTorView(SimulationModel simModel) {
     super(simModel);
   }

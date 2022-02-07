@@ -12,8 +12,15 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author: Cynthia France
+ */
 public class PercolationView extends SimulationView {
 
+  /**
+   *
+   * @param simModel the simulation model
+   */
   public PercolationView(SimulationModel simModel) {
     super(simModel);
   }

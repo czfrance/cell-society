@@ -10,8 +10,15 @@ import javafx.scene.web.WebView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author: Cynthia France
+ */
 public class GameOfLifeView extends SimulationView {
 
+  /**
+   *
+   * @param simModel the simulation model
+   */
   public GameOfLifeView(SimulationModel simModel) {
     super(simModel);
   }

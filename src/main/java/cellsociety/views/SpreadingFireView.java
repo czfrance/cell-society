@@ -8,12 +8,19 @@ import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 
+/**
+ * author: Cynthia France
+ */
 public class SpreadingFireView extends SimulationView{
 
   public static final int TREE = 0;
   public static final int BURNING = 1;
   public static final int DEAD = 2;
 
+  /**
+   *
+   * @param simModel the simulation model
+   */
   public SpreadingFireView(SimulationModel simModel) {
     super(simModel);
   }
