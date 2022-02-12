@@ -51,7 +51,6 @@ public class FishCell extends Cell {
   @Override
   public int getNextState() {
     turnsAlive = turnsAlive + 1;
-    System.out.print(turnsAlive);
     isReproducing = checkReproduce();
     return -1*currentState;
   }
@@ -66,7 +65,6 @@ public class FishCell extends Cell {
   }
 
   private boolean checkReproduce() {
-    System.out.printf("alive: %d breed: %d\n", turnsAlive, breedTurns);
     if (turnsAlive % breedTurns == 0) {
       return true;
     }
