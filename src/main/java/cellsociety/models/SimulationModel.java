@@ -108,7 +108,6 @@ public abstract class SimulationModel {
     List<List<Integer>> newStates = getCellNextStates();
     myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE);
     myGrid.updateGrid(newStates);
-    System.out.println(myGrid);
   }
 
   protected List<List<Integer>> getCellNextStates() {
