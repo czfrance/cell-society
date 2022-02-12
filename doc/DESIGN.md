@@ -8,25 +8,39 @@
  * Cynthia France:
    * General things
      * Set up the back-end and the front-end logic, connecting the two together
-         * Cell super class
-         * SimulationModel super class
-         * ViewCell super class
-         * View superclass
+         * `Cell` super class
+           * `setState()`
+           * `getNextState()`
+         * `SimulationModel` super class
+           * `createGrid()`
+           * `updateGrid()`
+           * `getCellNextStates()`
+           * `DATA_FIELDS`
+           * `simInfo`
+           * `getNeighborType()`
+         * `ViewCell` super class
+           * `updateState()`
+         * `View` superclass
+           * `updateGrid()`
+           * basic `myScene` (just the grid part)
+           * `step()`
+           * `addGridToNode()`
+           * `getSaveInfo()`
    * Backend
        * Simulations: Schelling's, Spreading of Fire, Game of Life, WaTor
            * Note: for WaTor, Jose started the simulation & Cynthia finished it
            * Note: for Game of Life, both Jose & Cynthia debugged it (separately)
        * Each of the above simulation's their corresponding components (Cells, Models, ViewCells, View, etc.)
-       * Helped come up with logic for finding neighbors for differently shaped cells (even odd orientation (see code))
+       * Helped come up with logic for finding neighbors for differently shaped cells (even-odd orientation (see code))
    * Frontend
        * Responsible for the connection part of the UI (ie updating the grid, creating viewCells)
-       * Design of the grid, display grid & cellSize logic
+       * Design of the grid, display grid & `cellSize` logic
        * play/pause, step
        * load new file
        * save configuration
            * including pop up dialog boxes that ask for simulation information
        * a version of changing speed (is not used anymore, but can still find the code for it
-         in Main, handleKeyInput)
+         in `Main`, `handleKeyInput`)
        * Gave Diane her breakout splash screen code to help her implement the splash screen
    * Everything related to XML, including:
        * XML Parser
@@ -87,12 +101,12 @@
   everything is happening in the cell class(es) specific to that simulation.
 * After the user chooses an XML file, 
 * When a simulation is first chosen, the parser parses through the information and passes it to
-  Main. Main creates the appropriate model and view classes. In model, the grid is created 
+  `Main`. `Main` creates the appropriate model and view classes. In model, the grid is created 
   containing the proper information & the view reflects this visually.
 * The model is told to update itself (which tells the cells to calculate their states) by the view, 
   which knows when it should be updating itself. To do so, it first tells the model to update itself,
   then using that the new backend states, updates itself in turn
-  * Note: after calling model.updateGrid(), each cell (in backend) is already in the correct state,
+  * Note: after calling `model.updateGrid()`, each cell (in backend) is already in the correct state,
     but has not been updated visually to reflect it yet.
 * The view updates itself by obtaining the new cell states from the model and telling each view cell
   to update itself (visually) to the correct state
@@ -100,12 +114,12 @@
   configuration, saving a configuration, etc)
 
 #### Core Classes
-* SimulationModel
-* Cell
-* Grid
-* SimulationView
-* ViewCell
-* XML*
+* `SimulationModel`
+* `Cell`
+* `Grid`
+* `SimulationView`
+* `ViewCell`
+* `XML*`
 
 ## Assumptions that Affect the Design
 * All triangle cells start facing down
@@ -116,17 +130,17 @@
 ## Significant differences from Original Plan
 * The most significant difference was our roles & the amount of work that each member did
 * Design-wise, we created more packages than we had expected. In addition to our planned
-  Simulation, Cell, and GUI, we also had an XML package (to deal with XML-related events) as well
+  `Simulation`, `Cell`, and `GUI`, we also had an `XML` package (to deal with XML-related events) as well
   as split Cell up into two classes: one for the backend and one for the frontend
 
 ## New Features HowTo
 * New Simulations
-  * Create as many new Cell classes as needed for the simulation & code their logic (ie how to
+  * Create as many new `Cell` classes as needed for the simulation & code their logic (ie how to
     determine their next state, if they die or live, if they move, etc)
-  * In the model, specify how cells are greated & generally updated, if there are any specific overall
+  * In the model, specify how cells are created & generally updated, if there are any specific overall
     logic that needs to take place (ie cells moving, being created, etc.)
   * In the view, specify how a grid must be updated & maintained (if different from default code)
-  * In view cell, ensure that each cell can be visually updated to the correct state (ie color)
+  * In `viewCell`, ensure that each cell can be visually updated to the correct state (ie color)
 * New file format
   * create a new package, preferably named the file's extension
   * Write a parser & a saver
@@ -151,7 +165,7 @@
 #### Other Features not yet Done
 * Error Checking
   * Add a new package containing all errors
-    * In each .java file that throws an error (probably all), import this package and throw the
+    * In each `.java` file that throws an error (probably all), import this package and throw the
       correct error
     * Files inside this package should be organized by type of error, ie
         * XML errors
@@ -161,7 +175,7 @@
 * Random initial cell state configurations
   * In the model & XML files, add the additional necessary XML tags
     * Add a check for which method we should use to create the grid
-    * Add new Grid subclasses that take care of random cell creation
+    * Add new `Grid` subclasses that take care of random cell creation
         * ie one for "based on a total number of locations to occupy"
         * and one for "based on probability/concentration distributions"
         * Pass in the necessary information to do this
@@ -172,39 +186,39 @@
       * Cell outline & color/fill -> view -> viewCell
 * Any number of simulations
   * Requires refactoring of the view
-    * New class: GUI, is what the user sees, contains multiple simulation views
+    * New class: `GUI`, is what the user sees, contains multiple simulation views
     * Simulation specific views
       * keep all old buttons & toggles, as each would control its own simulation
-  * In the GUI, add some way to indicate simulations to run (ie dropdown, plus sign)
+  * In the `GUI`, add some way to indicate simulations to run (ie dropdown, plus sign)
     * When button is pressed, trigger file selection
     * THOUGHT PROCESS ONE: recalculate position & size of cells based on the number of simulations
-      * Update the Grid class to include coordinates/location
+      * Update the `Grid` class to include coordinates/location
       * If load multiple at once, recalculate all at once
       * If use "plus" sign, recalculate & shift old simulations + add new simulation
   * THOUGHT PROCESS TWO: Each simulation view would probably go in its own panel
     * When adding a simulation, just add a panel, where each panel is organized the same way as 
-      each simulationView is now.
+      each `simulationView` is now.
     * This way, the window/java can do the heavy-lifting when it comes to locating the panels in
       the window
 * User Interaction
-  * In the GUI, create buttons/sliders that control this information
+  * In the `GUI`, create buttons/sliders that control this information
   * Once something is changed, communicate the new information to where it needs to go
-    * Different ratio of cells = Model
-    * update rate = View
+    * Different ratio of cells = model
+    * update rate = view
 * Different Views
   * Refactoring
-    * Super super class: View
-    * All classes (ie SimulationView, HistogramView) extend this
-  * Create new classes each type of view (HistogramView, TotalsView, etc)
+    * Super super class: `View`
+    * All classes (ie `SimulationView`, `HistogramView`) extend this
+  * Create new classes each type of view (`HistogramView`, `TotalsView`, etc)
     * And new subclasses for each simulation, if needed
   * In these new classes, specify what information to display & how to display it
-    * ie for HistogramView:
-      * take in the Grid
+    * ie for `HistogramView`:
+      * take in the `Grid`
       * obtain the count of each type of cell
       * transform that count into a value that makes sense for the view
-        * ie: multiplier = (histogramHeight) / max(cellCount)
-          * barHeight = multiplier * cellCount
+        * ie: `multiplier = (histogramHeight) / max(cellCount)`
+          * `barHeight = multiplier * cellCount`
       * create the histogram
       * update as normal
-  * In the GUI, add a button that allows the user to switch between types of views & update
+  * In the `GUI`, add a button that allows the user to switch between types of views & update
     as desired
