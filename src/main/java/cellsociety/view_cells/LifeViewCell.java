@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
+/**
+ * author: Cynthia France, Jose Santillan
+ */
 public class LifeViewCell extends ViewCell {
 
   public LifeViewCell(int x, int y, double size, int initState) {

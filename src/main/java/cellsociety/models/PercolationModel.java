@@ -6,12 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * author: Cynthia France
+ */
 public class PercolationModel extends SimulationModel {
 
   boolean initStateIsSet = false;
 
+  /**
+   *
+   * @param dataValues values from the xml file
+   * @param language language to use
+   */
   public PercolationModel(Map<String, String> dataValues, String language) {
     super(dataValues, language);
+  }
+
+  /**
+   * updates the grid to new states
+   */
+  @Override
+  public void updateGrid() {
+    if (!initStateIsSet) {
+      initFilledCells();
+      initStateIsSet = true;
+    }
+    else {
+      super.updateGrid();
+    }
   }
 
   @Override
@@ -28,20 +50,8 @@ public class PercolationModel extends SimulationModel {
         case '0' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 0)); colNum++;}
         case '1' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 1)); colNum++;}
         case '2' -> {myGrid.getRow(rowNum).add(new PercolatingCell(colNum, rowNum, 2)); colNum++;}
-        //case '2', '3', '4', '5', '6', '7', '8', '9' -> myGrid.get(rowNum).add(Character.getNumericValue(c));
         default -> {}
       }
-    }
-  }
-
-  @Override
-  public void updateGrid() {
-    if (!initStateIsSet) {
-      initFilledCells();
-      initStateIsSet = true;
-    }
-    else {
-      super.updateGrid();
     }
   }
 

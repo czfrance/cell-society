@@ -14,7 +14,7 @@ public class SugarGrid extends Grid{
 
   @Override
   public void updateGrid(List<List<Integer>> newGrid) {
-    initNeighbors(SimulationModel.NEIGHBORTYPE, WIDTH, HEIGHT);
+    initNeighbors(SimulationModel.NEIGHBORTYPE);
     for (List<Cell> list : myGrid) {
       for (Cell cell : list) {
         cell.update();

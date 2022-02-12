@@ -7,7 +7,9 @@ import javafx.scene.paint.Color;
 
 public class WaTorViewCell extends ViewCell {
 
-
+  /**
+   * author: Jose Santillan
+   */
   public WaTorViewCell(int x, int y, double size, int initState) {
     super(x, y, size, initState);
 

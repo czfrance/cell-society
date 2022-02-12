@@ -8,13 +8,44 @@ import java.util.Map;
 
 import java.util.Random;
 
+/**
+ * author: Cynthia France
+ */
 public class SegregationModel extends SimulationModel{
 
   private int numUnhappy1;
   private int numUnhappy2;
 
+  /**
+   *
+   * @param dataValues values from the xml file
+   * @param language language to use
+   */
   public SegregationModel(Map<String, String> dataValues, String language) {
     super(dataValues, language);
+  }
+
+  /**
+   * updates the grid to new states
+   */
+  @Override
+  public void updateGrid() {
+    Random rand = new Random();
+    List<Cell> emptyCells = getEmptyCells();
+    for (int i = 0; i < numUnhappy1; i++) {
+      int index = rand.nextInt(emptyCells.size());
+      Cell c = emptyCells.get(index);
+      c.setState(1);
+      emptyCells.remove(index);
+    }
+    for (int i = 0; i < numUnhappy2; i++) {
+      int index = rand.nextInt(emptyCells.size());
+      Cell c = emptyCells.get(index);
+      c.setState(2);
+      emptyCells.remove(index);
+    }
+    numUnhappy1 = 0;
+    numUnhappy2 = 0;
   }
 
   @Override
@@ -34,26 +65,6 @@ public class SegregationModel extends SimulationModel{
         default -> {}
       }
     }
-  }
-
-  @Override
-  public void updateGrid() {
-    Random rand = new Random();
-    List<Cell> emptyCells = getEmptyCells();
-    for (int i = 0; i < numUnhappy1; i++) {
-      int index = rand.nextInt(emptyCells.size());
-      Cell c = emptyCells.get(index);
-      c.setState(1);
-      emptyCells.remove(index);
-    }
-    for (int i = 0; i < numUnhappy2; i++) {
-      int index = rand.nextInt(emptyCells.size());
-      Cell c = emptyCells.get(index);
-      c.setState(2);
-      emptyCells.remove(index);
-    }
-    numUnhappy1 = 0;
-    numUnhappy2 = 0;
   }
 
   private List<Cell> getEmptyCells() {

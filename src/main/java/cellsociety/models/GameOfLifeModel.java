@@ -3,6 +3,9 @@ package cellsociety.models;
 import cellsociety.cells.LifeCell;
 import java.util.Map;
 
+/**
+ * author: Cynthia France, Jose Santillan
+ */
 public class GameOfLifeModel extends SimulationModel {
 
   private static final int DEAD = 0;

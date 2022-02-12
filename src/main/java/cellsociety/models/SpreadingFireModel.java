@@ -3,8 +3,16 @@ package cellsociety.models;
 import cellsociety.cells.BurningCell;
 import java.util.Map;
 
+/**
+ * author: Cynthia France
+ */
 public class SpreadingFireModel extends SimulationModel {
 
+  /**
+   *
+   * @param dataValues values from the xml file
+   * @param language language to use
+   */
   public SpreadingFireModel(Map<String, String> dataValues, String language) {
     super(dataValues, language);
   }
