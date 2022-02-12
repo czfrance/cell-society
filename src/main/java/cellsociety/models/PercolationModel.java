@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class PercolationModel extends SimulationModel {
 
+  public static final int EMPTY = 1;
   boolean initStateIsSet = false;
 
   /**
@@ -57,8 +58,8 @@ public class PercolationModel extends SimulationModel {
 
   private void initFilledCells() {
     for (Cell c : myGrid.getRow(0)) {
-      if ((c instanceof PercolatingCell)) {
-        ((PercolatingCell) c).makeFilled();;
+      if ((c.getMyCurrentState() == EMPTY)) {
+        ((PercolatingCell) c).makeFilled();
       }
     }
   }
