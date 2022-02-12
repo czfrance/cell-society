@@ -1,8 +1,6 @@
 # Cell Society Design Final
 ### Cynthia France, Jose Santillan, Diane Kim
 
-####Note: This document was written by Cynthia, so everything documented below is to her best knowledge
-
 ## Team Roles and Responsibilities
 
  * Cynthia France:
@@ -222,3 +220,6 @@
       * update as normal
   * In the `GUI`, add a button that allows the user to switch between types of views & update
     as desired
+
+
+####Note: This document was written by Cynthia, so everything documented below is to her best knowledge
