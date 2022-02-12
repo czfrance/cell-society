@@ -57,7 +57,7 @@ public class WaTorModel extends SimulationModel {
   private void move(List<Cell> movingObjects, int type) {
     System.out.println("size: " + movingObjects.size());
     for (Cell c : movingObjects) {
-      myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE, WIDTH, HEIGHT);
+      myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE);
       List<Cell> emptyNeighbors = c.getEmptyAdjacentCells();
       System.out.print(emptyNeighbors.size());
       if (emptyNeighbors.size() == 0) {

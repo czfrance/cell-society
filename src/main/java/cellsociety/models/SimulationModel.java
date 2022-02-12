@@ -4,11 +4,10 @@ import cellsociety.cells.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 /**
- * author: Cynthia France
+ * author: Cynthia France/Jose Santillan
  */
 public abstract class SimulationModel {
 
@@ -107,12 +106,13 @@ public abstract class SimulationModel {
    */
   public void updateGrid() {
     List<List<Integer>> newStates = getCellNextStates();
-    myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE, WIDTH, HEIGHT);
+    myGrid.initNeighbors(SimulationModel.NEIGHBORTYPE);
     myGrid.updateGrid(newStates);
     System.out.println(myGrid);
   }
 
   protected List<List<Integer>> getCellNextStates() {
+    //
     List<List<Integer>> newStates = new ArrayList<>();
 
     for (int row = 0; row < myGrid.size(); row++) {
@@ -128,6 +128,7 @@ public abstract class SimulationModel {
   }
 
   private int getNeighborType() {
+    //
     String type = simInfo.get(NEIGHBORTYPE_INFO);
     switch (type) {
       case "finite" -> {return FINITE;}
@@ -141,26 +142,35 @@ public abstract class SimulationModel {
   protected abstract void createGrid();
 
   /**
-   *
+   * This method gets the grid the SimulationModel current holds
    * @return the grid of cells
    */
   public Grid getGrid() {
     return myGrid;
   }
 
+  /**
+   * This method returns the dimensions of the Grid currently being held by the SimulationModel
+   * @return An array width the 0th index being the width and 1st index being the height
+   */
   public int[] getGridSize() {
     return new int[]{Integer.parseInt(simInfo.get("width")),
         Integer.parseInt(simInfo.get("height"))};
   }
 
   private void initGrid() {
+    //Initializes the Grid for this simulation model
     for (List<Cell> l : myGrid) {
       for (Cell c : l) {
-        c.initNeighbors(NEIGHBORTYPE, WIDTH, HEIGHT, myGrid.getGrid());
+        c.initNeighbors(NEIGHBORTYPE, WIDTH, HEIGHT, myGrid);
       }
     }
   }
 
+  /**
+   * This method returns the Resource Bundle currently being used by the SimulationModel
+   * @return the Resource Bundle
+   */
   public ResourceBundle getMyResources() {
     return myResources;
   }

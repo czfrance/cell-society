@@ -1,4 +1,5 @@
 # Cell Society Design Final
+
 ### Cynthia France, Jose Santillan, Diane Kim
 
 ## Team Roles and Responsibilities
@@ -121,9 +122,13 @@
 
 ## Assumptions that Affect the Design
 * All triangle cells start facing down
+* 
+
 
 #### Features Affected by Assumptions
 * The triangle grid
+* The simulation view of hexagonal shapes (if we had implemented it) would assume that the first hexagon the top left one would begin further in than the second row (if there was a second row).
+* 
 
 ## Significant differences from Original Plan
 * The most significant difference was the change in our roles from the plan

@@ -1,5 +1,6 @@
 package cellsociety.cells;
 
+import cellsociety.models.Grid;
 import java.util.ArrayList;
 import java.util.List;;
 
@@ -28,8 +29,8 @@ public abstract class Cell {
 
   /**
    *
-   * @param x the x location of the cell
-   * @param y the y location of the cell
+   * @param col the x location of the cell
+   * @param row the y location of the cell
    * @param initState the cell's initial state
    */
   public Cell(int col, int row, int initState) {
@@ -86,7 +87,7 @@ public abstract class Cell {
    *
    * @return column that the cell is in
    */
-  public int getCol() {
+  public int getColumn() {
     return column;
   }
 
@@ -99,14 +100,14 @@ public abstract class Cell {
   }
 
   public void initNeighbors(int code, int width, int height, Grid grid) {
+    List<List<Cell>> listGrid = grid.getGrid();
     myNeighbors = new ArrayList<>();
     switch (code) {
-      case FINITE -> {finiteNeighbors(width, height, grid);}
-
-      case TOROIDAL -> {toroidalNeighbors(width, height, grid);}
-      case TRIANGULAR_TOROIDAL -> {triangleNeighbors(width, height, grid);}
-      case HEXAGON -> {initHexagonNeighbors(width, height, grid);}
-      default -> toroidalNeighbors(width, height, grid);
+      case FINITE -> {finiteNeighbors(width, height, listGrid);}
+      case TOROIDAL -> {toroidalNeighbors(width, height, listGrid);}
+      case TRIANGULAR_TOROIDAL -> {triangleNeighbors(width, height, listGrid);}
+      case HEXAGON -> {initHexagonNeighbors(width, height, listGrid);}
+      default -> toroidalNeighbors(width, height, listGrid);
     }
 
   }
@@ -121,16 +122,13 @@ public abstract class Cell {
     return x;
   }
 
+
   @Override
   public String toString() {
     return String.format("State %s, Neighbors %d, row: %d, column: %d",
         currentState, myNeighbors == null ? 0 : myNeighbors.size(), row, column);}
 
-  public boolean isReproducing() {return false;}
-
-  public Cell getCurrentObject() {return this;}
-
-  private void finiteNeighbors(int width, int height, Grid grid) {
+  private void finiteNeighbors(int width, int height, List<List<Cell>> grid) {
     for (int i = -1; i < 2; i++) {
       for (int k = -1; k < 2; k++) {
         if (inBounds(column + k, row + i, width, height) && (i != 0 || k != 0)) {
@@ -152,13 +150,6 @@ public abstract class Cell {
     }
   }
 
-  public int flip(int x, int boundary) {
-    if (x >= boundary) return 0;
-    else if (x < 0) return boundary - 1;
-    return x;
-  }
-
-
   private void triangleNeighbors(int width, int height, List<List<Cell>> grid) {
 
     for (int i = -1; i < 2; i++) {
@@ -175,6 +166,11 @@ public abstract class Cell {
       }
     }
   }
+
+  public boolean isFacingDown() {return orientation == EVEN;}
+
+  public boolean isFacingUp() {return orientation == ODD;}
+
   private int[] getVals(int i) {
     int[] ret = new int[2];
 
@@ -207,31 +203,14 @@ public abstract class Cell {
     }
   }
 
-  public boolean inBounds(int x, int y, int width, int height) {
-    return (x >= 0 && x < width) && (y >= 0 && y < height);
-  }
-
-  @Override
-  public String toString() {
-    return String.format("State %s, Neighbors %d, row: %d, column: %d",
-           currentState, myNeighbors == null ? 0 : myNeighbors.size(), row, column);}
-
   public void update() {}
 
   public void update(int width, int height, List<List<Cell>> grid) {}
-
-  public int getRow() {return row;}
   public boolean isReproducing() {return false;}
 
   public Cell getCurrentObject() {return this;}
 
-  public int getColumn() {
-    return column;
-  }
-
   protected void death() {return;}
-
-  public List<Cell> getEmptyAdjacentCells() {return new ArrayList<>();}
 
   public boolean isDead() {return false;}
   //
@@ -260,13 +239,6 @@ public abstract class Cell {
   }
 
   public boolean isAlive() {return false;}
-  public int getHealth() {
-    return 0;
-  }
-
-  public int getTurnsAlive() {
-    return 0;
-  }
 
   public void setTurnsAlive(int alive) {
     return;

@@ -1,6 +1,5 @@
 package cellsociety.views;
 
-import cellsociety.cells.Cell;
 import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
@@ -333,6 +332,4 @@ public abstract class SimulationView {
   protected abstract String getHtml();
 
   protected abstract void makeGrid();
-
-  protected abstract void updateGrid();
 }
