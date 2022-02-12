@@ -126,7 +126,7 @@
 * The triangle grid
 
 ## Significant differences from Original Plan
-* The most significant difference was our roles & the amount of work that each member did
+* The most significant difference was the change in our roles from the plan
 * Design-wise, we created more packages than we had expected. In addition to our planned
   `Simulation`, `Cell`, and `GUI`, we also had an `XML` package (to deal with XML-related events) as well
   as split Cell up into two classes: one for the backend and one for the frontend
