@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="SpreadingFire">
+  <simulationType>SpreadingFire</simulationType>
+  <title>Spreading of Fire: dangerous territory</title>
+  <author>Cynthia France</author>
+  <description>random fires spread</description>
+  <width>10</width>
+  <height>10</height>
+  <config>
+    0000000101.
+    0100000001.
+    0000000210.
+    0000000000.
+    0000000000.
+    0000000000.
+    0000001000.
+    0000000000.
+    0010000000.
+    1000000000
+  </config>
+  <speed>1.0</speed>
+  <neighborType>finite</neighborType>
+  <probCatch>0</probCatch>
+</data>
