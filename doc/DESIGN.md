@@ -1,9 +1,9 @@
 # Cell Society Design Final
-### Names
+### Jose Santillan, Cynthia France, Diane Kim
 
 ## Team Roles and Responsibilities
 
- * Team Member #1                                                                                                                                                                                                                                                                                                                                                                                                                         c
+ * Team Member #1    
 
  * Team Member #2
 
