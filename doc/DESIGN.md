@@ -51,7 +51,7 @@
 
  * Jose Santillan
    * Backend
-     * Simulations: Falling Sand, Game of Life, Rock Paper Scissors, Sugar Scape, Foraging Ants
+     * Simulations: Falling Sand, Game of Life, Rock Paper Scissors, Sugar Scape, Foraging Ants, WaTor
          * Note: for WaTor, Jose started the simulation & Cynthia finished it
          * Note: for Game of Life, both Jose & Cynthia debugged it (separately)
      * Each of the above simulation's their corresponding components (Cells, Models, etc)
