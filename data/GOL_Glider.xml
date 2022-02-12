@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data simulation="GameOfLife">
+  <simulationType>GameOfLife</simulationType>
+  <title>Game of Life: Death</title>
+  <author>Conway</author>
+  <description>Glider that travels off the page and back on on the other side.</description>
+  <width>10</width>
+  <height>10</height>
+  <config>
+    0000000000.
+    0101000000.
+    0011000000.
+    0010000000.
+    0000000000.
+    0000000000.
+    0000000000.
+    0000000000.
+    0000000000.
+    0000000000
+  </config>
+  <speed>1.0</speed>
+  <neighborType>toroidal</neighborType>
+</data>
