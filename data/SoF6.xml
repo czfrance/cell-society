@@ -20,5 +20,5 @@
   </config>
   <speed>1.0</speed>
   <neighborType>finite</neighborType>
-  <probCatch>0</probCatch>
+  <probCatch>0.5</probCatch>
 </data>
