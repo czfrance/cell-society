@@ -1,6 +1,5 @@
 package cellsociety.views;
 
-import cellsociety.cells.Cell;
 import cellsociety.models.Grid;
 import cellsociety.models.SimulationModel;
 import cellsociety.view_cells.ViewCell;
